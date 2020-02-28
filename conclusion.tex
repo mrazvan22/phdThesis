@@ -1,0 +1,162 @@
+%auto-ignore
+\chapter{Conclusions}
+\label{chapter:conclusions}
+
+% \newcommand{\hl}[1]{\colorbox{yellow}{#1}}
+% \newcommand{\hl}[1][]{%
+%   \colorbox{yellow}{\parbox{\dimexpr\linewidth-2\fboxsep}{#1}}
+% }
+\definecolor{darkred}{rgb}{0.7,0,0}
+\newcommand{\hl}[1]{\textcolor{black}{#1}}
+
+
+
+In this thesis I presented my work on disease progression model applications to typical Alzheimer's disease and Posterior Cortical Atrophy, as well as novel methodological developments. In this chapter I will present a summary of the thesis (section \ref{sec:conSum}), along with future research directions, both for applications to other neurodegenerative diseases (section \ref{sec:conNeu}) as well as further methodological developments (section \ref{sec:conMet}). 
+
+\section{Summary}
+\label{sec:conSum}
+
+In chapter \ref{chapter:bck}, I first gave an overview of Alzheimer's disease (section \ref{sec:bckAd}) by describing its symptoms, disease causes and mechanisms, various risk factors involved, how it is currently diagnosed and the key biomarkers available to quantitatively measure Alzheimer's disease pathology. Afterwards, in section \ref{sec:bckProgAd} I described the progression of AD biomarkers and the Braak staging scheme. Finally, in section \ref{sec:bckPca} I performed a literature review on PCA, and described its symptoms, disease causes, diagnosis, management, neuroimaging and heterogeneity. Throughout the section, I compared and contrasted the differences between PCA and typical AD.
+
+In chapter \ref{chapter:bckDpm}, I presented the state of the art in disease progression modelling. I started with the hypothetical model by Jack et al. \cite{jack2010hypothetical} (section \ref{sec:bckDpmHyp}), then presented early models of progression based on symptomatic groups (section \ref{sec:bckSym}), then moved to continuous models which regress against one biomarker (section \ref{sec:bckDpmReg}) and survival analysis models that compute time until an event such as clinical conversion occurs (section \ref{sec:bckDpmSur}). I then presented state of the art methods that combine multiple biomarker measurements and generally compute latent time shifts and other hidden variables. I categorised them into models based on scalar biomarker measurements (section \ref{sec:bckSca}), spatiotemporal models (section \ref{sec:bckSpa}) which model changes both in brain structure and over time, as well as mechanistic models (section \ref{sec:bckMec}) which can be used to infer underlying disease mechanisms. Finally, I presented a summary of key machine learning methods that have been frequently used in medical imaging, especially for diagnosis and prognosis (section \ref{sec:bckMac}). 
+
+In chapter \ref{chapter:pca}, I presented a longitudinal comparison of Posterior Cortical Atrophy with typical Alzheimer's disease, analysing the progression of atrophy from MRI. I first presented the demographics (section \ref{sec:pcaParticipants}) of the cohort from the Dementia Research Centre, UK that I analysed, using data obtained by my collaborators. I then described the methodology I applied, which involved adaptations of the event-based model and the differential equation model to this specific dataset (section \ref{sec:pcaStaMet}). I showed that there were differences in the progression of brain volumes in PCA as opposed to  typical AD, where phenotype-specific areas were affected early in the disease process (section \ref{sec:pcaResPcaAd}). Moreover, I also showed that there were differences in atrophy progression in three cognitively-defined PCA subtypes, highlighting the amount of heterogeneity within PCA (section \ref{sec:pcaResPcaSub}). Finally, in section \ref{sec:pcaDis} I discussed the findings of our study, the strengths and limitations of our methods, and suggested directions for future research. 
+
+In chapter \ref{chapter:perf}, I presented methodological advances in two disease progression models, the event-based model and the differential equation model. In section \ref{sec:perfEvalMethods}, I presented novel performance metrics that I designed, which enable us to compare the performance of these novel methods against the standard implementations. In section \ref{sec:perfRes}, I showed that novel EBM methods perform better than the standard EBM, while the novel DEM methods performs equally well to the standard method on those datasets. This also suggested that the novel metrics that we proposed are sensitive to these small changes in the EBM and DEM methodologies. 
+
+In chapter \ref{chapter:dive} I presented Data-Driven Inference of Vertexwise Evolution (DIVE), a novel spatiotemporal disease progression model of brain pathology in neurodegenerative disorders. In section \ref{sec:diveInt} I first reviewed existing literature and motivated the need for such a model, due to the presence of dispersed atrophy patterns in AD caused by disruption in underlying brain connectomes \cite{seeley2009neurodegenerative}. I then presented the mathematical formulation of DIVE in section \ref{sec:diveMet}. I performed simulations to show that DIVE can reliably estimate cluster assignments, trajectory parameters and subject time-shifts in the presence of ground truth (section \ref{sec:diveSimulations}). Afterwards, I tested DIVE on four different datasets with distinct diseases (typical AD and PCA) and modalities (MRI and PET), and showed that it can recover meaningful patterns of pathology, which agree with previous findings in the literature, but offer us more spatial resolution, along with estimates of biomarker dynamics and subject-specific time shifts.  Finally, in section \ref{sec:diveEval} I validated DIVE by showing that the estimated clusters and trajectories are robust under 10-fold cross-validation, and that it has favourable predictive performance compared to simpler models.  
+
+In chapter \ref{chapter:dkt} I presented Disease Knowledge Transfer (DKT), a novel model that robustly learns patterns of progression from several types of dementia combined. This allows the inference of biomarker signatures in rare, atypical types of dementia, which is otherwise difficult due to the lack of multimodal, longitudinal data. In section \ref{sec:dktMet}, I presented the DKT framework, which I designed to be flexible, allowing one to plug-in any disease progression model within each disease-agnostic and disease-specific unit. Using simulations, I then showed in section \ref{sec:dktResSyn} that DKT can accurately estimate biomarker trajectories in two distinct diseases, and even when there is a lack of data for one of the diseases, through correlations with other known markers. When applied to patient data (section \ref{sec:dktResTadDrc}), I showed that DKT can estimate plausible biomarker trajectories, and showed that is has favourable performance compared to standard models. Compared to previous deep transfer learning approaches, DKT is also interpretable and can predict the future evolution of subjects at risk of neurodegenerative diseases.
+
+In chapter \ref{chapter:tadpole}, I presented the design of the TADPOLE Challenge, which aims to identify algorithms and features that can best predict the progression of subjects at risk of AD. The challenge was organised jointly by myself and my collaborators, and we had 33 international teams who made more than 90 submissions. For the challenge, I helped write the website, assembled the main training dataset, built a live leaderboard system that allowed instant evaluation of the predictions, and promoted the competition at various conferences. I also wrote the paper describing the design of the challenge \cite{marinescu2018tadpole}.
+
+\section{Future Research Directions}
+\label{sec:conFut}
+
+There are several future research directions that can be pursued after this work. In section \ref{sec:conNeu}, I will present further applications of the methods I developed to neurodegenerative diseases, while in section \ref{sec:conMet} I will provide suggestions of improvements to the methods developed, along with ideas for new methods.
+
+\subsection{Applications to Neurodegenerative Diseases}
+\label{sec:conNeu}
+
+% Why are they important?
+The application of the models we developed to different neurodegenerative diseases is important for several key reasons. First of all, they allow us to understand underlying mechanisms underpinning phenotypic heterogeneity within PCA and the other diseases, which can provide more informed drug targets. Secondly, they enable better stratification and selection of endpoints for clinical trials. Third, they can be used to inform health policy, by predicting the future evolution of subjects who are at risk of developing such diseases. 
+
+\subsubsection{Posterior Cortical Atrophy}
+\label{sec:conTyp}
+
+% EBM and DEM
+There are several further questions that need to be answered regarding the progression of Posterior Cortical Atrophy versus typical Alzheimer's Disease. To continue the work presented in chapter \ref{chapter:pca}, one can answer the following questions\footnote{The last three questions have been suggested by Sebastian Crutch}:
+\begin{itemize}
+ \item Differences in sub-populations: Are there differences in the estimated biomarker ordering of abnormality and trajectories for various sub-populations, such as APOE $\epsilon4$ positive vs negative or amyloid positive vs negative?
+ \item Imaging predicting cognition: If we split the PCA population based on the discrepancy between occipital-hippocampal values at baseline, does that predict distinct patterns of cognitive impairment? One can hypothesise that relatively lower occipital volumes for basic visual-PCA predict early visual deficits, with memory deficits later on. On the other hand, relatively lower hippocampal volumes would predict early multi-domain cognitive deficits, with visual deficits later on.
+ \item Relationship between posterior and anterior patterns of atrophy: Does greater inferior posterior atrophy predict greater inferior anterior atrophy, and vice-versa? Moreover, based on the cognitively-defined subgroups, is atrophy in dorsolateral prefrontal lobe different in the three cognitive subgroups, in the following manner: (highest) space $>$ object $>$ vision (lowest)? Similarly, is inferior prefrontal atrophy different between the three subgroups in the following manner: (highest) object $>$ space $>$ vision (lowest)?
+ \item Asymmetry analysis: Are the PCA patterns of atrophy asymmetric? Previous analyses suggested relatively greater atrophy in the right superior parietal lobe, but this may not be the case for all patients, and cognitive tests suggest at least a minority have left-predominant atrophy.
+\end{itemize}
+
+% DIVE and DKT
+ The above questions can explored not only using the EBM and DEM, but also using DIVE and DKT models. Moreover, another research direction would be to apply the models on biomarkers other than MRI brain volumes, such as cortical thickness from MRI, PET biomarkers (amyloid, tau, FDG), as well as DTI biomarkers (FA, MD, AD). The multimodal biomarker trajectories estimated in PCA with the EBM, DEM and DIVE models can also be compared with the ones inferred by DKT. 
+
+\subsubsection{Typical Alzheimer's disease}
+
+Several analyses can also be done to further understand typical Alzheimer's disease. \hl{For example, using DIVE one could test if the reason why disconnected vertices cluster together is due to underlying structural or functional connections. Such a hypothesis could be tested by computing the modularity (or other index of connectivity) of DIVE clusters on the weighted graph of white-matter connections between different vertices, where the weights are given by the number of tracts connecting the two vertices. The modularity coefficient could then be compared against a well-defined null hypothesis. This would help understand to what extent disruption of underlying connectomes affects neurodegeneration \cite{seeley2009neurodegenerative}. }
+
+
+\subsubsection{Familial Alzheimer's disease}
+
+The models and techniques we have developed here can also be applied to familial AD, using cohorts such as the Dominantly Inherited Alzheimer's Network (DIAN). So far, the EBM and DEM models have been applied to study familial AD \cite{oxtoby2018}, but more complex models are yet to be tested. 
+
+Some adaptation of our the models should be done when modelling familial AD. As opposed to sporadic AD, in familial AD we have a relatively reliable estimate of the subjects' disease onset based on familial age of onset. Therefore, models such as DIVE and DKT should be adapted by setting a stronger prior distribution on the subjects' time-shift, centred on their parental age of onset, and having a standard deviation of around +/- 5 years, like the approach of \cite{oxtoby2018}. On the other hand, familial AD cohorts can also be used for model validation, by comparing the subjects' estimated time-shifts against the parental age of onset, this time using an uninformative prior on the subjects' time-shift.
+
+\subsubsection{Other Alzheimer's variants}
+
+The EBM, DEM, DIVE and DKT methodologies can be further applied to other types of Alzheimer's variants, such as the focal temporal lobe dysfunction, pure-amnestic AD with episodic memory impairment \cite{butters1996focal} or language variant AD \cite{green1990progressive, greene1996alzheimer, galton2000atypical}.
+
+\subsubsection{Frontotemporal dementia}
+
+Our models can also be applied to study the progression of Fronto-temporal dementia. Fronto-temporal dementia (FTD) is a clinically and pathologically heterogeneous group of non-Alzheimer's dementias that affect frontal and temporal lobes \cite{warren2013frontotemporal}. There are three main clinical syndromes: behavioural-variant FTD characterised by behavioural changes, primary progressive aphasia characterised by impaired speech, and semantic dementia, characterised by impaired semantic memory \cite{warren2013frontotemporal}. FTD also has a strong genetic component, due to mutations in the microtubule associated protein tau (MAPT), progranulin (GRN) and C9ORF72 genes. So far, an extension of the event-based model, which estimates multiple progression patterns in sub-populations, has been applied to FTD \cite{young2018uncovering}. Applying spatiotemporal models such as DIVE or multi-disease models such as DKT would help understand the heterogeneity and progression of FTD, find early biomarkers and allow better stratification in FTD clinical trials. Moreover, the heterogeneity present in FTD, combined with genetic information, can be used to further validate the DKT model by checking how robustly it can transfer biomarker trajectories between different FTD genetic groups. 
+
+\subsubsection{Multiple Sclerosis}
+
+Another disease where we can apply our models is Multiple Sclerosis (MS), which is a chronic autoimmune, inflammatory neurological disease that attacks myelinated axons and causes neurodegeneration \cite{goldenberg2012multiple}. MS can be of several types: (a) relapsing-remitting MS, marked by alterating periods of relapses (i.e. exacerbations of symptoms) and remission, (b) primary-progressive MS characterised by gradual worsening of symptoms, (c) secondary progressive MS where progressive MS develops in relapsing-remitting patients and (d) progressive-relapsing MS characterised by progressive disease with intermittent flare-ups of worsening symptoms \cite{goldenberg2012multiple}. When applying our models to MS data, some care needs to be taken as all our models assume monotonic biomarker trajectories. If there are biomarkers that are non-monotonic, the models can be extended to use non-parametric trajectories that enable non-monotonicity. However, this requires stronger priors on the subject-specific time-shifts and on the noise variable, otherwise the model will not be identifiable. In terms of the  disease progression models applied on MS, so far the event-based model has been applied by Eshaghi et al. \cite{eshaghi2018progression}. However, other data-driven disease progression models are yet to be tested on MS.
+
+\subsubsection{Parkinson's Disease}
+
+Our models can also be applied to study the progression of Parkinson's disease (PD). PD is a neurodegenerative disease characterised by atrophy in the substantia nigra, dopamine deficiency and aggregates of $\alpha$-synuclein \cite{poewe2017parkinson}. While the disease is diagnosed clinically based on bradykinesia and other motor features, PD also causes multi-domain cognitive decline \cite{caballol2007cognitive, poewe2017parkinson}.  It would be particularly useful to apply our models to estimate the progression of PD, help distinguish between PD and other types of degenerative parkinsonism, and also to identify early markers in prodromal disease stages, allowing novel disease-modifying therapies to be started as early as possible \cite{poewe2017parkinson}.
+
+\subsubsection{Huntington's Disease}
+
+Our models can also be applied to study the progression of Huntington's disease (HD). HD is a rare neurodegenerative disease characterised by jerky, involuntary movements, behavioural and psychiatric disturbances \cite{roos2010huntington}. The disease is caused by an elongated CAG repeat (36 repeats or more) on the short arm of chromosome 4p16.3 in the Huntingtin gene, with longer repeats causing earlier onset of disease \cite{roos2010huntington}. While different types of MRI \cite{georgiou2008magnetic} and PET \cite{feigin2001metabolic} imaging modalities have been central in identifying structural and functional abnormalities, there is still a need to identify quantitative biomarkers for early disease detection and for mapping its evolution\cite{georgiou2008magnetic}. In terms of data-driven disease progression models, only the event-based model has been applied to HD \cite{fonteijn2012event, wijeratne2018image}.
+
+
+\subsection{Applications to Clinical Trials}
+\label{sec:conCli}
+
+The disease progression models that we have developed can be used to aid clinical trials in several ways. One area of application is for selecting the right subjects for enrolling in the clinical trial. For example, based on a few initial measurements such as cognitive tests and an MRI scan, our models can predict which subjects will develop dementia, along with the exact type of dementia, within a certain time window. \hl{This can help select a homogeneous group of patients for a clinical trial, which are otherwise estimated to develop the same type of dementia and at the same age/follow-up time. }
+
+Another key area of application is evaluation of the effects of putative drugs. The subject-specific time shifts, estimated based on multimodal imaging measures, could provide more robust measures of disease stage compared to single imaging or cognitive markers. Finally, our models could also be applied as a safety endpoint in clinical trials, where they could detect very early changes that might be due to adverse effects of a drug, before the appearance of symptoms. Such early detection of adverse effects could be used to suggest the interruption of the clinical trial \cite{cash2014imaging}. 
+
+\subsection{Methodological Developments}
+\label{sec:conMet}
+
+Further research can also focus on improvements in the models that I have developed, along with development of new models. Such methodological improvements are very important, as they enable understanding more complex disease mechanisms such as associations with genetics, and will enable more accurate predictions resulting in improved stratification for clinical trials. In the following sections I will present several key directions for further work, and will suggest concrete steps towards them.
+
+\subsubsection{Towards Personalised Predictions}
+\label{sec:conMetPer}
+% subject-specific random effects
+One key direction of these models is to enable them to perform personalised predictions, which will further enable personalised treatments to be delivered. To enable this in models such as DIVE or DKT, one can estimate subject-specific trajectories by adding random effects to the population trajectory. This will enable more accurate predictions and account for the heterogeneity in the modelled diseases. However, more longitudinal data is required for such personalised predictions, and model identifiability needs to be ensured.
+
+% distinct trajectories for population subgroups
+Another extension to our models that can aid personalised predictions is to model distinct progressions for different sub-populations, in a data-driven way as done by the SuStaIn model \cite{young2018uncovering}. \hl{More precisely, one can assume that the population is made of unknown subgroups with different progressions, and each subject will have an associated latent variable denoting the subgroup it belongs to. This can still be optimised with the Expectation-Maximisation framework \cite{bishop2007pattern}.}
+
+% continuous heterogeneity dimensions
+While estimating discrete subgroups with different progressions works well for some diseases such as FTD due to mutations in a few key genes, this might not work that well for diseases such as PCA or Huntington's, where it is believed that there is a continuum of phenotypic variability. In this case, our models should be extended to estimate a  continuous latent dimension of heterogeneity. This can be further extended to more than one latent dimension, to account for mixed pathologies, where each dimension could correspond to a different underlying pathology. While some studies have shown that a large proportion of healthy individuals and patients who receive a clinical diagnosis of AD actually have underlying mixed pathologies \cite{kovacs2013non, james2016tdp}, this analysis requires both in-vivo longitudinal data along with post-mortem pathological confirmation. This has recently become available in ADNI, which now has autopsy data for 56 AD and 52 age-matched controls \cite{trojanowski2010update}. 
+
+\subsubsection{Spatio-temporal Modelling}
+\label{sec:conMetSpa}
+
+% extend DIVE to multimodal data
+\hl{The spatio-temporal DIVE model we proposed can be further extended to cluster points on the brain based on a multi-modal signature. This could be done by extending the likelihood model from a single univariate Gaussian distribution to a multivariate Gaussian distribution with a small covariance matrix.  Parameter estimation can still be done using the Expectation-Maximisation framework. Such multimodal clusters could give further insights into the mechanisms underpinning Alzheimer's disease and other neurodegenerative diseases.}
+
+% extend DKT to spatiotemporal and image synthesys.
+The DKT model that we proposed can also be extended to estimate spatio-temporal changes in the brain. Such a spatiotemporal DKT model would be able to synthesize, based on e.g. a structural MRI scan, other types of scans such as PET or DTI, in patients with rare dementias, where there is a lack of such multimodal data. \hl{This could be done using deep learning methods, where the neural network could have, for each brain region independently, a shared 3D disease agnostic unit encompassing multimodal pathology across all diseases modelled. These shared units will then be used to estimate disease-specific dynamics by redirecting the training data along different pipelines. The disease specific parts could be implemented in an unsupervised manner (e.g. with autoencoder) or in a supervised manner, to predict e.g. cognitive tests. }
+
+\subsubsection{Modelling Disease Mechanisms}
+\label{sec:conMetMec}
+
+% modelling dynamics of pathogenic proteins
+One potential direction of research towards understanding underlying disease mechanisms is to model the dynamics of pathogenic proteins. The work of Raj et al. \cite{raj2012network, raj2015network} and Georgiadis et al. \cite{georgiadis2018computational} can be used as a starting point. Several concrete steps would be to extend the network diffusion model \cite{raj2015network} to estimate latent subject-specific time-shifts as in the work of Donohue et al. \cite{donohue2014estimating}. The model by \cite{georgiadis2018computational}, while simulating far more complex dynamics, needs to be validated using in-vitro studies, as well as using amyloid and tau PET imaging. 
+
+% undestand the link between connectomes and patterns of pathology -> suggestion: model dynamic connectomes, 
+One limitation of the diffusion models developed so far \cite{raj2015network, georgiadis2018computational} is that they assume a static structural connectome throughout the disease process. To this end, these models should be extended to account for changes in the connectome structure over the disease time-course, such as breakdown of key links or nodes, based on different kinds of selective vulnerabilities, e.g. those suggested by Zhou et al. \cite{zhou2012predicting}.
+
+\subsubsection{Incorporating genetic data}
+\label{sec:conMetGen}
+
+% connect above models with genetic data
+Another key direction of further research is to connect our models with genetic data. In ADNI, genetic data is available to perform genome-wide association studies (GWAS). In particular, GWAS can help identify novel loci and genes involved in AD by finding associations with more robust and quantitative endophenotypes derived from imaging and other types of biomarkers. For example, very recent work by Sclesi et al. \cite{scelsi2018genetic} has used the disease progression model by Donohue et al. \cite{donohue2014estimating} to estimate a quantitative multimodal endophenotype from MRI and PET images, which identified a novel locus. Such associations were not significant for simpler hippocampal volume or cortical amyloid markers on their own \cite{scelsi2018genetic}. Extending such work by adding other types of biomarker data available in ADNI can identify further loci. Moreover, associations can also be found between genes and various regions in the brain, and even with pathology identified at voxelwise level from DIVE, using an approach similar to \cite{stein2010voxelwise}.
+
+\subsubsection{Incorporating data from other datasets}
+\label{sec:conMetOth}
+
+
+% dementia datasets
+Some of our models can be further extended to incorporate data from other dementia or normal ageing datasets. This can be done in a manner similar to DKT, but other transfer-learning approaches can also be used to this end. Some datasets that can be used include observational studies for sporadic AD (e.g. AIBL \cite{ellis2009australian}) familial AD (e.g. DIAN \cite{morris2012developing}), Multiple Sclerosis, Parkinson's disease (PPMI \cite{marek2011parkinson}), Huntington's disease (TRACK HD \cite{tabrizi2009biological}). For normal ageing, datasets such as the Rotterdam study \cite{ikram2017rotterdam} can also be used. 
+
+% wearables data
+Our models can also be further extended to use novel biomarker data from wearables or internet of things (IoT) devices. Data from smart watches or body sensors \cite{hsu2014gait}, eye-tracking devices \cite{hutton1984eye} or speech recorders \cite{hoffmann2010temporal} can be sensitive to dementia, and thus can be used to identify early signs and track its progression. 
+
+\subsubsection{Estimating better features}
+\label{sec:conMetFea}
+
+% through dimensionality reduction
+An interesting direction of further research is to extract better features for scalar disease progression models such as EBM, DEM or DKT. This can be done by incorporating feature learning as part of the model itself, as in the case of DIVE. However, other methods based on dimensionality reduction using Principal Component Analysis or t-distributed Stochastic Neighbour Embedding (t-SNE) \cite{hinton2003stochastic} can also be used to extract more robust features by projecting the high-dimensional data into a lower-dimensional space. \hl{We hypothesize that  models with extracted features could perform better than vanilla models because it is harder for them to overfit the data.} Finally, deep learning approaches can also be used to learn complex non-local features from images, while also modelling the progression of the disease.
+
+\subsection{Model Evaluation}
+\label{sec:conEva}
+
+% other models to be tested on TADPOLE: spatio-temporal models
+Further work can also be done on model evaluation, by extending the TADPOLE Challenge. \hl{While submissions mostly used extracted features from imaging data, more complex non-local features can be extracted and used by spatiotemporal models or deep learning methods. The TADPOLE Challenge can also be extended to attempt to predict other types of target variables such as PET or DTI markers.} Yet another direction is to organise a competition similar to TADPOLE for AD related dementias, such as Posterior Cortical Atrophy, Frontotemporal Dementia, Huntington's disease, Parkinson's disease and Multiple Sclerosis.
+
+Another different research direction in model evaluation is to evaluate models based on simulated brain images, with more reliable ground truth compared to patient data. Simulators based on biophysical principles such as \cite{khanal2016biophysical} can be used to this end, which generate realistic brain MRI images for a given spatial pattern of atrophy. Models can be evaluated in several tasks: prediction of future biomarkers or spatial structure at both population-level and subject-level, differential diagnosis, as well as disease staging. 
+% 
+

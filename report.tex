@@ -1,0 +1,4454 @@
+% IMPORTANT: Please write various parts in different files, and then include
+% them into this document.
+% If you have a file called intro.tex then write: \include{intro}
+% This is to avoid nasty merge conflicts, as well as to keep it tidy,
+% modular, etc
+
+\documentclass[12pt,a4paper,twoside]{book}
+
+\usepackage{etex} % for fixing error: no room for a new \dimension
+
+% Make bibliography appear in table of contents
+\usepackage[nottoc,numbib]{tocbibind}
+
+\usepackage{amsmath,amssymb,calc,ifthen,capt-of,mathrsfs,eufrak}
+\usepackage{multirow} % for mergins cells vertically
+\usepackage{makecell} % for thicker horizontal/vertical lines
+
+%\usepackage[giveninits=true,hyperref]{biblatex}
+%\bibliography{citations} % or
+
+\usepackage[raggedright]{titlesec} % for section titles not to exceed page margins
+
+\usepackage[nomessages]{fp}% http://ctan.org/pkg/fp
+\usepackage{python} % allows to run pythonrvisors code inside latex
+
+% \usepackage{subfig}%
+
+\usepackage[ampersand]{easylist}
+
+\usepackage[table,usenames,dvipsnames]{xcolor} % for coloured cells in tables
+
+% \usepackage{auto-pst-pdf} % convert ps to pdf ... you need this if you compile with pdflatex
+\usepackage{epsf}
+
+\definecolor{blue3}{HTML}{86B7FC} % med blue
+\definecolor{blue1}{HTML}{B5F1FF} % light blue
+\definecolor{blue2}{HTML}{E0F9FF} % very light blue
+\definecolor{blue4}{HTML}{0047bc} % dark blue
+
+
+\usepackage[bottom]{footmisc} % prevent figures/floats to be placed after the footnote
+
+% Allows us to click on links and references!
+% http://tex.stackexchange.com/questions/73862/how-can-i-make-a-clickable-table-of-contents
+\usepackage[pdftex,
+            pdfauthor={Razvan V. Marinescu},
+            pdftitle={Modelling the Neuroanatomical Progression of Alzheimer's Disease and Posterior Cortical Atrophy},
+            pdfsubject={Modelling the Neuroanatomical Progression of Alzheimer's Disease and Posterior Cortical Atrophy},
+            pdfkeywords={Alzheimer's disease, Bayesian Modelling, Disease Progression Model}]{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=blue4,
+    filecolor=black,
+    linkcolor=blue4,
+    urlcolor=blue4
+}
+
+% Nice package for plotting graphs
+% See excellent guide:
+% http://www.tug.org/TUGboat/tb31-1/tb97wright-pgfplots.pdf
+\usepackage{pgfplots}
+\usetikzlibrary{plotmarks}
+\usepackage{amsmath,graphicx}
+\usepackage{epstopdf}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[table]{xcolor}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage{arydshln} % for horiz dotted line in table
+\usepackage{pdfpages} % for importing pdf images
+
+%\usepackage[romanian]{babel} % for romanian characters
+%\usepackage{combelow}
+
+\usepackage{multicol} % double-colum list
+
+\usepackage{listings} % for listing source code
+
+\usepackage[toc,page]{appendix}
+
+\usepackage{scalefnt} %^ scale font for neurological brain images
+
+\pgfplotsset{compat = newest}
+
+% highlight - useful for TODOs and similar
+\usepackage{color}
+%  \newcommand{\hilight}[1]{\colorbox{yellow}{#1}}
+\newcommand{\hilight}[1]{}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\usepackage{array,booktabs}
+
+\usepackage[export]{adjustbox}
+
+\usepackage{pifont}% for xmark http://ctan.org/pkg/pifont
+
+% margin size
+\usepackage[margin=1in,headheight=14pt]{geometry}
+
+% \usepackage{algpseudocode} % for writing pseudocode & algorithms
+\usepackage[linesnumbered]{algorithm2e}
+\newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{mycommfont}
+
+\usepackage{enumitem} % for nested enumerate numbers 1 1.1 1.1.1
+\usepackage{pgfgantt} % for grantt charts
+\usepackage{rotating}
+\usepackage[graphicx]{realboxes}
+
+\usepackage{pdflscape}
+
+\newganttchartelement*{mymilestone}{
+mymilestone/.style={
+shape=isosceles triangle,
+inner sep=0pt,
+draw=cyan,
+top color=white,
+bottom color=cyan!50
+},
+mymilestone incomplete/.style={
+/pgfgantt/mymilestone,
+draw=yellow,
+bottom color=yellow!50
+},
+mymilestone label font=\slshape,
+mymilestone left shift=0pt,
+mymilestone right shift=0pt
+}
+
+\newgantttimeslotformat{stardate}{%
+\def\decomposestardate##1.##2\relax{%
+\def\stardateyear{##1}\def\stardateday{##2}%
+}%
+\decomposestardate#1\relax%
+\pgfcalendardatetojulian{\stardateyear-01-01}{#2}%
+\advance#2 by-1\relax%
+\advance#2 by\stardateday\relax%
+}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,positioning, shapes.symbols,shapes.callouts,patterns,shapes,chains,calc,backgrounds,fadings}
+\tikzstyle{state}=[circle,thick,draw=black, align=center, minimum size=2.1cm,
+inner sep=0]
+\tikzstyle{vertex}=[circle,thick,draw=black]
+\tikzstyle{vertex2}=[circle,thick,draw=black,minimum size=0.3cm]
+\tikzstyle{vertex3}=[circle,thick,draw=white,minimum size=0.3cm,fill=white]
+\tikzstyle{terminal}=[rectangle,thick,draw=black]
+\tikzstyle{edge} = [draw,thick]
+\tikzstyle{lo} = [edge,dotted]
+\tikzstyle{hi} = [edge]
+\tikzstyle{trans} = [edge,->]
+\tikzstyle{image}=[circle,thick,draw=black]
+
+
+\usepackage[section]{placeins} % prevents placing floats before a section
+
+\usepackage{color}
+
+\usepackage{silence} % silence warning that page 
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\ttfamily,        	    % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should  happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mymauve},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII 
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=C++,                    % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings 
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\setcounter{secnumdepth}{3}
+
+% % Left bar
+\usepackage{framed}
+\usepackage{amsthm}
+\usepackage{thmtools}
+
+
+\definecolor{lightgray}{gray}{0.00}
+\renewenvironment{leftbar}[1][\hsize]{%
+  \def\FrameCommand{%
+    {\hspace{0pt}\color{lightgray}\vrule width 3pt}%
+    \hspace{5pt}%
+    %\fboxsep=\FrameSep\colorbox{lightgray}%
+  }%
+  \MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
+}
+{
+  \endMakeFramed%
+}
+\setlength{\FrameSep}{0pt}
+
+% Custom environments
+% \theoremstyle{definition}
+% \declaretheorem[shaded={bgcolor={gray}{0.93},margin=5pt}]{definition}
+% \declaretheorem[name=Definition]{rawdefinition}
+% \theoremstyle{definition}
+% \declaretheorem{proposition}
+% \theoremstyle{definition}
+% \declaretheorem{lemma}
+% \declaretheorem{corollary}
+
+% \newtheorem{rawdefinition}{Proof}
+% 
+% \newtheoremstyle{named}{1em}{1em}{\itshape}{}{\bfseries}{}{\newline}{#3 }
+% \theoremstyle{named}
+% \newtheorem*{namedtheorem}{Theorem}
+
+
+\newenvironment{myalgo}[1][]{%
+  \begin{leftbar}%
+  \vspace{-11pt}%
+  \subsubsection{#1}
+}
+{
+  \end{leftbar}%
+
+}
+
+\newenvironment{algotwo}[1][]{%
+  \begin{leftbar}%
+  \vspace{-11pt}%
+  \subsubsection{#1}
+  \begin{algorithm}
+}
+{
+  \end{algorithm}
+  \end{leftbar}%
+
+}
+
+
+\usepackage{tabularx, booktabs} % make width of table columns evenly distributed (see http://tex.stackexchange.com/questions/60601/evenly-distributing-column-widths)
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+
+% % Definition with left bar
+% \newenvironment{mydef}[1][]{%
+%   \begin{rawdefinition}[#1]%
+%   \vspace{-11pt}%
+%   \begin{leftbar}%
+% }
+% {
+%   \end{leftbar}%
+%   \vspace{-11pt}%
+%   \end{rawdefinition}%
+% }
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% fancy headers and footers from Petr 
+
+\usepackage{fancyhdr}
+
+\newcommand{\FrontPageStyle}{\pagestyle{empty}}
+\newcommand{\MainPageStyle}{\pagestyle{main}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+
+\fancypagestyle{main}{%
+  \fancyhf{}%
+  \fancyhead[RE]{\nouppercase{\leftmark}}%
+  \fancyhead[LO]{\nouppercase{\rightmark}}%
+  \fancyhead[LE,RO]{\thepage}
+}
+
+% \includeonly{introduction, background_research, pcaProg, perf_eval, voxelwise, dkt, tadpole, conclusion, appendix}
+% \includeonly{pcaProg, appendix}
+%\newcommand*{\pcaPaperFigs}{../PCA_long_paper/figures}
+\newcommand*{\pcaPaperFigs}{./pcaPaperFigs}
+
+%\newcommand{\voxDpmFolder}{../voxelwiseDPM/}
+\newcommand{\voxDpmFolder}{./voxelwiseDPM/}
+
+
+\newcommand\ci{\perp\!\!\!\perp} % perpendicular sign
+\newcommand{\Mu}{M}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+
+
+
+
+\DeclareSymbolFont{matha}{OML}{txmi}{m}{it}% txfonts
+\DeclareMathSymbol{\varv}{\mathord}{matha}{118}
+
+% \usepackage{titling}
+% 
+% % set up \maketitle to accept a new item
+% \predate{\begin{center}\placetitlepicture\large}
+% \postdate{\par\end{center}}
+% 
+% % commands for including the picture
+% \newcommand{\titlepicture}[2][]{%
+%   \renewcommand\placetitlepicture{%
+%     \includegraphics[#1]{#2}\par\medskip
+%   }%
+% }
+% \newcommand{\placetitlepicture}{} % initialization
+
+
+
+
+\usepackage{filecontents}
+
+\begin{filecontents*}{report.bib}
+@article{querfurth2010mechanisms,
+  title={Mechanisms of disease},
+  author={Querfurth, Henry W and LaFerla, Frank M},
+  journal={New England Journal of Medicine},
+  volume={362},
+  number={4},
+  pages={329--344},
+  year={2010}
+}
+@article{Burns2009,
+abstract = {In the second of two articles about dementia, the authors focus on Alzheimer's disease (AD), which is the most common cause of dementia and affects about 6\% of the population aged 65+ and increases in incidence with age. They review the diagnosis and medical management of Alzheimer's disease, relying where possible on evidence from randomised controlled trials. They searched Medline and Pubmed from 2006 to September 2008, previous work having been summarised in "Dementia: supporting people with dementia and their carers in health and social care", joint dementia guidelines published by the National Institute for Health and Clinical Excellence (NICE) and the Social Care Institute for Excellence (SCIE) in 2006. They searched the Cochrane database (2008 version) for randomised controlled trials for drug treatment and psychosocial interventions. They used their own knowledge of the literature to select authoritative reviews to supplement these sources. This article is aimed at the non-specialist, and notes risk factors for Alzheimer's disease as well as suggesting additional educational resources. (RH).},
+author = {Burns, Alistair and Iliffe, Steve},
+doi = {10.1136/bmj.b158},
+isbn = {09598138},
+journal = {BMJ},
+keywords = {Dementia Literature reviews.},
+pages = {467--471 ST  -- Alzheimer's disease},
+title = {{Alzheimer's disease}},
+volume = {338},
+year = {2009}
+}
+@article{klunk2004imaging,
+  title={Imaging brain amyloid in {Alzheimer's} disease with {Pittsburgh} {Compound-B}},
+  author={Klunk, William E and Engler, Henry and Nordberg, Agneta and Wang, Yanming and Blomqvist, Gunnar and Holt, Daniel P and Bergstr{\"o}m, Mats and Savitcheva, Irina and Huang, Guo-Feng and Estrada, Sergio and others},
+  journal={Annals of neurology},
+  volume={55},
+  number={3},
+  pages={306--319},
+  year={2004},
+  publisher={Wiley Online Library}
+}
+@article{braak1991neuropathological,
+  title={Neuropathological stageing of {Alzheimer}-related changes},
+  author={Braak, H and Braak, E},
+  journal={Acta neuropathologica},
+  volume={82},
+  number={4},
+  pages={239--259},
+  year={1991},
+  publisher={Springer}
+}
+@article{blennow2003csf,
+  title={CSF markers for incipient {Alzheimer's} disease},
+  author={Blennow, Kaj and Hampel, Harald},
+  journal={The Lancet Neurology},
+  volume={2},
+  number={10},
+  pages={605--613},
+  year={2003},
+  publisher={Elsevier}
+}
+@article{herholz2012use,
+  title={Use of {FDG} {PET} as an imaging biomarker in clinical trials of {Alzheimer's} disease},
+  author={Herholz, Karl},
+  journal={Biomarkers in medicine},
+  volume={6},
+  number={4},
+  pages={431--439},
+  year={2012},
+  publisher={Future Medicine}
+}
+@article{freeborough1997boundary,
+  title={The boundary shift integral: an accurate and robust measure of cerebral volume changes from registered repeat {MRI}},
+  author={Freeborough, Peter and Fox, Nick C and others},
+  journal={Medical Imaging, IEEE Transactions on},
+  volume={16},
+  number={5},
+  pages={623--629},
+  year={1997},
+  publisher={IEEE}
+}
+@article{mckhann1984clinical,
+  title={Clinical diagnosis of Alzheimer's disease Report of the {NINCDS-ADRDA} Work Group* under the auspices of {Department of Health and Human Services Task Force on Alzheimer's Disease}},
+  author={McKhann, Guy and Drachman, David and Folstein, Marshall and Katzman, Robert and Price, Donald and Stadlan, Emanuel M},
+  journal={Neurology},
+  volume={34},
+  number={7},
+  pages={939--939},
+  year={1984},
+  publisher={AAN Enterprises}
+}
+@article{fonteijn2012event,
+  title={{An event-based model for disease progression and its application in familial Alzheimer's disease and Huntington's disease}},
+  author={Fonteijn, Hubert M and Modat, Marc and Clarkson, Matthew J and Barnes, Josephine and Lehmann, Manja and Hobbs, Nicola Z and Scahill, Rachael I and Tabrizi, Sarah J and Ourselin, Sebastien and Fox, Nick C and others},
+  journal={NeuroImage},
+  volume={60},
+  number={3},
+  pages={1880--1889},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{young2014data,
+  title={{A data-driven model of biomarker changes in sporadic Alzheimer's disease}},
+  author={Young, Alexandra L and Oxtoby, Neil P and Daga, Pankaj and Cash, David M and Fox, Nick C and Ourselin, Sebastien and Schott, Jonathan M and Alexander, Daniel C},
+  journal={Brain},
+  volume={137},
+  number={9},
+  pages={2564--2577},
+  year={2014},
+  publisher={Oxford Univ Press}
+}
+@article{jackson2003multistate,
+  title={{Multistate Markov models for disease progression with classification error}},
+  author={Jackson, Christopher H and Sharples, Linda D and Thompson, Simon G and Duffy, Stephen W and Couto, Elisabeth},
+  journal={Journal of the Royal Statistical Society: Series D (The Statistician)},
+  volume={52},
+  number={2},
+  pages={193--209},
+  year={2003},
+  publisher={Wiley Online Library}
+}
+@article{guihenneuc2000modeling,
+  title={{Modeling markers of disease progression by a hidden Markov process: application to characterizing CD4 cell decline}},
+  author={Guihenneuc-Jouyaux, Chantal and Richardson, Sylvia and Longini, Ira M},
+  journal={Biometrics},
+  volume={56},
+  number={3},
+  pages={733--741},
+  year={2000},
+  publisher={Wiley Online Library}
+}
+@article{jack2013brain,
+  title={Brain $\beta$-amyloid load approaches a plateau},
+  author={Jack, Clifford R and Wiste, Heather J and Lesnick, Timothy G and Weigand, Stephen D and Knopman, David S and Vemuri, Prashanthi and Pankratz, Vernon S and Senjem, Matthew L and Gunter, Jeffrey L and Mielke, Michelle M and others},
+  journal={Neurology},
+  volume={80},
+  number={10},
+  pages={890--896},
+  year={2013},
+  publisher={AAN Enterprises}
+}
+@article{villemagne2013amyloid,
+  title={Amyloid $\beta$ deposition, neurodegeneration, and cognitive decline in sporadic {Alzheimer's} disease: a prospective cohort study},
+  author={Villemagne, Victor L and Burnham, Samantha and Bourgeat, Pierrick and Brown, Belinda and Ellis, Kathryn A and Salvado, Olivier and Szoeke, Cassandra and Macaulay, S Lance and Martins, Ralph and Maruff, Paul and others},
+  journal={The Lancet Neurology},
+  volume={12},
+  number={4},
+  pages={357--367},
+  year={2013},
+  publisher={Elsevier}
+}
+@incollection{oxtoby2014learning,
+  title={{Learning imaging biomarker trajectories from noisy {Alzheimer's} disease data using a Bayesian multilevel model}},
+  author={Oxtoby, Neil P and Young, Alexandra L and Fox, Nick C and Daga, Pankaj and Cash, David M and Ourselin, Sebastien and Schott, Jonathan M and Alexander, Daniel C and Alzheimer’s Disease Neuroimaging Initiative },
+  booktitle={Bayesian and grAphical Models for Biomedical Imaging},
+  pages={85--94},
+  year={2014},
+  publisher={Springer}
+}
+@article{donohue2014estimating,
+  title={Estimating long-term multivariate progression from short-term data},
+  author={Donohue, Michael C and Jacqmin-Gadda, H{\'e}l{\`e}ne and Le Goff, M{\'e}lanie and Thomas, Ronald G and Raman, Rema and Gamst, Anthony C and Beckett, Laurel A and Jack, Clifford R and Weiner, Michael W and Dartigues, Jean-Fran{\c{c}}ois and others},
+  journal={Alzheimer's \& Dementia},
+  volume={10},
+  number={5},
+  pages={S400--S410},
+  year={2014},
+  publisher={Elsevier}
+}
+@article{Jedynak2012,
+abstract = {While neurodegenerative diseases are characterized by steady degeneration over relatively long timelines, it is widely believed that the early stages are the most promising for therapeutic intervention, before irreversible neuronal loss occurs. Developing a therapeutic response requires a precise measure of disease progression. However, since the early stages are for the most part asymptomatic, obtaining accurate measures of disease progression is difficult. Longitudinal databases of hundreds of subjects observed during several years with tens of validated biomarkers are becoming available, allowing the use of computational methods. We propose a widely applicable statistical methodology for creating a disease progression score (DPS), using multiple biomarkers, for subjects with a neurodegenerative disease. The proposed methodology was evaluated for Alzheimer's disease (AD) using the publicly available ADNI database, yielding an Alzheimer's DPS or ADPS score for each subject and each time-point in the database. In addition, a common description of biomarker changes was produced allowing for an ordering of the biomarkers. The Rey Auditory Verbal Learning Test delayed recall was found to be the earliest biomarker to become abnormal. The group of biomarkers comprising the volume of the hippocampus and the protein concentration amyloid beta and Tau were next in the timeline, and these were followed by three cognitive biomarkers. The proposed methodology thus has potential to stage individuals according to their state of disease progression relative to a population and to deduce common behaviors of biomarkers in the disease itself. © 2012 Elsevier Inc.},
+author = {Jedynak, Bruno M. and Lang, Andrew and Liu, Bo and Katz, Elyse and Zhang, Yanwei and Wyman, Bradley T. and Raunig, David and Jedynak, C. Pierre and Caffo, Brian and Prince, Jerry L.},
+doi = {10.1016/j.neuroimage.2012.07.059},
+isbn = {doi:10.1016/j.neuroimage.2012.07.059},
+issn = {10538119},
+journal = {NeuroImage},
+keywords = {Alzheimer's disease,Biomarkers,Disease progression score,Neurodegenerative diseases},
+number = {3},
+pages = {1478--1486},
+pmid = {22885136},
+title = {{A computational neurodegenerative disease progression score: Method and results with the Alzheimer's disease neuroimaging initiative cohort}},
+volume = {63},
+year = {2012}
+}
+@misc{Young2015data,
+author = {Young, Alexandra L and Oxtoby, Neil P and Schott, Jonathan M and Alexander, Daniel C}, 
+title = {{Data-driven models of neurodegenerative disease}},
+url = {http://www.acnr.co.uk/2014/12/data-driven-models-of-neurodegenerative-disease/},
+urldate = {2015-07-18},
+journal= {ACNR Online Neurology}
+}
+@article{dickerson2009cortical,
+  title={{The cortical signature of Alzheimer's disease: regionally specific cortical thinning relates to symptom severity in very mild to mild {AD} dementia and is detectable in asymptomatic amyloid-positive individuals}},
+  author={Dickerson, Bradford C and Bakkour, Akram and Salat, David H and Feczko, Eric and Pacheco, Jenni and Greve, Douglas N and Grodstein, Fran and Wright, Christopher I and Blacker, Deborah and Rosas, H Diana and others},
+  journal={Cerebral cortex},
+  volume={19},
+  number={3},
+  pages={497--510},
+  year={2009},
+  publisher={Oxford Univ Press}
+}
+@article{jack2010hypothetical,
+  title={Hypothetical model of dynamic biomarkers of the Alzheimer's pathological cascade},
+  author={Jack, Clifford R and Knopman, David S and Jagust, William J and Shaw, Leslie M and Aisen, Paul S and Weiner, Michael W and Petersen, Ronald C and Trojanowski, John Q},
+  journal={The Lancet Neurology},
+  volume={9},
+  number={1},
+  pages={119--128},
+  year={2010},
+  publisher={Elsevier}
+}
+@article{scahill2002mapping,
+  title={Mapping the evolution of regional atrophy in Alzheimer's disease: unbiased analysis of fluid-registered serial {MRI}},
+  author={Scahill, Rachael I and Schott, Jonathan M and Stevens, John M and Rossor, Martin N and Fox, Nick C},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={99},
+  number={7},
+  pages={4703--4707},
+  year={2002},
+  publisher={National Acad Sciences}
+}
+@article{thompson2001cortical,
+  title={Cortical change in Alzheimer's disease detected with a disease-specific population-based brain atlas},
+  author={Thompson, Paul M and Mega, Michael S and Woods, Roger P and Zoumalan, Chris I and Lindshield, Chris J and Blanton, Rebecca E and Moussai, Jacob and Holmes, Colin J and Cummings, Jeffrey L and Toga, Arthur W},
+  journal={Cerebral Cortex},
+  volume={11},
+  number={1},
+  pages={1--16},
+  year={2001},
+  publisher={Oxford Univ Press}
+}
+@article{thompson2003dynamics,
+  title={Dynamics of gray matter loss in Alzheimer's disease},
+  author={Thompson, Paul M and Hayashi, Kiralee M and De Zubicaray, Greig and Janke, Andrew L and Rose, Stephen E and Semple, James and Herman, David and Hong, Michael S and Dittmer, Stephanie S and Doddrell, David M and others},
+  journal={The Journal of Neuroscience},
+  volume={23},
+  number={3},
+  pages={994--1005},
+  year={2003},
+  publisher={Soc Neuroscience}
+}
+@article{jack2013tracking,
+  title={Tracking pathophysiological processes in Alzheimer's disease: an updated hypothetical model of dynamic biomarkers},
+  author={Jack, Clifford R and Knopman, David S and Jagust, William J and Petersen, Ronald C and Weiner, Michael W and Aisen, Paul S and Shaw, Leslie M and Vemuri, Prashanthi and Wiste, Heather J and Weigand, Stephen D and others},
+  journal={The Lancet Neurology},
+  volume={12},
+  number={2},
+  pages={207--216},
+  year={2013},
+  publisher={Elsevier}
+}
+@misc{bishop2007pattern,
+  title={Pattern Recognition and Machine Learning (Information Science and Statistics), 1st edn. 2006. corr. 2nd printing edn},
+  author={Bishop, C},
+  year={2007},
+  publisher={Springer, New York}
+}
+@article{stigler1989francis,
+  title={Francis Galton's account of the invention of correlation},
+  author={Stigler, Stephen M},
+  journal={Statistical Science},
+  volume={4},
+  number={2},
+  pages={73--79},
+  year={1989},
+  publisher={Institute of Mathematical Statistics}
+}
+@article{lee1988thirteen,
+  title={Thirteen ways to look at the correlation coefficient},
+  author={Lee Rodgers, Joseph and Nicewander, W Alan},
+  journal={The American Statistician},
+  volume={42},
+  number={1},
+  pages={59--66},
+  year={1988},
+  publisher={Taylor \& Francis}
+}
+@article{szekely2005hierarchical,
+  title={Hierarchical clustering via joint between-within distances: Extending Ward's minimum variance method},
+  author={Szekely, Gabor J and Rizzo, Maria L},
+  journal={Journal of classification},
+  volume={22},
+  number={2},
+  pages={151--183},
+  year={2005},
+  publisher={Springer}
+}
+@article{sokal1958statistical,
+  title={A statistical method for evaluating systematic relationships},
+  author={Sokal, Robert R},
+  journal={Univ Kans Sci Bull},
+  volume={38},
+  pages={1409--1438},
+  year={1958}
+}
+@inproceedings{boser1992training,
+  title={A training algorithm for optimal margin classifiers},
+  author={Boser, Bernhard E and Guyon, Isabelle M and Vapnik, Vladimir N},
+  booktitle={Proceedings of the fifth annual workshop on Computational learning theory},
+  pages={144--152},
+  year={1992},
+  organization={ACM}
+}
+@article{cortes1995support,
+  title={Support-vector networks},
+  author={Cortes, Corinna and Vapnik, Vladimir},
+  journal={Machine learning},
+  volume={20},
+  number={3},
+  pages={273--297},
+  year={1995},
+  publisher={Springer}
+}
+@book{vapnik2006estimation,
+  title={Estimation of dependences based on empirical data},
+  author={Vapnik, Vladimir},
+  year={2006},
+  publisher={Springer Science \& Business Media}
+}
+@article{luenberger1984linear,
+  title={Linear and nonlinear optimization},
+  author={Luenberger, D and Ye, Y},
+  journal={Linear and Nonlinear Optimization},
+  year={1984},
+  publisher={Addison Wesley}
+}
+@article{aizerman1964theoretical,
+  title={Theoretical foundations of the potential function method in pattern recognition learning},
+  author={Aizerman, A and Braverman, Emmanuel M and Rozoner, LI},
+  journal={Automation and remote control},
+  volume={25},
+  pages={821--837},
+  year={1964}
+}
+@article{moody1989fast,
+  title={Fast learning in networks of locally-tuned processing units},
+  author={Moody, John and Darken, Christian J},
+  journal={Neural computation},
+  volume={1},
+  number={2},
+  pages={281--294},
+  year={1989},
+  publisher={MIT Press}
+}
+@article{metropolis1953equation,
+  title={Equation of state calculations by fast computing machines},
+  author={Metropolis, Nicholas and Rosenbluth, Arianna W and Rosenbluth, Marshall N and Teller, Augusta H and Teller, Edward},
+  journal={The journal of chemical physics},
+  volume={21},
+  number={6},
+  pages={1087--1092},
+  year={1953},
+  publisher={AIP Publishing}
+}
+@article{hastings1970monte,
+  title={Monte Carlo sampling methods using Markov chains and their applications},
+  author={Hastings, W Keith},
+  journal={Biometrika},
+  volume={57},
+  number={1},
+  pages={97--109},
+  year={1970},
+  publisher={Biometrika Trust}
+}
+@article{dhikav2011potential,
+  title={Potential predictors of hippocampal atrophy in {Alzheimer's} disease},
+  author={Dhikav, Vikas and Anand, Kuljeet},
+  journal={Drugs \& aging},
+  volume={28},
+  number={1},
+  pages={1--11},
+  year={2011},
+  publisher={Springer}
+}
+@article{crutch2013shining,
+  title={Shining a light on posterior cortical atrophy},
+  author={Crutch, Sebastian J and Schott, Jonathan M and Rabinovici, Gil D and Boeve, Bradley F and Cappa, Stefano F and Dickerson, Bradford C and Dubois, Bruno and Graff-Radford, Neill R and Krolak-Salmon, Pierre and Lehmann, Manja and others},
+  journal={Alzheimer's \& Dementia},
+  volume={9},
+  number={4},
+  pages={463--465},
+  year={2013},
+  publisher={Elsevier}
+}
+@article{crutch2012posterior,
+  title={Posterior cortical atrophy},
+  author={Crutch, Sebastian J and Lehmann, Manja and Schott, Jonathan M and Rabinovici, Gil D and Rossor, Martin N and Fox, Nick C},
+  journal={The Lancet Neurology},
+  volume={11},
+  number={2},
+  pages={170--178},
+  year={2012},
+  publisher={Elsevier}
+}
+@inproceedings{young2015multiple,
+  title={Multiple Orderings of Events in Disease Progression},
+  author={Young, Alexandra L and Oxtoby, Neil P and Huang, Jonathan and Marinescu, Razvan V and Daga, Pankaj and Cash, David M and Fox, Nick C and Ourselin, Sebastien and Schott, Jonathan M and Alexander, Daniel C and others},
+  booktitle={Information Processing in Medical Imaging},
+  pages={711--722},
+  year={2015},
+  organization={Springer}
+}
+@article{jack2008alzheimer,
+  title={The Alzheimer's disease neuroimaging initiative (ADNI): {MRI} methods},
+  author={Jack, Clifford R and Bernstein, Matt A and Fox, Nick C and Thompson, Paul and Alexander, Gene and Harvey, Danielle and Borowski, Bret and Britson, Paula J and L Whitwell, Jennifer and Ward, Chadwick and others},
+  journal={Journal of Magnetic Resonance Imaging},
+  volume={27},
+  number={4},
+  pages={685--691},
+  year={2008},
+  publisher={Wiley Online Library}
+}
+@article{rosen1984new,
+  title={A new rating scale for Alzheimer's disease.},
+  author={Rosen, Wilma G and Mohs, Richard C and Davis, Kenneth L},
+  journal={The American journal of psychiatry},
+  year={1984},
+  publisher={American Psychiatric Assn}
+}
+@article{rey1958examen,
+  title={L'examen clinique en psychologie.},
+  author={Rey, And{\'r}e},
+  year={1958},
+  publisher={Presses Universitaries de France}
+}
+@article{leung2010robust,
+  title={Robust atrophy rate measurement in Alzheimer's disease using multi-site serial {MRI}: tissue-specific intensity normalization and parameter selection},
+  author={Leung, Kelvin K and Clarkson, Matthew J and Bartlett, Jonathan W and Clegg, Shona and Jack, Clifford R and Weiner, Michael W and Fox, Nick C and Ourselin, S{\'e}bastien and Alzheimer's Disease Neuroimaging Initiative},
+  journal={Neuroimage},
+  volume={50},
+  number={2},
+  pages={516--523},
+  year={2010},
+  publisher={Elsevier}
+}
+@article{leung2010automated,
+  title={Automated cross-sectional and longitudinal hippocampal volume measurement in mild cognitive impairment and Alzheimer's disease},
+  author={Leung, Kelvin K and Barnes, Josephine and Ridgway, Gerard R and Bartlett, Jonathan W and Clarkson, Matthew J and Macdonald, Kate and Schuff, Norbert and Fox, Nick C and Ourselin, Sebastien and Alzheimer's Disease Neuroimaging Initiative},
+  journal={Neuroimage},
+  volume={51},
+  number={4},
+  pages={1345--1359},
+  year={2010},
+  publisher={Elsevier}
+}
+@book{warrington1991visual,
+  title={The visual object and space perception battery},
+  author={Warrington, Elizabeth K and James, Merle},
+  year={1991},
+  publisher={Thames Valley Test Company Bury St Edmunds}
+}
+@article{warrington1984category,
+  title={Category specific semantic impairments},
+  author={Warrington, Elizabeth K and Shallice, Tim and others},
+  journal={Brain},
+  volume={107},
+  number={3},
+  pages={829--853},
+  year={1984},
+  publisher={Oxford Univ Press}
+}
+@article{wechsler2008wechsler,
+  title={Wechsler adult intelligence scale--Fourth Edition (WAIS--IV)},
+  author={Wechsler, David},
+  journal={San Antonio, TX: NCS Pearson},
+  year={2008}
+}
+@article{richardson2007measures,
+  title={Measures of short-term memory: a historical review},
+  author={Richardson, John TE},
+  journal={Cortex},
+  volume={43},
+  number={5},
+  pages={635--650},
+  year={2007},
+  publisher={Elsevier}
+}
+@article{cardoso2015geodesic,
+  title={Geodesic Information Flows: Spatially-Variant Graphs and Their Application to Segmentation and Fusion},
+  author={Cardoso, M Jorge and Modat, Marc and Wolz, Robin and Melbourne, Andrew and Cash, David and Rueckert, Daniel and Ourselin, Sebastien},
+  year={2015},
+  publisher={IEEE}
+}
+@article{young2013accurate,
+  title={Accurate multimodal probabilistic prediction of conversion to Alzheimer's disease in patients with mild cognitive impairment},
+  author={Young, Jonathan and Modat, Marc and Cardoso, Manuel J and Mendelson, Alex and Cash, Dave and Ourselin, Sebastien and Alzheimer's Disease Neuroimaging Initiative },
+  journal={NeuroImage: Clinical},
+  volume={2},
+  pages={735--745},
+  year={2013},
+  publisher={Elsevier}
+}
+@article{fox1997brain,
+  title={Brain atrophy progression measured from registered serial {MRI}: validation and application to Alzheimer's disease},
+  author={Fox, Nick C and Freeborough, Peter A},
+  journal={Journal of Magnetic Resonance Imaging},
+  volume={7},
+  number={6},
+  pages={1069--1075},
+  year={1997},
+  publisher={Wiley Online Library}
+}
+@article{nestor2003topography,
+  title={The topography of metabolic deficits in posterior cortical atrophy (the visual variant of {Alzheimer's} disease) with FDG-PET},
+  author={Nestor, PJ and Caine, D and Fryer, TD and Clarke, J and Hodges, JR},
+  journal={Journal of Neurology, Neurosurgery \& Psychiatry},
+  volume={74},
+  number={11},
+  pages={1521--1529},
+  year={2003},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{schmidtke2005posterior,
+  title={Posterior cortical atrophy: variant of {Alzheimer's} disease?},
+  author={Schmidtke, Klaus and H{\"u}ll, PD Dr Michael and Talazko, Jochen},
+  journal={Journal of neurology},
+  volume={252},
+  number={1},
+  pages={27--35},
+  year={2005},
+  publisher={Springer}
+}
+@misc{world2013dementia,
+  title={Dementia fact sheet N. 362 2012},
+  author={World Health Organization (WHO) and others},
+  journal={2013-05-12]. http://www, who. int/media-centre/factsheets/fs362/en/index, htmL}
+}
+@article{bullock2004future,
+  title={Future directions in the treatment of Alzheimer's disease},
+  author={Bullock, Roger},
+  journal={Expert opinion on investigational drugs},
+  volume={13},
+  number={4},
+  pages={303--314},
+  year={2004},
+  publisher={Ashley Publications Ltd London, UK}
+}
+@article{klafki2006therapeutic,
+  title={Therapeutic approaches to Alzheimer's disease},
+  author={Klafki, Hans-Wolfgang and Staufenbiel, Matthias and Kornhuber, Johannes and Wiltfang, Jens},
+  journal={Brain},
+  volume={129},
+  number={11},
+  pages={2840--2855},
+  year={2006},
+  publisher={Oxford Univ Press}
+}
+@article{cummings2004alzheimers,
+author = {Cummings, Jeffrey L.},
+title = {Alzheimers Disease},
+journal = {New England Journal of Medicine},
+volume = {351},
+number = {1},
+pages = {56-67},
+year = {2004},
+doi = {10.1056/NEJMra040223},
+    note ={PMID: 15229308},
+
+URL = { 
+        http://dx.doi.org/10.1056/NEJMra040223
+    
+},
+eprint = { 
+        http://dx.doi.org/10.1056/NEJMra040223
+    
+}
+
+}
+@article{forsyth1998overview,
+  title={An overview of the etiology, diagnosis, and treatment of Alzheimer disease},
+  author={Forsyth, Elizabeth and Ritzline, Pamela D},
+  journal={Physical therapy},
+  volume={78},
+  number={12},
+  pages={1325--1331},
+  year={1998},
+  publisher={American Physical Therapy Association}
+}
+@article{benson1988posterior,
+  title={Posterior cortical atrophy},
+  author={Benson, D Frank and Davis, R Jeffrey and Snyder, Bruce D},
+  journal={Archives of neurology},
+  volume={45},
+  number={7},
+  pages={789--793},
+  year={1988},
+  publisher={American Medical Association}
+}
+@article{borruat2013posterior,
+  title={Posterior cortical atrophy: review of the recent literature},
+  author={Borruat, Fran{\c{c}}ois-Xavier},
+  journal={Current neurology and neuroscience reports},
+  volume={13},
+  number={12},
+  pages={1--8},
+  year={2013},
+  publisher={Springer}
+}
+@article{ashford2001modeling,
+  title={Modeling the time-course of Alzheimer dementia},
+  author={Ashford, J Wesson and Schmitt, Frederick A},
+  journal={Current psychiatry reports},
+  volume={3},
+  number={1},
+  pages={20--28},
+  year={2001},
+  publisher={Springer}
+}
+@article{yang2010quantifying,
+  title={Quantifying the pathophysiological timeline of Alzheimer's disease.},
+  author={Yang, Eric and Farnum, Michael and Lobanov, Victor and Schultz, Tim and Verbeeck, R and Raghavan, N and Samtani, MN and Novak, G and Narayan, V and DiBernardo, A},
+  journal={Journal of Alzheimer's disease: JAD},
+  volume={26},
+  number={4},
+  pages={745--753},
+  year={2010}
+}
+@article{sabuncu2011dynamics,
+  title={The dynamics of cortical and hippocampal atrophy in Alzheimer disease},
+  author={Sabuncu, Mert R and Desikan, Rahul S and Sepulcre, Jorge and Yeo, Boon Thye T and Liu, Hesheng and Schmansky, Nicholas J and Reuter, Martin and Weiner, Michael W and Buckner, Randy L and Sperling, Reisa A and others},
+  journal={Archives of neurology},
+  volume={68},
+  number={8},
+  pages={1040--1048},
+  year={2011},
+  publisher={American Medical Association}
+}
+@article{todd2013survival,
+  title={Survival in dementia and predictors of mortality: a review},
+  author={Todd, Stephen and Barr, Stephen and Roberts, Mark and Passmore, A Peter},
+  journal={International journal of geriatric psychiatry},
+  volume={28},
+  number={11},
+  pages={1109--1124},
+  year={2013},
+  publisher={Wiley Online Library}
+}
+@article{Ballard2011alzheimers,
+abstract = {An estimated 24 million people worldwide have dementia, the majority of whom are thought to have Alzheimer's disease. Thus, Alzheimer's disease represents a major public health concern and has been identified as a research priority. Although there are licensed treatments that can alleviate symptoms of Alzheimer's disease, there is a pressing need to improve our understanding of pathogenesis to enable development of disease-modifying treatments. Methods for improving diagnosis are also moving forward, but a better consensus is needed for development of a panel of biological and neuroimaging biomarkers that support clinical diagnosis. There is now strong evidence of potential risk and protective factors for Alzheimer's disease, dementia, and cognitive decline, but further work is needed to understand these better and to establish whether interventions can substantially lower these risks. In this Seminar, we provide an overview of recent evidence regarding the epidemiology, pathogenesis, diagnosis, and treatment of Alzheimer's disease, and discuss potential ways to reduce the risk of developing the disease. © 2011 Elsevier Ltd.},
+author = {Ballard, Clive and Gauthier, Serge and Corbett, Anne and Brayne, Carol and Aarsland, Dag and Jones, Emma},
+doi = {10.1016/S0140-6736(10)61349-9},
+isbn = {0140-6736},
+issn = {01406736},
+journal = {The Lancet},
+number = {9770},
+pages = {1019--1031},
+pmid = {21371747},
+title = {{Alzheimer's disease}},
+volume = {377},
+year = {2011}
+}
+@article{hardy1991amyloid,
+  title={Amyloid deposition as the central event in the aetiology of Alzheimer's disease},
+  author={Hardy, John and Allsop, David},
+  journal={Trends in pharmacological sciences},
+  volume={12},
+  pages={383--388},
+  year={1991},
+  publisher={Elsevier}
+}
+@article{mudher2002alzheimer,
+  title={Alzheimer's disease--do tauists and baptists finally shake hands?},
+  author={Mudher, Amritpal and Lovestone, Simon},
+  journal={Trends in neurosciences},
+  volume={25},
+  number={1},
+  pages={22--26},
+  year={2002},
+  publisher={Elsevier}
+}
+@article{grossberg2003management,
+  title={Management of Alzheimer's disease},
+  author={Grossberg, George T and Desai, Abhilash K},
+  journal={The Journals of Gerontology Series A: Biological Sciences and Medical Sciences},
+  volume={58},
+  number={4},
+  pages={M331--M353},
+  year={2003},
+  publisher={Oxford University Press}
+}
+@article{ridha2006tracking,
+  title={Tracking atrophy progression in familial Alzheimer's disease: a serial {MRI} study},
+  author={Ridha, Basil H and Barnes, Josephine and Bartlett, Jonathan W and Godbolt, Alison and Pepple, Tracey and Rossor, Martin N and Fox, Nick C},
+  journal={The Lancet Neurology},
+  volume={5},
+  number={10},
+  pages={828--834},
+  year={2006},
+  publisher={Elsevier}
+}
+@article{fox1999correlation,
+  title={Correlation between rates of brain atrophy and cognitive decline in AD},
+  author={Fox, NC and Scahill, RI and Crum, WR and Rossor, MN},
+  journal={Neurology},
+  volume={52},
+  number={8},
+  pages={1687--1687},
+  year={1999},
+  publisher={AAN Enterprises}
+}
+@article{jack1997medial,
+  title={Medial temporal atrophy on {MRI} in normal aging and very mild Alzheimer's disease},
+  author={Jack, Clifford R and Petersen, Ronald C and Xu, Yue Cheng and Waring, Stephen C and O'Brien, Peter C and Tangalos, Eric G and Smith, Glenn E and Ivnik, Robert J and Kokmen, Emre},
+  journal={Neurology},
+  volume={49},
+  number={3},
+  pages={786--794},
+  year={1997},
+  publisher={AAN Enterprises}
+}
+@article{lehericy1994amygdalohippocampal,
+  title={Amygdalohippocampal MR volume measurements in the early stages of Alzheimer disease.},
+  author={Lehericy, Stephane and Baulac, Michel and Chiras, Jacques and Pierot, Laurent and Martin, Nadine and Pillon, Bernard and Deweer, Bernard and Dubois, Bruno and Marsault, Claude},
+  journal={American Journal of Neuroradiology},
+  volume={15},
+  number={5},
+  pages={929--937},
+  year={1994},
+  publisher={Am Soc Neuroradiology}
+}
+@article{juottonen1999comparative,
+  title={Comparative MR analysis of the entorhinal cortex and hippocampus in diagnosing Alzheimer disease},
+  author={Juottonen, Kirsi and Laakso, Mikko P and Partanen, Kaarina and Soininen, Hilkka},
+  journal={American Journal of Neuroradiology},
+  volume={20},
+  number={1},
+  pages={139--144},
+  year={1999},
+  publisher={Am Soc Neuroradiology}
+}
+@article{bobinski1999histological,
+  title={The histological validation of post mortem magnetic resonance imaging-determined hippocampal volume in Alzheimer's disease},
+  author={Bobinski, M and De Leon, MJ and Wegiel, J and Desanti, S and Convit, A and Saint Louis, LA and Rusinek, H and Wisniewski, HM},
+  journal={Neuroscience},
+  volume={95},
+  number={3},
+  pages={721--725},
+  year={1999},
+  publisher={Elsevier}
+}
+@article{schott2003assessing,
+  title={Assessing the onset of structural change in familial Alzheimer's disease},
+  author={Schott, Jonathan M and Fox, Nick C and Frost, Chris and Scahill, Rachael I and Janssen, John C and Chan, Dennis and Jenkins, Rhian and Rossor, Martin N},
+  journal={Annals of neurology},
+  volume={53},
+  number={2},
+  pages={181--188},
+  year={2003},
+  publisher={Wiley Online Library}
+}
+@article{goethals2001posterior,
+  title={Posterior cortical atrophy. Two case reports and a review of the literature},
+  author={Goethals, Maarten and Santens, Patrick},
+  journal={Clinical neurology and neurosurgery},
+  volume={103},
+  number={2},
+  pages={115--119},
+  year={2001},
+  publisher={Elsevier}
+}
+@article{andrade2010visual,
+  title={Visual neglect in posterior cortical atrophy},
+  author={Andrade, Katia and Samri, Dalila and Sarazin, Marie and de Souza, Leonardo C and Cohen, Laurent and de Schotten, Michel T and Dubois, Bruno and Bartolomeo, Paolo},
+  journal={BMC neurology},
+  volume={10},
+  number={1},
+  pages={68},
+  year={2010},
+  publisher={BioMed Central Ltd}
+}
+@article{andrade2012visuospatial,
+  title={Visuospatial deficits in posterior cortical atrophy: structural and functional correlates},
+  author={Andrade, Katia and Kas, Aur{\'e}lie and Valabr{\`e}gue, Romain and Samri, Dalila and Sarazin, Marie and Habert, Marie-Odile and Dubois, Bruno and Bartolomeo, Paolo},
+  journal={Journal of Neurology, Neurosurgery \& Psychiatry},
+  year={2012},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{andrade2013visuospatial,
+  title={Visuospatial deficits and hemispheric perfusion asymmetries in posterior cortical atrophy},
+  author={Andrade, Katia and Kas, Aur{\'e}lie and Samri, Dalila and Sarazin, Marie and Dubois, Bruno and Habert, Marie-Odile and Bartolomeo, Paolo},
+  journal={Cortex},
+  volume={49},
+  number={4},
+  pages={940--947},
+  year={2013},
+  publisher={Elsevier}
+}
+@article{goldstein2011posterior,
+  title={Posterior cortical atrophy: an exemplar for renovating diagnostic formulation in neuropsychiatry},
+  author={Goldstein, Martin A and Ivanov, Iliyan and Silverman, Michael E},
+  journal={Comprehensive psychiatry},
+  volume={52},
+  number={3},
+  pages={326--333},
+  year={2011},
+  publisher={Elsevier}
+}
+@article{mendez2002posterior,
+  title={Posterior cortical atrophy: clinical characteristics and differences compared to {Alzheimer's} disease},
+  author={Mendez, Mario F and Ghajarania, Mehdi and Perryman, Kent M},
+  journal={Dementia and geriatric cognitive disorders},
+  volume={14},
+  number={1},
+  pages={33--40},
+  year={2002},
+  publisher={Karger Publishers}
+}
+@article{tang2004clinical,
+  title={Clinical, genetic, and neuropathologic characteristics of posterior cortical atrophy},
+  author={Tang-Wai, David F and Graff-Radford, NR and Boeve, BF and Dickson, DW and Parisi, JE and Crook, R and Caselli, RJ and Knopman, DS and Petersen, RC},
+  journal={Neurology},
+  volume={63},
+  number={7},
+  pages={1168--1174},
+  year={2004},
+  publisher={AAN Enterprises}
+}
+@article{rosenbloom2011distinct,
+  title={Distinct clinical and metabolic deficits in PCA and {AD} are not related to amyloid distribution},
+  author={Rosenbloom, MH and Alkalay, A and Agarwal, N and Baker, SL and O'Neil, JP and Janabi, M and Yen, IV and Growdon, M and Jang, J and Madison, C and others},
+  journal={Neurology},
+  volume={76},
+  number={21},
+  pages={1789--1796},
+  year={2011},
+  publisher={AAN Enterprises}
+}
+@article{videaud2012impact,
+  title={Impact of drug-free care in posterior cortical atrophy: Preliminary experience with a psycho-educative program.},
+  author={Videaud, H{\'e}l{\`e}ne and Torny, Fr{\'e}d{\'e}ric and Cartz-Piver, Leslie and Deschamps-Vergara, N and Couratier, Philippe},
+  journal={Revue neurologique},
+  volume={168},
+  number={11},
+  pages={861--867},
+  year={2012}
+}
+@article{weill2012physical,
+  title={Physical medicine and rehabilitation multidisciplinary approach in a case of posterior cortical atrophy},
+  author={Weill-Chounlamountry, A and Poncet, F and Crop, S and Hesly, N and Mouton, A and Samri, D and Sarazin, M and Pradat-Diehl, P},
+  journal={Annals of physical and rehabilitation medicine},
+  volume={55},
+  number={6},
+  pages={430--439},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{lehmann2011cortical,
+  title={Cortical thickness and voxel-based morphometry in posterior cortical atrophy and typical Alzheimer's disease},
+  author={Lehmann, Manja and Crutch, Sebastian J and Ridgway, Gerard R and Ridha, Basil H and Barnes, Josephine and Warrington, Elizabeth K and Rossor, Martin N and Fox, Nick C},
+  journal={Neurobiology of aging},
+  volume={32},
+  number={8},
+  pages={1466--1476},
+  year={2011},
+  publisher={Elsevier}
+}
+@article{hof1997atypical,
+  title={Atypical form of Alzheimer's disease with prominent posterior cortical atrophy: a review of lesion distribution and circuit disconnection in cortical visual pathways},
+  author={Hof, Patrick R and Vogt, Brent A and Bouras, Constantin and Morrison, John H},
+  journal={Vision research},
+  volume={37},
+  number={24},
+  pages={3609--3625},
+  year={1997},
+  publisher={Elsevier}
+}
+@article{bateman2012clinical,
+  title={Clinical and biomarker changes in dominantly inherited Alzheimer's disease},
+  author={Bateman, Randall J and Xiong, Chengjie and Benzinger, Tammie LS and Fagan, Anne M and Goate, Alison and Fox, Nick C and Marcus, Daniel S and Cairns, Nigel J and Xie, Xianyun and Blazey, Tyler M and others},
+  journal={New England Journal of Medicine},
+  volume={367},
+  number={9},
+  pages={795--804},
+  year={2012},
+  publisher={Mass Medical Soc}
+}
+@article{whitwell2007imaging,
+  title={Imaging correlates of posterior cortical atrophy},
+  author={Whitwell, Jennifer L and Jack, Clifford R and Kantarci, Kejal and Weigand, Stephen D and Boeve, Bradley F and Knopman, David S and Drubach, Daniel A and Tang-Wai, David F and Petersen, Ronald C and Josephs, Keith A},
+  journal={Neurobiology of aging},
+  volume={28},
+  number={7},
+  pages={1051--1061},
+  year={2007},
+  publisher={Elsevier}
+}
+@article{kim2005case,
+  title={A case with cholinesterase inhibitor responsive asymmetric posterior cortical atrophy},
+  author={Kim, Eunhee and Lee, Yunsoo and Lee, Jongkeol and Han, Seol-Heui},
+  journal={Clinical neurology and neurosurgery},
+  volume={108},
+  number={1},
+  pages={97--101},
+  year={2005},
+  publisher={Elsevier}
+}
+@article{wakai1994unusual,
+  title={Unusual findings on {PET} study of a patient with posterior cortical atrophy},
+  author={Wakai, M and Honda, H and Takahashi, A and Kato, T and Ito, K and Hamanaka, T},
+  journal={Acta neurologica scandinavica},
+  volume={89},
+  number={6},
+  pages={458--461},
+  year={1994},
+  publisher={Wiley Online Library}
+}
+@inproceedings{schmidt2015multi,
+  title={Multi-stage Biomarker Models for Progression Estimation in {Alzheimer's} Disease},
+  author={Schmidt-Richberg, Alexander and Guerrero, Ricardo and Ledig, Christian and Molina-Abril, Helena and Frangi, Alejandro F and Rueckert, Daniel and Alzheimers Disease Neuroimaging Initiative},
+  booktitle={International Conference on Information Processing in Medical Imaging},
+  pages={387--398},
+  year={2015},
+  organization={Springer}
+}
+@inproceedings{schiratti2015mixed,
+  title={A mixed-effects model with time reparametrization for longitudinal univariate manifold-valued data},
+  author={Schiratti, J-B and Allassonniere, St{\'e}phanie and Routier, Alexandre and Colliot, Olivier and Durrleman, Stanley and Alzheimers Disease Neuroimaging Initiative},
+  booktitle={International Conference on Information Processing in Medical Imaging},
+  pages={564--575},
+  year={2015},
+  organization={Springer}
+}
+@article{jedynak2012computational,
+  title={A computational neurodegenerative disease progression score: method and results with the Alzheimer's Disease Neuroimaging Initiative cohort},
+  author={Jedynak, Bruno M and Lang, Andrew and Liu, Bo and Katz, Elyse and Zhang, Yanwei and Wyman, Bradley T and Raunig, David and Jedynak, C Pierre and Caffo, Brian and Prince, Jerry L and others},
+  journal={Neuroimage},
+  volume={63},
+  number={3},
+  pages={1478--1486},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{yang2011quantifying,
+  title={Quantifying the pathophysiological timeline of Alzheimer's disease},
+  author={Yang, Eric and Farnum, Michael and Lobanov, Victor and Schultz, Tim and Raghavan, Nandini and Samtani, Mahesh N and Novak, Gerald and Narayan, Vaibhav and DiBernardo, Allitia},
+  journal={Journal of Alzheimer's Disease},
+  volume={26},
+  number={4},
+  pages={745--753},
+  year={2011},
+  publisher={IOS Press}
+}
+@article{young2015simulation,
+  title={A simulation system for biomarker evolution in neurodegenerative disease},
+  author={Young, Alexandra L and Oxtoby, Neil P and Ourselin, Sebastien and Schott, Jonathan M and Alexander, Daniel C and Alzheimer's Disease Neuroimaging Initiative},
+  journal={Medical image analysis},
+  volume={26},
+  number={1},
+  pages={47--56},
+  year={2015},
+  publisher={Elsevier}
+}
+@article{bilgel2016multivariate,
+  title={A multivariate nonlinear mixed effects model for longitudinal image analysis: Application to amyloid imaging},
+  author={Bilgel, Murat and Prince, Jerry L and Wong, Dean F and Resnick, Susan M and Jedynak, Bruno M},
+  journal={NeuroImage},
+  volume={134},
+  pages={658--670},
+  year={2016},
+  publisher={Elsevier}
+}
+@article{seeley2009neurodegenerative,
+  title={Neurodegenerative diseases target large-scale human brain networks},
+  author={Seeley, William W and Crawford, Richard K and Zhou, Juan and Miller, Bruce L and Greicius, Michael D},
+  journal={Neuron},
+  volume={62},
+  number={1},
+  pages={42--52},
+  year={2009},
+  publisher={Elsevier}
+}
+@article{reuter2012within,
+  title={Within-subject template estimation for unbiased longitudinal image analysis},
+  author={Reuter, Martin and Schmansky, Nicholas J and Rosas, H Diana and Fischl, Bruce},
+  journal={Neuroimage},
+  volume={61},
+  number={4},
+  pages={1402--1418},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{caroli2010dynamics,
+  title={The dynamics of Alzheimer's disease biomarkers in the Alzheimer's Disease Neuroimaging Initiative cohort},
+  author={Caroli, A and Frisoni, GB and Alzheimer's Disease Neuroimaging Initiative},
+  journal={Neurobiology of aging},
+  volume={31},
+  number={8},
+  pages={1263--1274},
+  year={2010},
+  publisher={Elsevier}
+}
+@article{sabuncu2011dynamics,
+  title={The dynamics of cortical and hippocampal atrophy in Alzheimer disease},
+  author={Sabuncu, Mert R and Desikan, Rahul S and Sepulcre, Jorge and Yeo, Boon Thye T and Liu, Hesheng and Schmansky, Nicholas J and Reuter, Martin and Weiner, Michael W and Buckner, Randy L and Sperling, Reisa A and others},
+  journal={Archives of neurology},
+  volume={68},
+  number={8},
+  pages={1040--1048},
+  year={2011},
+  publisher={American Medical Association}
+}
+@inproceedings{schiratti2015learning,
+  title={Learning spatiotemporal trajectories from manifold-valued longitudinal data},
+  author={Schiratti, Jean-Baptiste and Allassonniere, St{\'e}phanie and Colliot, Olivier and Durrleman, Stanley},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={2404--2412},
+  year={2015}
+}
+@inproceedings{datar2012mixed,
+  title={Mixed-effects shape models for estimating longitudinal changes in anatomy},
+  author={Datar, Manasi and Muralidharan, Prasanna and Kumar, Abhishek and Gouttard, Sylvain and Piven, Joseph and Gerig, Guido and Whitaker, Ross and Fletcher, P Thomas},
+  booktitle={International Workshop on Spatio-temporal Image Analysis for Longitudinal and Time-Series Image Data},
+  pages={76--87},
+  year={2012},
+  organization={Springer}
+}
+@article{raj2012network,
+  title={A network diffusion model of disease progression in dementia},
+  author={Raj, Ashish and Kuceyeski, Amy and Weiner, Michael},
+  journal={Neuron},
+  volume={73},
+  number={6},
+  pages={1204--1215},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{raj2015network,
+  title={Network diffusion model of progression predicts longitudinal patterns of atrophy and metabolism in {Alzheimer's} disease},
+  author={Raj, Ashish and LoCastro, Eve and Kuceyeski, Amy and Tosun, Duygu and Relkin, Norman and Weiner, Michael and {Alzheimer's} Disease Neuroimaging Initiative} and others},
+  journal={Cell reports},
+  volume={10},
+  number={3},
+  pages={359--369},
+  year={2015},
+  publisher={Elsevier}
+}
+@article{villain2010sequential,
+  title={Sequential relationships between grey matter and white matter atrophy and brain metabolic abnormalities in early Alzheimer's disease},
+  author={Villain, Nicolas and Fouquet, Marine and Baron, Jean-Claude and M{\'e}zenge, Florence and Landeau, Brigitte and de La Sayette, Vincent and Viader, Fausto and Eustache, Francis and Desgranges, B{\'e}atrice and Ch{\'e}telat, Ga{\"e}l},
+  journal={Brain},
+  volume={133},
+  number={11},
+  pages={3301--3314},
+  year={2010},
+  publisher={Oxford Univ Press}
+}
+@article{englund1988white,
+  title={White matter changes in dementia of Alzheimer's type},
+  author={Englund, E and Brun, A and Alling, C},
+  journal={Brain},
+  volume={111},
+  number={6},
+  pages={1425--1439},
+  year={1988},
+  publisher={Oxford Univ Press}
+}
+@article{kuczynski2010white,
+  title={White matter integrity and cortical metabolic associations in aging and dementia},
+  author={Kuczynski, Beth and Targan, Elizabeth and Madison, Cindee and Weiner, Michael and Zhang, Yu and Reed, Bruce and Chui, Helena C and Jagust, William},
+  journal={Alzheimer's \& dementia},
+  volume={6},
+  number={1},
+  pages={54--62},
+  year={2010},
+  publisher={Elsevier}
+}
+@article{behrens2007probabilistic,
+  title={Probabilistic diffusion tractography with multiple fibre orientations: What can we gain?},
+  author={Behrens, TEJ and Berg, H Johansen and Jbabdi, Saad and Rushworth, MFS and Woolrich, MW},
+  journal={Neuroimage},
+  volume={34},
+  number={1},
+  pages={144--155},
+  year={2007},
+  publisher={Elsevier}
+}
+@inproceedings{kondor2002diffusion,
+  title={Diffusion kernels on graphs and other discrete input spaces},
+  author={Kondor, Risi Imre and Lafferty, John},
+  booktitle={ICML},
+  volume={2},
+  pages={315--322},
+  year={2002}
+}
+@article{zhou2010divergent,
+  title={Divergent network connectivity changes in behavioural variant frontotemporal dementia and {Alzheimer's} disease},
+  author={Zhou, Juan and Greicius, Michael D and Gennatas, Efstathios D and Growdon, Matthew E and Jang, Jung Y and Rabinovici, Gil D and Kramer, Joel H and Weiner, Michael and Miller, Bruce L and Seeley, William W},
+  journal={Brain},
+  volume={133},
+  number={5},
+  pages={1352--1367},
+  year={2010},
+  publisher={Oxford Univ Press}
+}
+@article{zhou2012predicting,
+  title={Predicting regional neurodegeneration from the healthy brain functional connectome},
+  author={Zhou, Juan and Gennatas, Efstathios D and Kramer, Joel H and Miller, Bruce L and Seeley, William W},
+  journal={Neuron},
+  volume={73},
+  number={6},
+  pages={1216--1227},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{convit1995hippocampal,
+  title={Hippocampal volume losses in minimally impaired elderly},
+  author={Convit, Antonio and de Leon, Mony and Tarshish, Chaim and De Santi, Susan and Kluger, Alan and Rusinek, Henry and George, AjaxE},
+  journal={The Lancet},
+  volume={345},
+  number={8944},
+  pages={266},
+  year={1995},
+  publisher={Elsevier}
+}
+@article{xu2000usefulness,
+  title={Usefulness of {MRI} measures of entorhinal cortex versus hippocampus in AD},
+  author={Xu, Y and Jack, CR and O’brien, PC and Kokmen, E and Smith, Glenn E and Ivnik, Robert J and Boeve, Bradley F and Tangalos, RG and Petersen, Ronald C},
+  journal={Neurology},
+  volume={54},
+  number={9},
+  pages={1760--1767},
+  year={2000},
+  publisher={AAN Enterprises}
+}
+@article{lehmann2011basic,
+  title={Basic visual function and cortical thickness patterns in posterior cortical atrophy},
+  author={Lehmann, Manja and Barnes, Josephine and Ridgway, Gerard R and Wattam-Bell, John and Warrington, Elizabeth K and Fox, Nick C and Crutch, Sebastian J},
+  journal={Cerebral cortex},
+  volume={21},
+  number={9},
+  pages={2122--2132},
+  year={2011},
+  publisher={Oxford Univ Press}
+}
+@article{ross1996progressive,
+  title={Progressive biparietal atrophy: an atypical presentation of Alzheimer's disease.},
+  author={Ross, SJ and Graham, Naida and Stuart-Green, Lindsay and Prins, Miriam and Xuereb, John and Patterson, Karalyn and Hodges, John R},
+  journal={Journal of Neurology, Neurosurgery \& Psychiatry},
+  volume={61},
+  number={4},
+  pages={388--395},
+  year={1996},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{galton2000atypical,
+  title={Atypical and typical presentations of Alzheimer's disease: a clinical, neuropsychological, neuroimaging and pathological study of 13 cases},
+  author={Galton, Clare J and Patterson, Karalyn and Xuereb, John H and Hodges, John R},
+  journal={Brain},
+  volume={123},
+  number={3},
+  pages={484--498},
+  year={2000},
+  publisher={Oxford Univ Press}
+}
+@article{kiyosawa1989alzheimer,
+  title={Alzheimer's disease with prominent visual symptoms: clinical and metabolic evaluation},
+  author={Kiyosawa, Motohiro and Bosley, Thomas M and Chawluk, John and Jamieson, Dara and Schatz, Norman J and Savino, Peter J and Sergott, Robert C and Reivich, Martin and Alavi, Abass},
+  journal={Ophthalmology},
+  volume={96},
+  number={7},
+  pages={1077--1086},
+  year={1989},
+  publisher={Elsevier}
+}
+@article{kloppel2008automatic,
+  title={Automatic classification of MR scans in Alzheimer's disease},
+  author={Kl{\"o}ppel, Stefan and Stonnington, Cynthia M and Chu, Carlton and Draganski, Bogdan and Scahill, Rachael I and Rohrer, Jonathan D and Fox, Nick C and Jack, Clifford R and Ashburner, John and Frackowiak, Richard SJ},
+  journal={Brain},
+  volume={131},
+  number={3},
+  pages={681--689},
+  year={2008},
+  publisher={Oxford Univ Press}
+}
+@article{lao2004morphological,
+  title={Morphological classification of brains via high-dimensional shape transformations and machine learning methods},
+  author={Lao, Zhiqiang and Shen, Dinggang and Xue, Zhong and Karacali, Bilge and Resnick, Susan M and Davatzikos, Christos},
+  journal={Neuroimage},
+  volume={21},
+  number={1},
+  pages={46--57},
+  year={2004},
+  publisher={Elsevier}
+}
+@inproceedings{fan2005classification,
+  title={Classification of structural images via high-dimensional image warping, robust feature extraction, and SVM},
+  author={Fan, Yong and Shen, Dinggang and Davatzikos, Christos},
+  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  pages={1--8},
+  year={2005},
+  organization={Springer}
+}
+@article{mourao2005classifying,
+  title={Classifying brain states and determining the discriminating activation patterns: support vector machine on functional {MRI} data},
+  author={Mour{\~a}o-Miranda, Janaina and Bokde, Arun LW and Born, Christine and Hampel, Harald and Stetter, Martin},
+  journal={NeuroImage},
+  volume={28},
+  number={4},
+  pages={980--995},
+  year={2005},
+  publisher={Elsevier}
+}
+@article{kawasaki2007multivariate,
+  title={Multivariate voxel-based morphometry successfully differentiates schizophrenia patients from healthy controls},
+  author={Kawasaki, Yasuhiro and Suzuki, Michio and Kherif, Ferath and Takahashi, Tsutomu and Zhou, Shi-Yu and Nakamura, Kazue and Matsui, Mie and Sumiyoshi, Tomiki and Seto, Hikaru and Kurachi, Masayoshi},
+  journal={Neuroimage},
+  volume={34},
+  number={1},
+  pages={235--242},
+  year={2007},
+  publisher={Elsevier}
+}
+@article{pennanen2004hippocampus,
+  title={Hippocampus and entorhinal cortex in mild cognitive impairment and early AD},
+  author={Pennanen, Corina and Kivipelto, Miia and Tuomainen, Susanna and Hartikainen, P{\"a}ivi and H{\"a}nninen, Tuomo and Laakso, Mikko P and Hallikainen, Merja and Vanhanen, Matti and Nissinen, Aulikki and Helkala, Eeva-Liisa and others},
+  journal={Neurobiology of aging},
+  volume={25},
+  number={3},
+  pages={303--310},
+  year={2004},
+  publisher={Elsevier}
+}
+@article{braak1994morphological,
+  title={Morphological criteria for the recognition of Alzheimer's disease and the distribution pattern of cortical changes related to this disorder},
+  author={Braak, Heiko and Braak, Eva},
+  journal={Neurobiology of aging},
+  volume={15},
+  number={3},
+  pages={355--356},
+  year={1994},
+  publisher={Elsevier}
+}
+@article{laakso2000hippocampus,
+  title={Hippocampus and entorhinal cortex in frontotemporal dementia and {Alzheimer's} disease: a morphometric {MRI} study},
+  author={Laakso, Mikko P and Frisoni, Giovanni B and K{\"o}n{\"o}nen, Mervi and Mikkonen, Mia and Beltramello, Alberto and Geroldi, Claudia and Bianchetti, Angelo and Trabucchi, Marco and Soininen, Hilkka and Aronen, Hannu J},
+  journal={Biological psychiatry},
+  volume={47},
+  number={12},
+  pages={1056--1063},
+  year={2000},
+  publisher={Elsevier}
+}
+@inproceedings{sukkar2012disease,
+  title={Disease progression modeling using hidden Markov models},
+  author={Sukkar, Rafid and Katz, Elyse and Zhang, Yanwei and Raunig, David and Wyman, Bradley T},
+  booktitle={2012 Annual International Conference of the IEEE Engineering in Medicine and Biology Society},
+  pages={2845--2848},
+  year={2012},
+  organization={IEEE}
+}
+@inproceedings{ho1995random,
+  title={Random decision forests},
+  author={Ho, Tin Kam},
+  booktitle={Document Analysis and Recognition, 1995., Proceedings of the Third International Conference on},
+  volume={1},
+  pages={278--282},
+  year={1995},
+  organization={IEEE}
+}
+@article{breiman2001random,
+  title={Random forests},
+  author={Breiman, Leo},
+  journal={Machine learning},
+  volume={45},
+  number={1},
+  pages={5--32},
+  year={2001},
+  publisher={Springer}
+}
+@article{gray2013random,
+  title={Random forest-based similarity measures for multi-modal classification of Alzheimer's disease},
+  author={Gray, Katherine R and Aljabar, Paul and Heckemann, Rolf A and Hammers, Alexander and Rueckert, Daniel and Alzheimer's Disease Neuroimaging Initiative},
+  journal={NeuroImage},
+  volume={65},
+  pages={167--175},
+  year={2013},
+  publisher={Elsevier}
+}
+@inproceedings{lempitsky2009random,
+  title={Random forest classification for automatic delineation of myocardium in real-time 3D echocardiography},
+  author={Lempitsky, Victor and Verhoek, Michael and Noble, J Alison and Blake, Andrew},
+  booktitle={International Conference on Functional Imaging and Modeling of the Heart},
+  pages={447--456},
+  year={2009},
+  organization={Springer}
+}
+@article{maroco2011data,
+  title={Data mining methods in the prediction of Dementia: A real-data comparison of the accuracy, sensitivity and specificity of linear discriminant analysis, logistic regression, neural networks, support vector machines, classification trees and random forests},
+  author={Maroco, Jo{\~a}o and Silva, Dina and Rodrigues, Ana and Guerreiro, Manuela and Santana, Isabel and de Mendon{\c{c}}a, Alexandre},
+  journal={BMC research notes},
+  volume={4},
+  number={1},
+  pages={299},
+  year={2011},
+  publisher={BioMed Central}
+}
+@inproceedings{alexander2014image,
+  title={Image quality transfer via random forest regression: applications in diffusion {MRI}},
+  author={Alexander, Daniel C and Zikic, Darko and Zhang, Jiaying and Zhang, Hui and Criminisi, Antonio},
+  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  pages={225--232},
+  year={2014},
+  organization={Springer}
+}
+@article{lorenzi2017disease,
+  title={Disease Progression Modeling and Prediction through Random Effect Gaussian Processes and Time Transformation},
+  author={Lorenzi, Marco and Filippone, Maurizio and Alexander, Daniel C and Ourselin, Sebastien},
+  journal={arXiv preprint arXiv:1701.01668},
+  year={2017}
+}
+@article{oxtoby2018,
+  title={Data-driven models of dominantly-inherited {Alzheimer's} disease progression},
+  author={Oxtoby, Neil P and Young, Alexandra L and Cash, David M and Benzinger, Tammie LS and Fagan, Anne M and Morris, John C and Bateman, Randall J and Fox, Nick C and Schott, Jonathan M and Alexander, Daniel C},
+  journal={Brain},
+  volume={141},
+  number={5},
+  pages={1529--1544},
+  year={2018},
+  publisher={Oxford University Press}
+}
+@article{Ossenkoppele2014atrophy,
+  title={Atrophy patterns in early clinical stages across distinct phenotypes of A lzheimer's disease},
+  author={Ossenkoppele, Rik and Cohn-Sheehy, Brendan I and La Joie, Renaud and Vogel, Jacob W and M{\"o}ller, Christiane and Lehmann, Manja and van Berckel, Bart NM and Seeley, William W and Pijnenburg, Yolande A and Gorno-Tempini, Maria L and others},
+  journal={Human brain mapping},
+  volume={36},
+  number={11},
+  pages={4421--4437},
+  year={2015},
+  publisher={Wiley Online Library}
+}
+@article{hon2017towards,
+  title={Towards Alzheimer's disease classification through transfer learning},
+  author={Hon, Marcia and Khan, Naimul},
+  journal={arXiv preprint arXiv:1711.11117},
+  year={2017}
+}
+@article{Baron2001,
+  title={In vivo mapping of gray matter loss with voxel-based morphometry in mild Alzheimer's disease},
+  author={Baron, JC and Chetelat, G and Desgranges, B and Perchey, G and Landeau, B and De La Sayette, V and Eustache, F},
+  journal={Neuroimage},
+  volume={14},
+  number={2},
+  pages={298--309},
+  year={2001},
+  publisher={Elsevier}
+}
+@article{jack2013update,
+  title={Update on hypothetical model of {Alzheimer's} disease biomarkers},
+  author={Jack Jr, Clifford R and Knopman, David S and Jagust, William J and Petersen, Ronald C and Weiner, Michael W and Aisen, Paul S and Shaw, Leslie M and Vemuri, Prashanthi and Wiste, Heather J and Weigand, Stephen D and others},
+  journal={Lancet neurology},
+  volume={12},
+  number={2},
+  pages={207},
+  year={2013},
+  publisher={NIH Public Access}
+}
+@article{frisoni2010clinical,
+  title={The clinical use of structural {MRI} in {Alzheimer} disease},
+  author={Frisoni, Giovanni B and Fox, Nick C and Jack Jr, Clifford R and Scheltens, Philip and Thompson, Paul M},
+  journal={Nature Reviews Neurology},
+  volume={6},
+  number={2},
+  pages={67},
+  year={2010},
+  publisher={Nature Publishing Group}
+}
+@article{aisen2010clinical,
+  title={Clinical Core of the {Alzheimer}'s {Disease} {Neuroimaging} {Initiative}: progress and plans},
+  author={Aisen, Paul S and Petersen, Ronald C and Donohue, Michael C and Gamst, Anthony and Raman, Rema and Thomas, Ronald G and Walter, Sarah and Trojanowski, John Q and Shaw, Leslie M and Beckett, Laurel A and others},
+  journal={Alzheimer's \& dementia: the journal of the {Alzheimer}'s Association},
+  volume={6},
+  number={3},
+  pages={239--246},
+  year={2010},
+  publisher={Elsevier}
+}
+@article{scahill2002mapping,
+  title={Mapping the evolution of regional atrophy in {Alzheimer}'s disease: unbiased analysis of fluid-registered serial {MRI}},
+  author={Scahill, Rachael I and Schott, Jonathan M and Stevens, John M and Rossor, Martin N and Fox, Nick C},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={99},
+  number={7},
+  pages={4703--4707},
+  year={2002},
+  publisher={National Acad Sciences}
+}
+@article{yang2011quantifying,
+  title={Quantifying the pathophysiological timeline of {Alzheimer}'s disease},
+  author={Yang, Eric and Farnum, Michael and Lobanov, Victor and Schultz, Tim and Raghavan, Nandini and Samtani, Mahesh N and Novak, Gerald and Narayan, Vaibhav and DiBernardo, Allitia},
+  journal={Journal of {Alzheimer}'s {Disease}},
+  volume={26},
+  number={4},
+  pages={745--753},
+  year={2011},
+  publisher={IOS Press}
+}
+@article{sabuncu2011dynamics,
+  title={The dynamics of cortical and hippocampal atrophy in {Alzheimer} disease},
+  author={Sabuncu, Mert R and Desikan, Rahul S and Sepulcre, Jorge and Yeo, Boon Thye T and Liu, Hesheng and Schmansky, Nicholas J and Reuter, Martin and Weiner, Michael W and Buckner, Randy L and Sperling, Reisa A and others},
+  journal={Archives of Neurology},
+  volume={68},
+  number={8},
+  pages={1040--1048},
+  year={2011},
+  publisher={American Medical Association}
+}
+@article{doody2010predicting,
+  title={Predicting progression of {Alzheimer's} disease},
+  author={Doody, Rachelle S and Pavlik, Valory and Massman, Paul and Rountree, Susan and Darby, Eveleen and Chan, Wenyaw},
+  journal={Alzheimer's research \& therapy},
+  volume={2},
+  number={1},
+  pages={2},
+  year={2010},
+  publisher={BioMed Central}
+}
+@article{guerrero2016instantiated,
+  title={Instantiated mixed effects modeling of {Alzheimer}'s disease markers},
+  author={Guerrero, Ricardo and Schmidt-Richberg, Alexander and Ledig, Christian and Tong, Tong and Wolz, Robin and Rueckert, Daniel and ADNI},
+  journal={NeuroImage},
+  volume={142},
+  pages={113--125},
+  year={2016},
+  publisher={Elsevier}
+}
+@article{kloppel2008automatic,
+  title={Automatic classification of {MR} scans in {Alzheimer}'s disease},
+  author={Kl{\"o}ppel, Stefan and Stonnington, Cynthia M and Chu, Carlton and Draganski, Bogdan and Scahill, Rachael I and Rohrer, Jonathan D and Fox, Nick C and Jack Jr, Clifford R and Ashburner, John and Frackowiak, Richard SJ},
+  journal={Brain},
+  volume={131},
+  number={3},
+  pages={681--689},
+  year={2008},
+  publisher={Oxford University Press}
+}
+@article{zhang2011multimodal,
+  title={Multimodal classification of {Alzheimer}'s disease and mild cognitive impairment},
+  author={Zhang, Daoqiang and Wang, Yaping and Zhou, Luping and Yuan, Hong and Shen, Dinggang and ADNI},
+  journal={Neuroimage},
+  volume={55},
+  number={3},
+  pages={856--867},
+  year={2011},
+  publisher={Elsevier}
+}
+@article{young2013accurate,
+  title={Accurate multimodal probabilistic prediction of conversion to {Alzheimer}'s disease in patients with mild cognitive impairment},
+  author={Young, Jonathan and Modat, Marc and Cardoso, Manuel J and Mendelson, Alex and Cash, Dave and Ourselin, Sebastien and ADNI },
+  journal={NeuroImage: Clinical},
+  volume={2},
+  pages={735--745},
+  year={2013},
+  publisher={Elsevier}
+}
+@article{mattila2011disease,
+  title={A disease state fingerprint for evaluation of {Alzheimer}'s disease},
+  author={Mattila, Jussi and Koikkalainen, Juha and Virkki, Arho and Simonsen, Anja and van Gils, Mark and Waldemar, Gunhild and Soininen, Hilkka and L{\"o}tj{\"o}nen, Jyrki},
+  journal={Journal of {Alzheimer}'s Disease},
+  volume={27},
+  number={1},
+  pages={163--176},
+  year={2011},
+  publisher={IOS Press}
+}
+@article{fonteijn2012event,
+  title={An event-based model for disease progression and its application in familial {Alzheimer}'s disease and {Huntington's} disease},
+  author={Fonteijn, Hubert M and Modat, Marc and Clarkson, Matthew J and Barnes, Josephine and Lehmann, Manja and Hobbs, Nicola Z and Scahill, Rachael I and Tabrizi, Sarah J and Ourselin, Sebastien and Fox, Nick C and Alexander, Daniel C},
+  journal={NeuroImage},
+  volume={60},
+  number={3},
+  pages={1880--1889},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{young2014data,
+  title={A data-driven model of biomarker changes in sporadic {Alzheimer}'s disease},
+  author={Young, Alexandra L and Oxtoby, Neil P and Daga, Pankaj and Cash, David M and Fox, Nick C and Ourselin, Sebastien and Schott, Jonathan M and Alexander, Daniel C},
+  journal={Brain},
+  volume={137},
+  number={9},
+  pages={2564--2577},
+  year={2014},
+  publisher={Oxford University Press}
+}
+@article{jedynak2012computational,
+  title={A computational neurodegenerative disease progression score: method and results with the {Alzheimer}'s {Disease} {Neuroimaging} {Initiative} cohort},
+  author={Jedynak, Bruno M and Lang, Andrew and Liu, Bo and Katz, Elyse and Zhang, Yanwei and Wyman, Bradley T and Raunig, David and Jedynak, C Pierre and Caffo, Brian and Prince, Jerry L and others},
+  journal={Neuroimage},
+  volume={63},
+  number={3},
+  pages={1478--1486},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{donohue2014estimating,
+  title={Estimating long-term multivariate progression from short-term data},
+  author={Donohue, Michael C and Jacqmin-Gadda, H{\'e}l{\`e}ne and Le Goff, M{\'e}lanie and Thomas, Ronald G and Raman, Rema and Gamst, Anthony C and Beckett, Laurel A and Jack, Clifford R and Weiner, Michael W and Dartigues, Jean-Fran{\c{c}}ois and others},
+  journal={Alzheimer's \& dementia: the journal of the {Alzheimer}'s Association},
+  volume={10},
+  number={5},
+  pages={S400--S410},
+  year={2014},
+  publisher={Elsevier}
+}
+
+@article{durrleman2013toward,
+  title={Toward a comprehensive framework for the spatiotemporal statistical analysis of longitudinal shape data},
+  author={Durrleman, Stanley and Pennec, Xavier and Trouv{\'e}, Alain and Braga, Jos{\'e} and Gerig, Guido and Ayache, Nicholas},
+  journal={International journal of computer vision},
+  volume={103},
+  number={1},
+  pages={22--59},
+  year={2013},
+  publisher={Springer}
+}
+@article{lorenzi2015disentangling,
+  title={Disentangling normal aging from {Alzheimer}'s disease in structural magnetic resonance images},
+  author={Lorenzi, Marco and Pennec, Xavier and Frisoni, Giovanni B and Ayache, Nicholas},
+  journal={Neurobiology of aging},
+  volume={36},
+  pages={S42--S52},
+  year={2015},
+  publisher={Elsevier}
+}
+@article{bilgel2016multivariate,
+  title={A multivariate nonlinear mixed effects model for longitudinal image analysis: Application to amyloid imaging},
+  author={Bilgel, Murat and Prince, Jerry L and Wong, Dean F and Resnick, Susan M and Jedynak, Bruno M},
+  journal={Neuroimage},
+  volume={134},
+  pages={658--670},
+  year={2016},
+  publisher={Elsevier}
+}
+@article{seeley2009neurodegenerative,
+  title={Neurodegenerative diseases target large-scale human brain networks},
+  author={Seeley, William W and Crawford, Richard K and Zhou, Juan and Miller, Bruce L and Greicius, Michael D},
+  journal={Neuron},
+  volume={62},
+  number={1},
+  pages={42--52},
+  year={2009},
+  publisher={Elsevier}
+}
+@article{zhou2012predicting,
+  title={Predicting regional neurodegeneration from the healthy brain functional connectome},
+  author={Zhou, Juan and Gennatas, Efstathios D and Kramer, Joel H and Miller, Bruce L and Seeley, William W},
+  journal={Neuron},
+  volume={73},
+  number={6},
+  pages={1216--1227},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{raj2012network,
+  title={A network diffusion model of disease progression in dementia},
+  author={Raj, Ashish and Kuceyeski, Amy and Weiner, Michael},
+  journal={Neuron},
+  volume={73},
+  number={6},
+  pages={1204--1215},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{iturria2016early,
+  title={Early role of vascular dysregulation on late-onset {Alzheimer}’s disease based on multifactorial data-driven analysis},
+  author={Iturria-Medina, Yasser and Sotero, Roberto C and Toussaint, Paule J and Mateos-P{\'e}rez, Jos{\'e} Mar{\'\i}a and Evans, Alan C and Weiner, Michael W and Aisen, Paul and Petersen, Ronald and Jack, Clifford R and Jagust, William and others},
+  journal={Nature communications},
+  volume={7},
+  pages={11934},
+  year={2016},
+  publisher={Nature Publishing Group}
+}
+@article{bron2015standardized,
+  title={Standardized evaluation of algorithms for computer-aided diagnosis of dementia based on structural {MRI}: the {CADDementia} challenge},
+  author={Bron, Esther E and Smits, Marion and Van Der Flier, Wiesje M and Vrenken, Hugo and Barkhof, Frederik and Scheltens, Philip and Papma, Janne M and Steketee, Rebecca ME and Orellana, Carolina M{\'e}ndez and Meijboom, Rozanna and others},
+  journal={NeuroImage},
+  volume={111},
+  pages={562--579},
+  year={2015},
+  publisher={Elsevier}
+}
+@article{sarica2018machine,
+  title={A machine learning neuroimaging challenge for automated diagnosis of Mild Cognitive Impairment},
+  author={Sarica, Alessia and Cerasa Antonio and Quattrone Aldo and Calhoun Vince},
+  journal={in press},
+  year={2018}
+}
+@article{allen2016crowdsourced,
+  title={Crowdsourced estimation of cognitive decline and resilience in {Alzheimer}'s disease},
+  author={Allen, Genevera I and Amoroso, Nicola and Anghel, Catalina and Balagurusamy, Venkat and Bare, Christopher J and Beaton, Derek and Bellotti, Roberto and Bennett, David A and Boehme, Kevin L and Boutros, Paul C and others},
+  journal={Alzheimer's \& dementia: the journal of the {Alzheimer}'s Association},
+  volume={12},
+  number={6},
+  pages={645--653},
+  year={2016},
+  publisher={Elsevier}
+}
+@article{petersen2010alzheimer,
+  title={Alzheimer's {Disease} {Neuroimaging} {Initiative} (ADNI) clinical characterization},
+  author={Petersen, Ronald Carl and Aisen, PS and Beckett, LA and Donohue, MC and Gamst, AC and Harvey, DJ and Jack, CR and Jagust, WJ and Shaw, LM and Toga, AW and others},
+  journal={Neurology},
+  volume={74},
+  number={3},
+  pages={201--209},
+  year={2010},
+  publisher={AAN Enterprises}
+}
+@article{reuter2012within,
+  title={Within-subject template estimation for unbiased longitudinal image analysis},
+  author={Reuter, Martin and Schmansky, Nicholas J and Rosas, H Diana and Fischl, Bruce},
+  journal={Neuroimage},
+  volume={61},
+  number={4},
+  pages={1402--1418},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{ashburner2009computational,
+  title={Computational anatomy with the {SPM} software},
+  author={Ashburner, John},
+  journal={Magnetic resonance imaging},
+  volume={27},
+  number={8},
+  pages={1163--1174},
+  year={2009},
+  publisher={Elsevier}
+}
+@article{nir2013effectiveness,
+  title={Effectiveness of regional {DTI} measures in distinguishing {Alzheimer}'s disease, {MCI}, and normal aging},
+  author={Nir, Talia M and Jahanshad, Neda and Villalon-Reina, Julio E and Toga, Arthur W and Jack, Clifford R and Weiner, Michael W and Thompson, Paul M and ADNI},
+  journal={NeuroImage: clinical},
+  volume={3},
+  pages={180--195},
+  year={2013},
+  publisher={Elsevier}
+}
+@article{oishi2009atlas,
+  title={Atlas-based whole brain white matter analysis using large deformation diffeomorphic metric mapping: application to normal elderly and {Alzheimer}'s disease participants},
+  author={Oishi, Kenichi and Faria, Andreia and Jiang, Hangyi and Li, Xin and Akhter, Kazi and Zhang, Jiangyang and Hsu, John T and Miller, Michael I and van Zijl, Peter CM and Albert, Marilyn and others},
+  journal={Neuroimage},
+  volume={46},
+  number={2},
+  pages={486--499},
+  year={2009},
+  publisher={Elsevier}
+}
+@article{hand2001simple,
+  title={A simple generalisation of the area under the {ROC} curve for multiple class classification problems},
+  author={Hand, David J and Till, Robert J},
+  journal={Machine learning},
+  volume={45},
+  number={2},
+  pages={171--186},
+  year={2001},
+  publisher={Springer}
+}
+@inproceedings{brodersen2010balanced,
+  title={The balanced accuracy and its posterior distribution},
+  author={Brodersen, Kay Henning and Ong, Cheng Soon and Stephan, Klaas Enno and Buhmann, Joachim M},
+  booktitle={International Conference on Pattern recognition (ICPR)},
+  pages={3121--3124},
+  year={2010},
+  organization={IEEE}
+}
+@article{jagust2010alzheimer,
+  title={The {Alzheimer's} {Disease} {Neuroimaging} {Initiative} positron emission tomography core},
+  author={Jagust, William J and Bandy, Dan and Chen, Kewei and Foster, Norman L and Landau, Susan M and Mathis, Chester A and Price, Julie C and Reiman, Eric M and Skovronsky, Daniel and Koeppe, Robert A},
+  journal={Alzheimer's \& dementia: the journal of the {Alzheimer}'s Association},
+  volume={6},
+  number={3},
+  pages={221--229},
+  year={2010},
+  publisher={Elsevier}
+}
+@article{weiner2017recent,
+  title={Recent publications from the {Alzheimer's} {Disease} {Neuroimaging} {Initiative}: {Reviewing} progress toward improved {AD} clinical trials},
+  author={Weiner, Michael W and Veitch, Dallas P and Aisen, Paul S and Beckett, Laurel A and Cairns, Nigel J and Green, Robert C and Harvey, Danielle and Jack, Clifford R and Jagust, William and Morris, John C and others},
+  journal={Alzheimer's \& dementia: the journal of the {Alzheimer's} Association},
+  volume={13},
+  number={4},
+  pages={e1--e85},
+  year={2017},
+  publisher={Elsevier}
+}
+@article{winblad2016defeating,
+  title={Defeating {Alzheimer's} disease and other dementias: a priority for European science and society},
+  author={Winblad, Bengt and Amouyel, Philippe and Andrieu, Sandrine and Ballard, Clive and Brayne, Carol and Brodaty, Henry and Cedazo-Minguez, Angel and Dubois, Bruno and Edvardsson, David and Feldman, Howard and others},
+  journal={The Lancet Neurology},
+  volume={15},
+  number={5},
+  pages={455--532},
+  year={2016},
+  publisher={Elsevier}
+}
+@article{schott2016genetic,
+  title={Genetic risk factors for the posterior cortical atrophy variant of {Alzheimer's} disease},
+  author={Schott, Jonathan M and Crutch, Sebastian J and Carrasquillo, Minerva M and Uphill, James and Shakespeare, Tim J and Ryan, Natalie S and Yong, Keir X and Lehmann, Manja and Ertekin-Taner, Nilufer and Graff-Radford, Neill R and others},
+  journal={Alzheimer's \& dementia},
+  volume={12},
+  number={8},
+  pages={862--871},
+  year={2016},
+  publisher={Elsevier}
+}
+@article{crutch2017consensus,
+  title={Consensus classification of posterior cortical atrophy},
+  author={Crutch, Sebastian J and Schott, Jonathan M and Rabinovici, Gil D and Murray, Melissa and Snowden, Julie S and van der Flier, Wiesje M and Dickerson, Bradford C and Vandenberghe, Rik and Ahmed, Samrah and Bak, Thomas H and others},
+  journal={Alzheimer's \& Dementia},
+  volume={13},
+  number={8},
+  pages={870--884},
+  year={2017},
+  publisher={Elsevier}
+}
+@article{dubois2007research,
+  title={Research criteria for the diagnosis of {Alzheimer's} disease: revising the NINCDS--ADRDA criteria},
+  author={Dubois, Bruno and Feldman, Howard H and Jacova, Claudia and DeKosky, Steven T and Barberger-Gateau, Pascale and Cummings, Jeffrey and Delacourte, Andr{\'e} and Galasko, Douglas and Gauthier, Serge and Jicha, Gregory and others},
+  journal={The Lancet Neurology},
+  volume={6},
+  number={8},
+  pages={734--746},
+  year={2007},
+  publisher={Elsevier}
+}
+@article{dubois2010revising,
+  title={Revising the definition of {Alzheimer's} disease: a new lexicon},
+  author={Dubois, Bruno and Feldman, Howard H and Jacova, Claudia and Cummings, Jeffrey L and DeKosky, Steven T and Barberger-Gateau, Pascale and Delacourte, Andr{\'e} and Frisoni, Giovanni and Fox, Nick C and Galasko, Douglas and others},
+  journal={The Lancet Neurology},
+  volume={9},
+  number={11},
+  pages={1118--1127},
+  year={2010},
+  publisher={Elsevier}
+}
+@article{braak2016potential,
+  title={Potential pathways of abnormal tau and $\alpha$-synuclein dissemination in sporadic {Alzheimer's} and Parkinson's diseases},
+  author={Braak, Heiko and Del Tredici, Kelly},
+  journal={Cold Spring Harbor perspectives in biology},
+  pages={a023630},
+  year={2016},
+  publisher={Cold Spring Harbor Lab}
+}
+@article{frost2010prion,
+  title={Prion-like mechanisms in neurodegenerative diseases},
+  author={Frost, Bess and Diamond, Marc I},
+  journal={Nature Reviews Neuroscience},
+  volume={11},
+  number={3},
+  pages={155},
+  year={2010},
+  publisher={Nature Publishing Group}
+}
+@article{hardy2012spread,
+  title={The spread of neurodegenerative disease},
+  author={Hardy, John and Revesz, Tamas},
+  journal={New England Journal of Medicine},
+  volume={366},
+  number={22},
+  pages={2126--2128},
+  year={2012},
+  publisher={Mass Medical Soc}
+}
+@article{ahmed2014novel,
+  title={A novel in vivo model of tau propagation with rapid and progressive neurofibrillary tangle pathology: the pattern of spread is determined by connectivity, not proximity},
+  author={Ahmed, Zeshan and Cooper, Jane and Murray, Tracey K and Garn, Katya and McNaughton, Emily and Clarke, Hannah and Parhizkar, Samira and Ward, Mark A and Cavallini, Annalisa and Jackson, Samuel and others},
+  journal={Acta neuropathologica},
+  volume={127},
+  number={5},
+  pages={667--683},
+  year={2014},
+  publisher={Springer}
+}
+@article{brettschneider2015spreading,
+  title={Spreading of pathology in neurodegenerative diseases: a focus on human studies},
+  author={Brettschneider, Johannes and Del Tredici, Kelly and Lee, Virginia M-Y and Trojanowski, John Q},
+  journal={Nature Reviews Neuroscience},
+  volume={16},
+  number={2},
+  pages={109},
+  year={2015},
+  publisher={Nature Publishing Group}
+}
+@article{goedert2015alzheimer,
+  title={Alzheimer’s and Parkinson’s diseases: The prion concept in relation to assembled A$\beta$, tau, and $\alpha$-synuclein},
+  author={Goedert, Michel},
+  journal={Science},
+  volume={349},
+  number={6248},
+  pages={1255555},
+  year={2015},
+  publisher={American Association for the Advancement of Science}
+}
+@incollection{cummings2005neurodegenerative,
+  title={Neurodegenerative Disorders as Proteinopathies: Phenotypic Relationships},
+  author={Cummings, Jeffrey L},
+  booktitle={Genotype--Proteotype--Phenotype Relationships in Neurodegenerative Diseases},
+  pages={1--10},
+  year={2005},
+  publisher={Springer}
+}
+@article{seeley2009neurodegenerative,
+  title={Neurodegenerative diseases target large-scale human brain networks},
+  author={Seeley, William W and Crawford, Richard K and Zhou, Juan and Miller, Bruce L and Greicius, Michael D},
+  journal={Neuron},
+  volume={62},
+  number={1},
+  pages={42--52},
+  year={2009},
+  publisher={Elsevier}
+}
+@article{filippi2011structural,
+  title={Structural and functional network connectivity breakdown in {Alzheimer's} disease studied with magnetic resonance imaging techniques},
+  author={Filippi, Massimo and Agosta, Federica},
+  journal={Journal of {Alzheimer's} Disease},
+  volume={24},
+  number={3},
+  pages={455--474},
+  year={2011},
+  publisher={IOS Press}
+}
+@article{warren2013molecular,
+  title={Molecular nexopathies: a new paradigm of neurodegenerative disease},
+  author={Warren, Jason D and Rohrer, Jonathan D and Schott, Jonathan M and Fox, Nick C and Hardy, John and Rossor, Martin N},
+  journal={Trends in neurosciences},
+  volume={36},
+  number={10},
+  pages={561--569},
+  year={2013},
+  publisher={Elsevier}
+}
+@article{galton2000atypical,
+  title={Atypical and typical presentations of {Alzheimer's} disease: a clinical, neuropsychological, neuroimaging and pathological study of 13 cases},
+  author={Galton, Clare J and Patterson, Karalyn and Xuereb, John H and Hodges, John R},
+  journal={Brain},
+  volume={123},
+  number={3},
+  pages={484--498},
+  year={2000},
+  publisher={Oxford University Press}
+}
+@article{murray2011neuropathologically,
+  title={Neuropathologically defined subtypes of {Alzheimer's} disease with distinct clinical characteristics: a retrospective study},
+  author={Murray, Melissa E and Graff-Radford, Neill R and Ross, Owen A and Petersen, Ronald C and Duara, Ranjan and Dickson, Dennis W},
+  journal={The Lancet Neurology},
+  volume={10},
+  number={9},
+  pages={785--796},
+  year={2011},
+  publisher={Elsevier}
+}
+@article{qiang2017structural,
+  title={Structural variation in amyloid-$\beta$ fibrils from {Alzheimer's} disease clinical subtypes},
+  author={Qiang, Wei and Yau, Wai-Ming and Lu, Jun-Xia and Collinge, John and Tycko, Robert},
+  journal={Nature},
+  volume={541},
+  number={7636},
+  pages={217},
+  year={2017},
+  publisher={Nature Publishing Group}
+}
+@article{benson1988posterior,
+  title={Posterior cortical atrophy},
+  author={Benson, D Frank and Davis, R Jeffrey and Snyder, Bruce D},
+  journal={Archives of neurology},
+  volume={45},
+  number={7},
+  pages={789--793},
+  year={1988},
+  publisher={American Medical Association}
+}
+@article{levine1993visual,
+  title={The visual variant of {Alzheimer's} disease A clinicopathologic case study},
+  author={Levine, David N and Lee, John M and Fisher, CM},
+  journal={Neurology},
+  volume={43},
+  number={2},
+  pages={305--305},
+  year={1993},
+  publisher={AAN Enterprises}
+}
+@article{ross1996progressive,
+  title={Progressive biparietal atrophy: an atypical presentation of {Alzheimer's} disease.},
+  author={Ross, SJ and Graham, Naida and Stuart-Green, Lindsay and Prins, Miriam and Xuereb, John and Patterson, Karalyn and Hodges, John R},
+  journal={Journal of Neurology, Neurosurgery \& Psychiatry},
+  volume={61},
+  number={4},
+  pages={388--395},
+  year={1996},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{hof1990selective,
+  title={Selective disconnection of specific visual association pathways in cases of {Alzheimer's} disease presenting with Balint's syndrome},
+  author={Hof, Patrick R and Bouras, Constantin and Constantinidis, Jean and Morrison, John H},
+  journal={Journal of neuropathology and experimental neurology},
+  volume={49},
+  number={2},
+  pages={168--184},
+  year={1990},
+  publisher={American Association of Neuropathologists, Inc.}
+}
+@article{hof1997atypical,
+  title={Atypical form of {Alzheimer's} disease with prominent posterior cortical atrophy: a review of lesion distribution and circuit disconnection in cortical visual pathways},
+  author={Hof, Patrick R and Vogt, Brent A and Bouras, Constantin and Morrison, John H},
+  journal={Vision research},
+  volume={37},
+  number={24},
+  pages={3609--3625},
+  year={1997},
+  publisher={Elsevier}
+}
+@article{tang2003pathologically,
+  title={Pathologically confirmed corticobasal degeneration presenting with visuospatial dysfunction},
+  author={Tang-Wai, DF and Josephs, KA and Boeve, Bradley F and Dickson, DW and Parisi, JE and Petersen, RC},
+  journal={Neurology},
+  volume={61},
+  number={8},
+  pages={1134--1135},
+  year={2003},
+  publisher={AAN Enterprises}
+}
+@article{tang2003coexistent,
+  title={Coexistent Lewy body disease in a case of “visual variant of {Alzheimer's} disease”},
+  author={Tang-Wai, DF and Josephs, KA and Boeve, Bradley F and Petersen, RC and Parisi, JE and Dickson, DW},
+  journal={Journal of Neurology, Neurosurgery \& Psychiatry},
+  volume={74},
+  number={3},
+  pages={389--389},
+  year={2003},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{renner2004progressive,
+  title={Progressive posterior cortical dysfunction A clinicopathologic series},
+  author={Renner, JA and Burns, JM and Hou, CE and McKeel, DW and Storandt, M and Morris, JC},
+  journal={Neurology},
+  volume={63},
+  number={7},
+  pages={1175--1180},
+  year={2004},
+  publisher={AAN Enterprises}
+}
+@article{migliaccio2012brain,
+  title={Brain networks in posterior cortical atrophy: a single case tractography study and literature review},
+  author={Migliaccio, Raffaella and Agosta, Federica and Toba, Monica N and Samri, Dalila and Corlier, Fabian and De Souza, Leonardo C and Chupin, Marie and Sharman, Michael and Gorno-Tempini, Maria L and Dubois, Bruno and others},
+  journal={Cortex},
+  volume={48},
+  number={10},
+  pages={1298--1309},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{kas2011neural,
+  title={Neural correlates of cognitive impairment in posterior cortical atrophy},
+  author={Kas, Aurelie and De Souza, Leonardo Cruz and Samri, Dalila and Bartolomeo, Paolo and Lacomblez, Lucette and Kalafat, Michel and Migliaccio, Raffaella and Thiebaut de Schotten, Michel and Cohen, Laurent and Dubois, Bruno and others},
+  journal={Brain},
+  volume={134},
+  number={5},
+  pages={1464--1478},
+  year={2011},
+  publisher={Oxford University Press}
+}
+@article{lehmann2016novel,
+  title={A novel use of arterial spin labelling {MRI} to demonstrate focal hypoperfusion in individuals with posterior cortical atrophy: a multimodal imaging study},
+  author={Lehmann, Manja and Melbourne, Andrew and Dickson, John C and Ahmed, Rebekah M and Modat, Marc and Cardoso, M Jorge and Thomas, David L and De Vita, Enrico and Crutch, Sebastian J and Warren, Jason D and others},
+  journal={J Neurol Neurosurg Psychiatry},
+  pages={jnnp--2015},
+  year={2016},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{ossenkoppele2015cerebrospinal,
+  title={Cerebrospinal fluid biomarkers and cerebral atrophy in distinct clinical variants of probable {Alzheimer's} disease},
+  author={Ossenkoppele, Rik and Mattsson, Niklas and Teunissen, Charlotte E and Barkhof, Frederik and Pijnenburg, Yolande and Scheltens, Philip and van der Flier, Wiesje M and Rabinovici, Gil D},
+  journal={Neurobiology of aging},
+  volume={36},
+  number={8},
+  pages={2340--2347},
+  year={2015},
+  publisher={Elsevier}
+}
+@article{ossenkoppele2016tau,
+  title={Tau {PET} patterns mirror clinical and neuroanatomical variability in {Alzheimer's} disease},
+  author={Ossenkoppele, Rik and Schonhaut, Daniel R and Sch{\"o}ll, Michael and Lockhart, Samuel N and Ayakta, Nagehan and Baker, Suzanne L and O’Neil, James P and Janabi, Mustafa and Lazaris, Andreas and Cantwell, Averill and others},
+  journal={Brain},
+  volume={139},
+  number={5},
+  pages={1551--1567},
+  year={2016},
+  publisher={Oxford University Press}
+}
+@article{dorothee2012distinct,
+  title={Distinct patterns of antiamyloid-$\beta$ antibodies in typical and atypical Alzheimer disease},
+  author={Doroth{\'e}e, Guillaume and Bottlaender, Michel and Moukari, Edmond and De Souza, Leonardo C and Maroy, Renaud and Corlier, Fabian and Colliot, Olivier and Chupin, Marie and Lamari, Foudil and Leh{\'e}ricy, Stephane and others},
+  journal={Archives of neurology},
+  volume={69},
+  number={9},
+  pages={1181--1185},
+  year={2012},
+  publisher={American Medical Association}
+}
+@article{kreisl2017distinct,
+  title={Distinct patterns of increased translocator protein in posterior cortical atrophy and amnestic {Alzheimer's} disease},
+  author={Kreisl, William C and Lyoo, Chul Hyoung and Liow, Jeih-San and Snow, Joseph and Page, Emily and Jenko, Kimberly J and Morse, Cheryl L and Zoghbi, Sami S and Pike, Victor W and Turner, R Scott and others},
+  journal={Neurobiology of aging},
+  volume={51},
+  pages={132--140},
+  year={2017},
+  publisher={Elsevier}
+}
+@article{schott2006apolipoprotein,
+  title={Apolipoprotein e genotype modifies the phenotype of Alzheimer disease},
+  author={Schott, Jonathan M and Ridha, Basil H and Crutch, Sebastian J and Healy, Daniel G and Uphill, James B and Warrington, Elizabeth K and Rossor, Martin N and Fox, Nick C},
+  journal={Archives of neurology},
+  volume={63},
+  number={1},
+  pages={155--156},
+  year={2006},
+  publisher={American Medical Association}
+}
+@article{snowden2007cognitive,
+  title={Cognitive phenotypes in {Alzheimer's} disease and genetic risk},
+  author={Snowden, Julie S and Stopford, Cheryl L and Julien, Camille L and Thompson, Jennifer C and Davidson, Yvonne and Gibbons, Linda and Pritchard, Antonia and Lendon, Corinne L and Richardson, Anna M and Varma, Anoop and others},
+  journal={Cortex},
+  volume={43},
+  number={7},
+  pages={835--845},
+  year={2007},
+  publisher={Elsevier}
+}
+@article{goethals2001posterior,
+  title={Posterior cortical atrophy. Two case reports and a review of the literature},
+  author={Goethals, Maarten and Santens, Patrick},
+  journal={Clinical neurology and neurosurgery},
+  volume={103},
+  number={2},
+  pages={115--119},
+  year={2001},
+  publisher={Elsevier}
+}
+@article{giovagnoli2009neuropsychological,
+  title={The neuropsychological and neuroradiological correlates of slowly progressive visual agnosia},
+  author={Giovagnoli, Anna Rita and Aresi, Anna and Reati, Fabiola and Riva, Alice and Gobbo, Clara and Bizzi, Alberto},
+  journal={Neurological sciences},
+  volume={30},
+  number={2},
+  pages={123--131},
+  year={2009},
+  publisher={Springer}
+}
+@article{chang2015substance,
+  title={Substance use disorders, psychiatric disorders, and mortality after release from prison: a nationwide longitudinal cohort study},
+  author={Chang, Zheng and Lichtenstein, Paul and Larsson, Henrik and Fazel, Seena},
+  journal={The Lancet Psychiatry},
+  volume={2},
+  number={5},
+  pages={422--430},
+  year={2015},
+  publisher={Elsevier}
+}
+@article{kennedy2012visualizing,
+  title={Visualizing the emergence of posterior cortical atrophy},
+  author={Kennedy, Jonathan and Lehmann, Manja and Sokolska, Magdalena J and Archer, Hilary and Warrington, Elizabeth K and Fox, Nick C and Crutch, Sebastian J},
+  journal={Neurocase},
+  volume={18},
+  number={3},
+  pages={248--257},
+  year={2012},
+  publisher={Taylor \& Francis}
+}
+@article{yong2016longitudinal,
+  title={A longitudinal investigation of the relationship between crowding and reading: A neurodegenerative approach},
+  author={Yong, Keir and Rajdev, Kishan and Warrington, Elizabeth and Nicholas, Jennifer and Warren, Jason and Crutch, Sebastian},
+  journal={Neuropsychologia},
+  volume={85},
+  pages={127--136},
+  year={2016},
+  publisher={Elsevier}
+}
+@article{primativo2017oral,
+  title={The oral spelling profile of posterior cortical atrophy and the nature of the graphemic representation},
+  author={Primativo, Silvia and Yong, Keir XX and Shakespeare, Timothy J and Crutch, Sebastian J},
+  journal={Neuropsychologia},
+  volume={94},
+  pages={61--74},
+  year={2017},
+  publisher={Elsevier}
+}
+@article{lehmann2012global,
+  title={Global gray matter changes in posterior cortical atrophy: a serial imaging study},
+  author={Lehmann, Manja and Barnes, Josephine and Ridgway, Gerard R and Ryan, Natalie S and Warrington, Elizabeth K and Crutch, Sebastian J and Fox, Nick C},
+  journal={Alzheimer's \& Dementia},
+  volume={8},
+  number={6},
+  pages={502--512},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{ossenkoppele2015atrophy,
+  title={Atrophy patterns in early clinical stages across distinct phenotypes of A lzheimer's disease},
+  author={Ossenkoppele, Rik and Cohn-Sheehy, Brendan I and La Joie, Renaud and Vogel, Jacob W and M{\"o}ller, Christiane and Lehmann, Manja and van Berckel, Bart NM and Seeley, William W and Pijnenburg, Yolande A and Gorno-Tempini, Maria L and others},
+  journal={Human brain mapping},
+  volume={36},
+  number={11},
+  pages={4421--4437},
+  year={2015},
+  publisher={Wiley Online Library}
+}
+@article{tang2004clinical,
+  title={Clinical, genetic, and neuropathologic characteristics of posterior cortical atrophy},
+  author={Tang-Wai, David F and Graff-Radford, NR and Boeve, BF and Dickson, DW and Parisi, JE and Crook, R and Caselli, RJ and Knopman, DS and Petersen, RC},
+  journal={Neurology},
+  volume={63},
+  number={7},
+  pages={1168--1174},
+  year={2004},
+  publisher={AAN Enterprises}
+}
+@article{mckhann2011diagnosis,
+  title={The diagnosis of dementia due to {Alzheimer's} disease: Recommendations from the National Institute on Aging-Alzheimer’s Association workgroups on diagnostic guidelines for {Alzheimer's} disease},
+  author={McKhann, Guy M and Knopman, David S and Chertkow, Howard and Hyman, Bradley T and Jack Jr, Clifford R and Kawas, Claudia H and Klunk, William E and Koroshetz, Walter J and Manly, Jennifer J and Mayeux, Richard and others},
+  journal={Alzheimer's \& dementia},
+  volume={7},
+  number={3},
+  pages={263--269},
+  year={2011},
+  publisher={Elsevier}
+}
+@article{duits2014cerebrospinal,
+  title={The cerebrospinal fluid “Alzheimer profile”: easily said, but what does it mean?},
+  author={Duits, Flora H and Teunissen, Charlotte E and Bouwman, Femke H and Visser, Pieter-Jelle and Mattsson, Niklas and Zetterberg, Henrik and Blennow, Kaj and Hansson, Oskar and Minthon, Lennart and Andreasen, Niels and others},
+  journal={Alzheimer's \& Dementia},
+  volume={10},
+  number={6},
+  pages={713--723},
+  year={2014},
+  publisher={Elsevier}
+}
+@article{shaw2009cerebrospinal,
+  title={Cerebrospinal fluid biomarker signature in {Alzheimer's} disease neuroimaging initiative subjects},
+  author={Shaw, Leslie M and Vanderstichele, Hugo and Knapik-Czajka, Malgorzata and Clark, Christopher M and Aisen, Paul S and Petersen, Ronald C and Blennow, Kaj and Soares, Holly and Simon, Adam and Lewczuk, Piotr and others},
+  journal={Annals of neurology},
+  volume={65},
+  number={4},
+  pages={403--413},
+  year={2009},
+  publisher={Wiley Online Library}
+}
+@article{cardoso2015geodesic,
+  title={Geodesic information flows: spatially-variant graphs and their application to segmentation and fusion},
+  author={Cardoso, M Jorge and Modat, Marc and Wolz, Robin and Melbourne, Andrew and Cash, David and Rueckert, Daniel and Ourselin, Sebastien},
+  journal={IEEE transactions on medical imaging},
+  volume={34},
+  number={9},
+  pages={1976--1988},
+  year={2015},
+  publisher={IEEE}
+}
+@article{dickerson2010dysexecutive,
+  title={Dysexecutive versus amnesic phenotypes of very mild {Alzheimer's} disease are associated with distinct clinical, genetic and cortical thinning characteristics},
+  author={Dickerson, Bradford C and Wolk, David A and Alzheimer's Disease Neuroimaging Initiative},
+  journal={Journal of Neurology, Neurosurgery \& Psychiatry},
+  pages={jnnp--2009},
+  year={2010},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{whitwell2012neuroimaging,
+  title={Neuroimaging signatures of frontotemporal dementia genetics: C9ORF72, tau, progranulin and sporadics},
+  author={Whitwell, Jennifer L and Weigand, Stephen D and Boeve, Bradley F and Senjem, Matthew L and Gunter, Jeffrey L and DeJesus-Hernandez, Mariely and Rutherford, Nicola J and Baker, Matthew and Knopman, David S and Wszolek, Zbigniew K and others},
+  journal={Brain},
+  volume={135},
+  number={3},
+  pages={794--806},
+  year={2012},
+  publisher={Oxford University Press}
+}
+@article{chui1985clinical,
+  title={Clinical subtypes of dementia of the Alzheimer type},
+  author={Chui, Helena Chang and Teng, Evelyn Lee and Henderson, Victor W and Moy, Arthur C},
+  journal={Neurology},
+  volume={35},
+  number={11},
+  pages={1544--1544},
+  year={1985},
+  publisher={AAN Enterprises}
+}
+@article{fisher1996neuropsychological,
+  title={Neuropsychological subgroups of patients with {Alzheimer's} disease},
+  author={Fisher, Nancy J and Rourke, Byron P and Bieliauskas, Linas and Giordani, Bruno and Berent, Stanley and Foster, Norman L},
+  journal={Journal of clinical and experimental neuropsychology},
+  volume={18},
+  number={3},
+  pages={349--370},
+  year={1996},
+  publisher={Taylor \& Francis}
+}
+@article{butters1996focal,
+  title={Focal temporal lobe dysfunction in probable {Alzheimer's} disease predicts a slow rate of cognitive decline},
+  author={Butters, Meryl A and Lopez, Oscar L and Becker, James T},
+  journal={Neurology},
+  volume={46},
+  number={3},
+  pages={687--692},
+  year={1996},
+  publisher={AAN Enterprises}
+}
+@article{green1990progressive,
+  title={Progressive aphasia: A precursor of global dementia?},
+  author={Green, J and Morris, John C and Sandson, J and McKeel, DW and Miller, JW},
+  journal={Neurology},
+  volume={40},
+  number={3 Part 1},
+  pages={423--423},
+  year={1990},
+  publisher={AAN Enterprises}
+}
+@article{greene1996alzheimer,
+  title={Alzheimer disease and nonfluent progressive aphasia},
+  author={Greene, John DW and Patterson, Karalyn and Xuereb, John and Hodges, John R},
+  journal={Archives of Neurology},
+  volume={53},
+  number={10},
+  pages={1072--1078},
+  year={1996},
+  publisher={American Medical Association}
+}
+@article{galton2000atypical,
+  title={Atypical and typical presentations of {Alzheimer's} disease: a clinical, neuropsychological, neuroimaging and pathological study of 13 cases},
+  author={Galton, Clare J and Patterson, Karalyn and Xuereb, John H and Hodges, John R},
+  journal={Brain},
+  volume={123},
+  number={3},
+  pages={484--498},
+  year={2000},
+  publisher={Oxford University Press}
+}
+@article{johnson1999clinical,
+  title={Clinical and pathological evidence for a frontal variant of Alzheimer disease},
+  author={Johnson, Julene K and Head, Elizabeth and Kim, Ronald and Starr, Arnold and Cotman, Carl W},
+  journal={Archives of neurology},
+  volume={56},
+  number={10},
+  pages={1233--1239},
+  year={1999},
+  publisher={American Medical Association}
+}
+@article{lam2013clinical,
+  title={Clinical, imaging, and pathological heterogeneity of the {Alzheimer's} disease syndrome},
+  author={Lam, Benjamin and Masellis, Mario and Freedman, Morris and Stuss, Donald T and Black, Sandra E},
+  journal={Alzheimer's research \& therapy},
+  volume={5},
+  number={1},
+  pages={1},
+  year={2013},
+  publisher={BioMed Central}
+}
+@article{cappa2001brain,
+  title={Brain perfusion abnormalities in {Alzheimer's} disease: comparison between patients with focal temporal lobe dysfunction and patients with diffuse cognitive impairment},
+  author={Cappa, Atonella and Calcagni, ML and Villa, Giampiero and Giordano, Alessandro and Marra, Camillo and De Rossi, Giuseppe and Puopolo, M and Gainotti, Guido},
+  journal={Journal of Neurology, Neurosurgery \& Psychiatry},
+  volume={70},
+  number={1},
+  pages={22--27},
+  year={2001},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{alladi2007focal,
+  title={Focal cortical presentations of {Alzheimer's} disease},
+  author={Alladi, Suvarna and Xuereb, John and Bak, Thomas and Nestor, Peter and Knibb, Jonathan and Patterson, Karalyn and Hodges, JR},
+  journal={Brain},
+  volume={130},
+  number={10},
+  pages={2636--2645},
+  year={2007},
+  publisher={Oxford University Press}
+}
+@article{cardoso2015geodesic,
+  title={Geodesic information flows: spatially-variant graphs and their application to segmentation and fusion},
+  author={Cardoso, M Jorge and Modat, Marc and Wolz, Robin and Melbourne, Andrew and Cash, David and Rueckert, Daniel and Ourselin, Sebastien},
+  journal={IEEE transactions on medical imaging},
+  volume={34},
+  number={9},
+  pages={1976--1988},
+  year={2015},
+  publisher={IEEE}
+}
+@misc{neuromorphometrics,
+  title = {{Neuromorphometrics Brain Atlas}},
+  howpublished = "\url{http://www.neuromorphometrics.com/}",
+}
+@article{schneider2007mixed,
+  title={Mixed brain pathologies account for most dementia cases in community-dwelling older persons},
+  author={Schneider, Julie A and Arvanitakis, Zoe and Bang, Woojeong and Bennett, David A},
+  journal={Neurology},
+  volume={69},
+  number={24},
+  pages={2197--2204},
+  year={2007},
+  publisher={AAN Enterprises}
+}
+@article{schneider2009neuropathology,
+  title={The neuropathology of probable Alzheimer disease and mild cognitive impairment},
+  author={Schneider, Julie A and Arvanitakis, Zoe and Leurgans, Sue E and Bennett, David A},
+  journal={Annals of Neurology: Official Journal of the American Neurological Association and the Child Neurology Society},
+  volume={66},
+  number={2},
+  pages={200--208},
+  year={2009},
+  publisher={Wiley Online Library}
+}
+@article{georgiadis2018computational,
+  title={Computational modelling of pathogenic protein spread in neurodegenerative diseases},
+  author={Georgiadis, Konstantinos and Wray, Selina and Ourselin, S{\'e}bastien and Warren, Jason D and Modat, Marc},
+  journal={PloS one},
+  volume={13},
+  number={2},
+  pages={e0192518},
+  year={2018},
+  publisher={Public Library of Science}
+}
+@article{greve2016different,
+  title={Different partial volume correction methods lead to different conclusions: an 18F-FDG-PET study of aging},
+  author={Greve, Douglas N and Salat, David H and Bowen, Spencer L and Izquierdo-Garcia, David and Schultz, Aaron P and Catana, Ciprian and Becker, J Alex and Svarer, Claus and Knudsen, Gitte M and Sperling, Reisa A and others},
+  journal={Neuroimage},
+  volume={132},
+  pages={334--343},
+  year={2016},
+  publisher={Elsevier}
+}
+@article{greve2014cortical,
+  title={Cortical surface-based analysis reduces bias and variance in kinetic modeling of brain {PET} data},
+  author={Greve, Douglas N and Svarer, Claus and Fisher, Patrick M and Feng, Ling and Hansen, Adam E and Baare, William and Rosen, Bruce and Fischl, Bruce and Knudsen, Gitte M},
+  journal={Neuroimage},
+  volume={92},
+  pages={225--236},
+  year={2014},
+  publisher={Elsevier}
+}
+@article{dickerson2008cortical,
+  title={The cortical signature of {Alzheimer's} disease: regionally specific cortical thinning relates to symptom severity in very mild to mild {AD} dementia and is detectable in asymptomatic amyloid-positive individuals},
+  author={Dickerson, Bradford C and Bakkour, Akram and Salat, David H and Feczko, Eric and Pacheco, Jenni and Greve, Douglas N and Grodstein, Fran and Wright, Christopher I and Blacker, Deborah and Rosas, H Diana and others},
+  journal={Cerebral cortex},
+  volume={19},
+  number={3},
+  pages={497--510},
+  year={2008},
+  publisher={Oxford University Press}
+}
+@article{singh2006spatial,
+  title={Spatial patterns of cortical thinning in mild cognitive impairment and {Alzheimer's} disease},
+  author={Singh, Vivek and Chertkow, Howard and Lerch, Jason P and Evans, Alan C and Dorr, Adrienne E and Kabani, Noor Jehan},
+  journal={Brain},
+  volume={129},
+  number={11},
+  pages={2885--2893},
+  year={2006},
+  publisher={Oxford University Press}
+}
+@article{young2018uncovering,
+  title={Uncovering the heterogeneity and temporal complexity of
+neurodegenerative diseases with Subtype and Stage Inference},
+  author={Young, Alexandra L and others},
+  journal={Nature Communications, in press},
+  year={2018},
+  publisher={Nature}
+}
+@article{derado2010modeling,
+  title={Modeling the spatial and temporal dependence in fMRI data},
+  author={Derado, Gordana and Bowman, F DuBois and Kilts, Clinton D},
+  journal={Biometrics},
+  volume={66},
+  number={3},
+  pages={949--957},
+  year={2010},
+  publisher={Wiley Online Library}
+}
+@article{hyun2016stgp,
+  title={STGP: Spatio-temporal Gaussian process models for longitudinal neuroimaging data},
+  author={Hyun, Jung Won and Li, Yimei and Huang, Chao and Styner, Martin and Lin, Weili and Zhu, Hongtu and {Alzheimer's} Disease Neuroimaging Initiative},
+  journal={NeuroImage},
+  volume={134},
+  pages={550--562},
+  year={2016},
+  publisher={Elsevier}
+}
+@inproceedings{lorenzi2015efficient,
+  title={Efficient Gaussian process-based modelling and prediction of image time series},
+  author={Lorenzi, Marco and Ziegler, Gabriel and Alexander, Daniel C and Ourselin, Sebastien},
+  booktitle={International Conference on Information Processing in Medical Imaging},
+  pages={626--637},
+  year={2015},
+  organization={Springer}
+}
+@inproceedings{koval2017statistical,
+  title={Statistical learning of spatiotemporal patterns from longitudinal manifold-valued networks},
+  author={Koval, Igor and Schiratti, J-B and Routier, Alexandre and Bacci, Michael and Colliot, Olivier and Allassonni{\`e}re, St{\'e}phanie and Durrleman, Stanley and Alzheimer’s Disease Neuroimaging Initiative},
+  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  pages={451--459},
+  year={2017},
+  organization={Springer}
+}
+@article{caroli2010dynamics,
+  title={The dynamics of {Alzheimer's} disease biomarkers in the {Alzheimer's} Disease Neuroimaging Initiative cohort},
+  author={Caroli, A and Frisoni, GB and Alzheimer's Disease Neuroimaging Initiative},
+  journal={Neurobiology of aging},
+  volume={31},
+  number={8},
+  pages={1263--1274},
+  year={2010},
+  publisher={Elsevier}
+}
+@article{sabuncu2011dynamics,
+  title={The dynamics of cortical and hippocampal atrophy in Alzheimer disease},
+  author={Sabuncu, Mert R and Desikan, Rahul S and Sepulcre, Jorge and Yeo, Boon Thye T and Liu, Hesheng and Schmansky, Nicholas J and Reuter, Martin and Weiner, Michael W and Buckner, Randy L and Sperling, Reisa A and others},
+  journal={Archives of neurology},
+  volume={68},
+  number={8},
+  pages={1040--1048},
+  year={2011},
+  publisher={American Medical Association}
+}
+@inproceedings{marinescu2017vertex,
+  title={A vertex clustering model for disease progression: application to cortical thickness images},
+  author={Marinescu, R{\u{a}}zvan Valentin and Eshaghi, Arman and Lorenzi, Marco and Young, Alexandra L and Oxtoby, Neil P and Garbarino, Sara and Shakespeare, Timothy J and Crutch, Sebastian J and Alexander, Daniel C and Alzheimer’s Disease Neuroimaging Initiative},
+  booktitle={International Conference on Information Processing in Medical Imaging},
+  pages={134--145},
+  year={2017},
+  organization={Springer}
+}
+@article{marinescu2018tadpole,
+  title={TADPOLE Challenge: Prediction of Longitudinal Evolution in {Alzheimer's} Disease},
+  author={Marinescu, Razvan V and Oxtoby, Neil P and Young, Alexandra L and Bron, Esther E and Toga, Arthur W and Weiner, Michael W and Barkhof, Frederik and Fox, Nick C and Klein, Stefan and Alexander, Daniel C and others},
+  journal={arXiv preprint arXiv:1805.03909},
+  year={2018}
+}
+@misc{princeglobal,
+  title={The global impact of Dementia: an analysis of prevalence, incidence, cost and trends. 2015. London, UK: {Alzheimer's} Disease International.},
+  author={Prince, M and Wimo, A and Guerchet, M and others},
+}
+@article{forstl1999clinical,
+  title={Clinical features of {Alzheimer's} disease},
+  author={F{\"o}rstl, Hans and Kurz, Alexander},
+  journal={European archives of psychiatry and clinical neuroscience},
+  volume={249},
+  number={6},
+  pages={288--290},
+  year={1999},
+  publisher={Springer}
+}
+@article{chobor1990semantic,
+  title={Semantic deterioration in Alzheimer's: the patterns to expect.},
+  author={Chobor, KL and Brown, JW},
+  journal={Geriatrics (Basel, Switzerland)},
+  volume={45},
+  number={10},
+  pages={68--70},
+  year={1990}
+}
+@article{moore1984drawing,
+  title={Drawing disability in patients with senile dementia},
+  author={Moore, Vanessa and Wyke, Maria A},
+  journal={Psychological Medicine},
+  volume={14},
+  number={1},
+  pages={97--105},
+  year={1984},
+  publisher={Cambridge University Press}
+}
+@article{locascio1995cognitive,
+  title={Cognitive test performance in detecting, staging, and tracking {Alzheimer's} disease},
+  author={Locascio, Joseph J and Growdon, John H and Corkin, Suzanne},
+  journal={Archives of neurology},
+  volume={52},
+  number={11},
+  pages={1087--1099},
+  year={1995},
+  publisher={American Medical Association}
+}
+@article{haupt1992psychopathologische,
+  title={Psychopathologische St{\"o}rungen bei beginnender Alzheimerscher Krankheit},
+  author={Haupt, M and Kurz, A and Romero, Barbara and others},
+  journal={Fortschritte der Neurologie{\textperiodcentered} Psychiatrie},
+  volume={60},
+  number={01},
+  pages={3--7},
+  year={1992},
+  publisher={{\copyright} Georg Thieme Verlag KG Stuttgart{\textperiodcentered} New York}
+}
+@article{burns1990psychiatric,
+  title={Psychiatric phenomena in {Alzheimer's} disease. IV: Disorders of behaviour},
+  author={Burns, Alastair and Jacoby, Robin and Levy, Raymond},
+  journal={The British Journal of Psychiatry},
+  volume={157},
+  number={1},
+  pages={86--94},
+  year={1990},
+  publisher={Cambridge University Press}
+}
+@article{beatty1988retrograde,
+  title={Retrograde amnesia in patients with {Alzheimer's} disease or Huntington's disease},
+  author={Beatty, William W and Salmon, David P and Butters, Nelson and Heindel, William C and Granholm, Eric L},
+  journal={Neurobiology of aging},
+  volume={9},
+  pages={181--186},
+  year={1988},
+  publisher={Elsevier}
+}
+@article{romero1995pragmatische,
+  title={Pragmatische Sprachst{\"o}rungen in fr{\"u}hen Stadien der Alzheimer Krankheit: Analyse der Art und Auspr{\"a}gung},
+  author={Romero, Barbara and Pulverm{\"u}ller, F and Haupt, M and Kurz, A},
+  journal={Zeitschrift f{\"u}r Neuropsychologie},
+  volume={6},
+  number={1},
+  pages={29--42},
+  year={1995}
+}
+@article{cummings1986pattern,
+  title={The pattern of reading deterioration in dementia of the Alzheimer type: Observations and implications},
+  author={Cummings, Jeffrey L and Houlihan, John P and Hill, Mary Ann},
+  journal={Brain and language},
+  volume={29},
+  number={2},
+  pages={315--323},
+  year={1986},
+  publisher={Elsevier}
+}
+@article{neils1989descriptive,
+  title={Descriptive writing abilities in {Alzheimer's} disease},
+  author={Neils, Jean and Boller, Francois and Gerdeman, Bernice and Cole, Monroe},
+  journal={Journal of Clinical and Experimental neuropsychology},
+  volume={11},
+  number={5},
+  pages={692--698},
+  year={1989},
+  publisher={Taylor \& Francis}
+}
+@article{reisberg1996behavioral,
+  title={Behavioral disturbances of dementia: an overview of phenomenology and methodologic concerns},
+  author={Reisberg, Barry and Auer, Stefanie R and Monteiro, Isabel and Boksay, Istvan and Sclan, Steven G},
+  journal={International Psychogeriatrics},
+  volume={8},
+  number={S2},
+  pages={169--182},
+  year={1996},
+  publisher={Cambridge University Press}
+}
+@article{perry1990visual,
+  title={Visual hallucinations and the cholinergic system in dementia.},
+  author={Perry, EK and Kerwin, J and Perry, RH and Blessed, G and Fairbairn, AF},
+  journal={Journal of neurology, neurosurgery, and psychiatry},
+  volume={53},
+  number={1},
+  pages={88},
+  year={1990},
+  publisher={BMJ Publishing Group}
+}
+@article{mudher2002alzheimer,
+  title={Alzheimer's disease--do tauists and baptists finally shake hands?},
+  author={Mudher, Amritpal and Lovestone, Simon},
+  journal={Trends in neurosciences},
+  volume={25},
+  number={1},
+  pages={22--26},
+  year={2002},
+  publisher={Elsevier}
+}
+@article{ertekin2000linkage,
+  title={Linkage of plasma A$\beta$42 to a quantitative locus on chromosome 10 in late-onset {Alzheimer's} disease pedigrees},
+  author={Ertekin-Taner, Nilufer and Graff-Radford, Neill and Younkin, Linda H and Eckman, Christopher and Baker, Matthew and Adamson, Jennifer and Ronald, James and Blangero, John and Hutton, Michael and Younkin, Steven G},
+  journal={Science},
+  volume={290},
+  number={5500},
+  pages={2303--2304},
+  year={2000},
+  publisher={American Association for the Advancement of Science}
+}
+@article{gotz2001formation,
+  title={Formation of neurofibrillary tangles in P301L tau transgenic mice induced by A$\beta$42 fibrils},
+  author={G{\"o}tz, J and Chen, F and Van Dorpe, Jo and Nitsch, RM},
+  journal={Science},
+  volume={293},
+  number={5534},
+  pages={1491--1495},
+  year={2001},
+  publisher={American Association for the Advancement of Science}
+}
+@article{lewis2001enhanced,
+  title={Enhanced neurofibrillary degeneration in transgenic mice expressing mutant tau and APP},
+  author={Lewis, Jada and Dickson, Dennis W and Lin, Wen-Lang and Chisholm, Louise and Corral, Anthony and Jones, Graham and Yen, Shu-Hui and Sahara, Naruhiko and Skipper, Lisa and Yager, Debra and others},
+  journal={Science},
+  volume={293},
+  number={5534},
+  pages={1487--1491},
+  year={2001},
+  publisher={American Association for the Advancement of Science}
+}
+@article{roberson2007reducing,
+  title={Reducing endogenous tau ameliorates amyloid {\ss}-induced deficits in an {Alzheimer's} disease mouse model},
+  author={Roberson, Erik D and Scearce-Levie, Kimberly and Palop, Jorge J and Yan, Fengrong and Cheng, Irene H and Wu, Tiffany and Gerstein, Hilary and Yu, Gui-Qiu and Mucke, Lennart},
+  journal={Science},
+  volume={316},
+  number={5825},
+  pages={750--754},
+  year={2007},
+  publisher={American Association for the Advancement of Science}
+}
+@article{bloom2014amyloid,
+  title={Amyloid-$\beta$ and tau: the trigger and bullet in Alzheimer disease pathogenesis},
+  author={Bloom, George S},
+  journal={JAMA neurology},
+  volume={71},
+  number={4},
+  pages={505--508},
+  year={2014},
+  publisher={American Medical Association}
+}
+@article{hsiao1995age,
+  title={Age-related CNS disorder and early death in transgenic FVB/N mice overexpressing Alzheimer amyloid precursor proteins},
+  author={Hsiao, Karen K and Borchelt, David R and Olson, Kristine and Johannsdottir, Rosa and Kitt, Cheryl and Yunis, Wael and Xu, Sherry and Eckman, Chris and Younkin, Steven and Price, Donald and others},
+  journal={Neuron},
+  volume={15},
+  number={5},
+  pages={1203--1218},
+  year={1995},
+  publisher={Elsevier}
+}
+@article{irizarry1997appsw,
+  title={APPSw transgenic mice develop age-related A$\beta$ deposits and neuropil abnormalities, but no neuronal loss in CA1},
+  author={Irizarry, Michael C and McNamara, Megan and Fedorchak, Kerri and Hsiao, Karen and Hyman, Bradley T},
+  journal={Journal of Neuropathology \& Experimental Neurology},
+  volume={56},
+  number={9},
+  pages={965--973},
+  year={1997},
+  publisher={American Association of Neuropathologists, Inc.}
+}
+@article{nagy1995relative,
+  title={Relative roles of plaques and tangles in the dementia of {Alzheimer's} disease: correlations using three sets of neuropathological criteria},
+  author={Nagy, ZS and Esiri, MM and Jobst, KA and Morris, JH and King, EM-F and McDonald, B and Litchfield, S and Smith, A and Barnetson, L and Smith, AD},
+  journal={Dementia and Geriatric Cognitive Disorders},
+  volume={6},
+  number={1},
+  pages={21--31},
+  year={1995},
+  publisher={Karger Publishers}
+}
+@incollection{braak1998evolution,
+  title={Evolution of neuronal changes in the course of {Alzheimer's} disease},
+  author={Braak, H and Braak, E},
+  booktitle={Ageing and dementia},
+  pages={127--140},
+  year={1998},
+  publisher={Springer}
+}
+@article{braak1994sequence,
+  title={A sequence of cytoskeleton changes related to the formation of neurofibrillary tangles and neuropil threads},
+  author={Braak, F and Braak, Heiko and Mandelkow, E-M},
+  journal={Acta neuropathologica},
+  volume={87},
+  number={6},
+  pages={554--567},
+  year={1994},
+  publisher={Springer}
+}
+@article{heutink2000untangling,
+  title={Untangling tau-related dementia},
+  author={Heutink, Peter},
+  journal={Human molecular genetics},
+  volume={9},
+  number={6},
+  pages={979--986},
+  year={2000},
+  publisher={Oxford University Press}
+}
+@article{francis1999cholinergic,
+  title={The cholinergic hypothesis of {Alzheimer's} disease: a review of progress},
+  author={Francis, Paul T and Palmer, Alan M and Snape, Michael and Wilcock, Gordon K},
+  journal={Journal of Neurology, Neurosurgery \& Psychiatry},
+  volume={66},
+  number={2},
+  pages={137--147},
+  year={1999},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{davies1976selective,
+  title={Selective loss of central cholinergic neurons in {Alzheimer's} disease},
+  author={Davies, Peter and Maloney, AJF},
+  journal={The Lancet},
+  volume={308},
+  number={8000},
+  pages={1403},
+  year={1976},
+  publisher={Elsevier}
+}
+@article{martorana2010beyond,
+  title={Beyond the cholinergic hypothesis: do current drugs work in {Alzheimer's} disease?},
+  author={Martorana, Alessandro and Esposito, Zaira and Koch, Giacomo},
+  journal={CNS neuroscience \& therapeutics},
+  volume={16},
+  number={4},
+  pages={235--245},
+  year={2010},
+  publisher={Wiley Online Library}
+}
+@article{bergem1997role,
+  title={The role of heredity in late-onset Alzheimer disease and vascular dementia: a twin study},
+  author={Bergem, AL Mina and Engedal, Knut and Kringlen, Einar},
+  journal={Archives of General Psychiatry},
+  volume={54},
+  number={3},
+  pages={264--270},
+  year={1997},
+  publisher={American Medical Association}
+}
+@article{gatz1997heritability,
+  title={Heritability for {Alzheimer's} disease: the study of dementia in Swedish twins},
+  author={Gatz, Margaret and Pedersen, Nancy L and Berg, Stig and Johansson, Boo and Johansson, Kurt and Mortimer, James A and Posner, Samuel F and Viitanen, Matti and Winblad, Bengt and Ahlbom, Anders},
+  journal={The Journals of Gerontology Series A: Biological Sciences and Medical Sciences},
+  volume={52},
+  number={2},
+  pages={M117--M125},
+  year={1997},
+  publisher={The Gerontological Society of America}
+}
+@incollection{chouraki2014genetics,
+  title={Genetics of {Alzheimer's} disease},
+  author={Chouraki, Vincent and Seshadri, Sudha},
+  booktitle={Advances in genetics},
+  volume={87},
+  pages={245--294},
+  year={2014},
+  publisher={Elsevier}
+}
+@article{glenner1984alzheimer,
+  title={Alzheimer's disease and Down's syndrome: sharing of a unique cerebrovascular amyloid fibril protein},
+  author={Glenner, George G and Wong, Caine W},
+  journal={Biochemical and biophysical research communications},
+  volume={122},
+  number={3},
+  pages={1131--1135},
+  year={1984},
+  publisher={Elsevier}
+}
+@article{st1987genetic,
+  title={The genetic defect causing familial {Alzheimer's} disease maps on chromosome 21},
+  author={St George-Hyslop, Peter H and Tanzi, Rudolph E and Polinsky, Ronald J and Haines, Jonathan L and Nee, Linda and Watkins, Paul C and Myers, Richard H and Feldman, Robert G and Pollen, Daniel and Drachman, David and others},
+  journal={Science},
+  volume={235},
+  number={4791},
+  pages={885--890},
+  year={1987},
+  publisher={American Association for the Advancement of Science}
+}
+@article{goldgaber1987characterization,
+  title={Characterization and chromosomal localization of a cDNA encoding brain amyloid of {Alzheimer's} disease},
+  author={Goldgaber, Dmitry and Lerman, Michael I and McBride, O Westley and Saffiotti, Umberto and Gajdusek, D Carleton},
+  journal={Science},
+  volume={235},
+  number={4791},
+  pages={877--880},
+  year={1987},
+  publisher={American Association for the Advancement of Science}
+}
+@article{chartier1991early,
+  title={Early-onset {Alzheimer's} disease caused by mutations at codon 717 of the $\beta$-amyloid precursor protein gene},
+  author={Chartier-Harlin, Marie-Christine and Crawford, Fiona and Houlden, Henry and Warren, Andrew and Hughes, David and Fidani, Liana and Goate, Alison and Rossor, Martin and Roques, Penelope and Hardy, John and others},
+  journal={Nature},
+  volume={353},
+  number={6347},
+  pages={844},
+  year={1991},
+  publisher={Nature Publishing Group}
+}
+@article{sherrington1995cloning,
+  title={Cloning of a gene bearing missense mutations in early-onset familial {Alzheimer's} disease},
+  author={Sherrington, R and Rogaev, EI and Liang, Y al and Rogaeva, EA and Levesque, G and Ikeda, M and Chi, H and Lin, C and Li, G and Holman, K and others},
+  journal={Nature},
+  volume={375},
+  number={6534},
+  pages={754},
+  year={1995},
+  publisher={Nature Publishing Group}
+}
+@article{levy1995candidate,
+  title={Candidate gene for the chromosome 1 familial {Alzheimer's} disease locus},
+  author={Levy-Lahad, Ephrat and Wasco, Wilma and Poorkaj, Parvoneh and Romano, Donna M and Oshima, Junko and Pettingell, Warren H and Yu, Chang En and Jondro, Paul D and Schmidt, Stephen D and Wang, Kai and others},
+  journal={Science},
+  volume={269},
+  number={5226},
+  pages={973--977},
+  year={1995},
+  publisher={American Association for the Advancement of Science}
+}
+@article{strittmatter1993apolipoprotein,
+  title={Apolipoprotein E: high-avidity binding to beta-amyloid and increased frequency of type 4 allele in late-onset familial Alzheimer disease.},
+  author={Strittmatter, Warren J and Saunders, Ann M and Schmechel, Donald and Pericak-Vance, Margaret and Enghild, Jan and Salvesen, Guy S and Roses, Allen D},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={90},
+  number={5},
+  pages={1977--1981},
+  year={1993},
+  publisher={National Acad Sciences}
+}
+@article{saunders1993association,
+  title={Association of apolipoprotein E allele ϵ4 with late-onset familial and sporadic {Alzheimer's} disease},
+  author={Saunders, Ann M and Strittmatter, Warren J and Schmechel, D and George-Hyslop, PH St and Pericak-Vance, MA and Joo, SH and Rosi, BL and Gusella, JF and Crapper-MacLachlan, DR and Alberts, MJ and others},
+  journal={Neurology},
+  volume={43},
+  number={8},
+  pages={1467--1467},
+  year={1993},
+  publisher={AAN Enterprises}
+}
+@article{corder1993gene,
+  title={Gene dose of apolipoprotein E type 4 allele and the risk of {Alzheimer's} disease in late onset families},
+  author={Corder, Elizabeth H and Saunders, Ann M and Strittmatter, Waren J and Schmechel, Donald E and Gaskell, P Craig and Small, Gwet and Roses, Allen D and Haines, JL and Pericak-Vance, Margaret A},
+  journal={Science},
+  volume={261},
+  number={5123},
+  pages={921--923},
+  year={1993},
+  publisher={American Association for the Advancement of Science}
+}
+@article{harold2009genome,
+  title={Genome-wide association study identifies variants at CLU and PICALM associated with {Alzheimer's} disease},
+  author={Harold, Denise and Abraham, Richard and Hollingworth, Paul and Sims, Rebecca and Gerrish, Amy and Hamshere, Marian L and Pahwa, Jaspreet Singh and Moskvina, Valentina and Dowzell, Kimberley and Williams, Amy and others},
+  journal={Nature genetics},
+  volume={41},
+  number={10},
+  pages={1088},
+  year={2009},
+  publisher={Nature Publishing Group}
+}
+@article{lambert2009genome,
+  title={Genome-wide association study indentifies variants at CLU and CR1 associated with {Alzheimer's} disease},
+  author={Lambert, J and Heath, S and Even, G and Campion, D and Sleegers, K and Hiltunen, M and Cambarros, O and Zelenika, D and Bullido, M and Tavernier, B and others},
+  journal={Nature Genetics},
+  volume={41},
+  number={10},
+  pages={1094--1099},
+  year={2009},
+  publisher={Nature America, Inc.}
+}
+@article{seshadri2010genome,
+  title={Genome-wide analysis of genetic loci associated with Alzheimer disease},
+  author={Seshadri, Sudha and Fitzpatrick, Annette L and Ikram, M Arfan and DeStefano, Anita L and Gudnason, Vilmundur and Boada, Merce and Bis, Joshua C and Smith, Albert V and Carrasquillo, Minerva M and Lambert, Jean Charles and others},
+  journal={JAMA},
+  volume={303},
+  number={18},
+  pages={1832--1840},
+  year={2010},
+  publisher={American Medical Association}
+}
+@article{hollingworth2011common,
+  title={Common variants at ABCA7, MS4A6A/MS4A4E, EPHA1, CD33 and CD2AP are associated with {Alzheimer's} disease},
+  author={Hollingworth, Paul and Harold, Denise and Sims, Rebecca and Gerrish, Amy and Lambert, Jean-Charles and Carrasquillo, Minerva M and Abraham, Richard and Hamshere, Marian L and Pahwa, Jaspreet Singh and Moskvina, Valentina and others},
+  journal={Nature genetics},
+  volume={43},
+  number={5},
+  pages={429},
+  year={2011},
+  publisher={Nature Publishing Group}
+}
+@article{naj2011common,
+  title={Common variants at MS4A4/MS4A6E, CD2AP, CD33 and EPHA1 are associated with late-onset {Alzheimer's} disease},
+  author={Naj, Adam C and Jun, Gyungah and Beecham, Gary W and Wang, Li-San and Vardarajan, Badri Narayan and Buros, Jacqueline and Gallins, Paul J and Buxbaum, Joseph D and Jarvik, Gail P and Crane, Paul K and others},
+  journal={Nature genetics},
+  volume={43},
+  number={5},
+  pages={436},
+  year={2011},
+  publisher={Nature Publishing Group}
+}
+@article{thambisetty2013alzheimerA,
+  title={Alzheimer's disease risk genes and the age-at-onset phenotype},
+  author={Thambisetty, Madhav and An, Yang and Tanaka, Toshiko},
+  journal={Neurobiology of aging},
+  volume={34},
+  number={11},
+  pages={2696--e1},
+  year={2013},
+  publisher={Elsevier}
+}
+@article{thambisetty2013alzheimerB,
+  title={Alzheimer risk variant CLU and brain function during aging},
+  author={Thambisetty, Madhav and Beason-Held, Lori L and An, Yang and Kraut, Michael and Nalls, Michael and Hernandez, Dena G and Singleton, Andrew B and Zonderman, Alan B and Ferrucci, Luigi and Lovestone, Simon and others},
+  journal={Biological psychiatry},
+  volume={73},
+  number={5},
+  pages={399--405},
+  year={2013},
+  publisher={Elsevier}
+}
+@article{biffi2012genetic,
+  title={Genetic variation at CR1 increases risk of cerebral amyloid angiopathy},
+  author={Biffi, A and Shulman, JM and Jagiella, JM and Cortellini, L and Ayres, AM and Schwab, K and Brown, DL and Silliman, SL and Selim, M and Worrall, BB and others},
+  journal={Neurology},
+  pages={WNL--0b013e3182452b40},
+  year={2012},
+  publisher={AAN Enterprises}
+}
+@article{chibnik2011cr1,
+  title={CR1 is associated with amyloid plaque burden and age-related cognitive decline},
+  author={Chibnik, Lori B and Shulman, Joshua M and Leurgans, Sue E and Schneider, Julie A and Wilson, Robert S and Tran, Dong and Aubin, Cristin and Buchman, Aron S and Heward, Christopher B and Myers, Amanda J and others},
+  journal={Annals of neurology},
+  volume={69},
+  number={3},
+  pages={560--569},
+  year={2011},
+  publisher={Wiley Online Library}
+}
+@article{elias2013genetic,
+  title={Genetic loci associated with {Alzheimer's} disease and cerebrospinal fluid biomarkers in a Finnish case-control cohort},
+  author={Elias-Sonnenschein, Lyzel S and Helisalmi, Seppo and Natunen, Teemu and Hall, Anette and Paajanen, Teemu and Herukka, Sanna-Kaisa and Laitinen, Marjo and Remes, Anne M and Koivisto, Anne M and Mattila, Kari M and others},
+  journal={PloS one},
+  volume={8},
+  number={4},
+  pages={e59676},
+  year={2013},
+  publisher={Public Library of Science}
+}
+@article{kauwe2011fine,
+  title={Fine mapping of genetic variants in BIN1, CLU, CR1 and PICALM for association with cerebrospinal fluid biomarkers for {Alzheimer's} disease},
+  author={Kauwe, John SK and Cruchaga, Carlos and Karch, Celeste M and Sadler, Brooke and Lee, Mo and Mayo, Kevin and Latu, Wayne and Su'a, Manti and Fagan, Anne M and Holtzman, David M and others},
+  journal={PloS one},
+  volume={6},
+  number={2},
+  pages={e15918},
+  year={2011},
+  publisher={Public Library of Science}
+}
+@article{bralten2011cr1,
+  title={CR1 genotype is associated with entorhinal cortex volume in young healthy adults},
+  author={Bralten, Janita and Franke, Barbara and Arias-V{\'a}squez, Alejandro and Heister, Angelien and Brunner, Han G and Fern{\'a}ndez, Guill{\'e}n and Rijpkema, Mark},
+  journal={Neurobiology of aging},
+  volume={32},
+  number={11},
+  pages={2106--e7},
+  year={2011},
+  publisher={Elsevier}
+}
+@article{furney2011genome,
+  title={Genome-wide association with {MRI} atrophy measures as a quantitative trait locus for {Alzheimer's} disease},
+  author={Furney, SJ and Simmons, A and Breen, G and Pedroso, I and Lunnon, K and Proitsi, P and Hodges, A and Powell, J and Wahlund, LO and Kloszewska, I and others},
+  journal={Molecular psychiatry},
+  volume={16},
+  number={11},
+  pages={1130},
+  year={2011},
+  publisher={Nature Publishing Group}
+}
+@article{barral2012genotype,
+  title={Genotype patterns at PICALM, CR1, BIN1, CLU, and APOE genes are associated with episodic memory},
+  author={Barral, S and Bird, T and Goate, A and Farlow, MR and Diaz-Arrastia, R and Bennett, DA and Graff-Radford, N and Boeve, BF and Sweet, RA and Stern, Y and others},
+  journal={Neurology},
+  volume={78},
+  number={19},
+  pages={1464--1471},
+  year={2012},
+  publisher={AAN Enterprises}
+}
+@article{chibnik2011cr1,
+  title={CR1 is associated with amyloid plaque burden and age-related cognitive decline},
+  author={Chibnik, Lori B and Shulman, Joshua M and Leurgans, Sue E and Schneider, Julie A and Wilson, Robert S and Tran, Dong and Aubin, Cristin and Buchman, Aron S and Heward, Christopher B and Myers, Amanda J and others},
+  journal={Annals of neurology},
+  volume={69},
+  number={3},
+  pages={560--569},
+  year={2011},
+  publisher={Wiley Online Library}
+}
+@article{mengel2013clu,
+  title={CLU genetic variants and cognitive decline among elderly and oldest old},
+  author={Mengel-From, Jonas and Thinggaard, Mikael and Lindahl-Jacobsen, Rune and McGue, Matt and Christensen, Kaare and Christiansen, Lene},
+  journal={PloS one},
+  volume={8},
+  number={11},
+  pages={e79105},
+  year={2013},
+  publisher={Public Library of Science}
+}
+@article{de2004alzheimer,
+  title={Is {Alzheimer's} disease a neurodegenerative or a vascular disorder? Data, dogma, and dialectics},
+  author={de la Torre, Jack C},
+  journal={The Lancet Neurology},
+  volume={3},
+  number={3},
+  pages={184--190},
+  year={2004},
+  publisher={Elsevier}
+}
+@article{iturria2016early,
+  title={Early role of vascular dysregulation on late-onset {Alzheimer's} disease based on multifactorial data-driven analysis},
+  author={Iturria-Medina, Yasser and Sotero, Roberto C and Toussaint, Paule J and Mateos-P{\'e}rez, Jos{\'e} Mar{\'\i}a and Evans, Alan C and Weiner, Michael W and Aisen, Paul and Petersen, Ronald and Jack, Clifford R and Jagust, William and others},
+  journal={Nature communications},
+  volume={7},
+  pages={11934},
+  year={2016},
+  publisher={Nature Publishing Group}
+}
+@article{kalaria2003vascular,
+  title={Vascular factors in {Alzheimer's} disease},
+  author={Kalaria, Raj N},
+  journal={International Psychogeriatrics},
+  volume={15},
+  number={S1},
+  pages={47--52},
+  year={2003},
+  publisher={Cambridge University Press}
+}
+@article{meyer2000risk,
+  title={Risk factors for cerebral hypoperfusion, mild cognitive impairment, and dementia},
+  author={Meyer, John S and Rauch, Gaiane and Rauch, Ronald A and Haque, A},
+  journal={Neurobiology of aging},
+  volume={21},
+  number={2},
+  pages={161--169},
+  year={2000},
+  publisher={Elsevier}
+}
+@article{breteler2000vascular,
+  title={Vascular involvement in cognitive decline and dementia: epidemiologic evidence from the Rotterdam Study and the Rotterdam Scan Study},
+  author={Breteler, Monique},
+  journal={Annals of the New York Academy of Sciences},
+  volume={903},
+  number={1},
+  pages={457--465},
+  year={2000},
+  publisher={Wiley Online Library}
+}
+@article{aronson1990women,
+  title={Women, myocardial infarction, and dementia in the very old},
+  author={Aronson, MK and Ooi, WL and Morgenstern, H and Hafner, A and Masur, D and Crystal, H and Frishman, WH and Fisher, D and Katzman, R},
+  journal={Neurology},
+  volume={40},
+  number={7},
+  pages={1102--1102},
+  year={1990},
+  publisher={AAN Enterprises}
+}
+@article{polidori2001heart,
+  title={Heart disease and vascular risk factors in the cognitively impaired elderly: implications for {Alzheimer's} dementia},
+  author={Polidori, MC and Marvardi, M and Cherubini, A and Senin, U and Mecocci, P},
+  journal={Aging Clinical and Experimental Research},
+  volume={13},
+  number={3},
+  pages={231--239},
+  year={2001},
+  publisher={Springer}
+}
+@article{hofman1997atherosclerosis,
+  title={Atherosclerosis, apolipoprotein E, and prevalence of dementia and {Alzheimer's} disease in the Rotterdam Study},
+  author={Hofman, Albert and Ott, Alewijn and Breteler, Monique MB and Bots, Michiel L and Slooter, Arjen JC and van Harskamp, Frans and van Duijn, Cornelia N and Van Broeckhoven, Christine and Grobbee, Diederick E},
+  journal={The Lancet},
+  volume={349},
+  number={9046},
+  pages={151--154},
+  year={1997},
+  publisher={Elsevier}
+}
+@article{cataldo2010cigarette,
+  title={Cigarette smoking is a risk factor for {Alzheimer's} Disease: an analysis controlling for tobacco industry affiliation},
+  author={Cataldo, Janine K and Prochaska, Judith J and Glantz, Stanton A},
+  journal={Journal of Alzheimer's disease},
+  volume={19},
+  number={2},
+  pages={465--480},
+  year={2010},
+  publisher={IOS Press}
+}
+@article{moulton2012air,
+  title={Air pollution, oxidative stress, and {Alzheimer's} disease},
+  author={Moulton, Paula Valencia and Yang, Wei},
+  journal={Journal of environmental and public health},
+  volume={2012},
+  year={2012},
+  publisher={Hindawi}
+}
+@inproceedings{ahlskog2011physical,
+  title={Physical exercise as a preventive or disease-modifying treatment of dementia and brain aging},
+  author={Ahlskog, J Eric and Geda, Yonas E and Graff-Radford, Neill R and Petersen, Ronald C},
+  booktitle={Mayo Clinic Proceedings},
+  volume={86},
+  number={9},
+  pages={876--884},
+  year={2011},
+  organization={Elsevier}
+}
+@article{baumgart2015summary,
+  title={Summary of the evidence on modifiable risk factors for cognitive decline and dementia: a population-based perspective},
+  author={Baumgart, Matthew and Snyder, Heather M and Carrillo, Maria C and Fazio, Sam and Kim, Hye and Johns, Harry},
+  journal={Alzheimer's \& Dementia},
+  volume={11},
+  number={6},
+  pages={718--726},
+  year={2015},
+  publisher={Elsevier}
+}
+@article{robinson2017recent,
+  title={Recent progress in {Alzheimer's} disease research, part 2: genetics and epidemiology},
+  author={Robinson, Morgan and Lee, Brenda Y and Hane, Francis T},
+  journal={Journal of Alzheimer's Disease},
+  volume={57},
+  number={2},
+  pages={317--330},
+  year={2017},
+  publisher={IOS Press}
+}
+@article{waldemar2007recommendations,
+  title={Recommendations for the diagnosis and management of {Alzheimer's} disease and other disorders associated with dementia: EFNS guideline},
+  author={Waldemar, G and Dubois, B and Emre, M and Georges, J and McKeith, IG and Rossor, M and Scheltens, P and Tariska, P and Winblad, B},
+  journal={European Journal of Neurology},
+  volume={14},
+  number={1},
+  pages={e1--e26},
+  year={2007},
+  publisher={Wiley Online Library}
+}
+@article{duara2008medial,
+  title={Medial temporal lobe atrophy on {MRI} scans and the diagnosis of Alzheimer disease},
+  author={Duara, R and Loewenstein, DA and Potter, E and Appel, J and Greig, MT and Urs, R and Shen, Q and Raj, A and Small, B and Barker, W and others},
+  journal={Neurology},
+  volume={71},
+  number={24},
+  pages={1986--1992},
+  year={2008},
+  publisher={AAN Enterprises}
+}
+@article{cohen2014early,
+  title={Early detection of {Alzheimer's} disease using PiB and {FDG} PET},
+  author={Cohen, Ann D and Klunk, William E},
+  journal={Neurobiology of disease},
+  volume={72},
+  pages={117--122},
+  year={2014},
+  publisher={Elsevier}
+}
+@article{lowe2016autoradiographic,
+  title={An autoradiographic evaluation of AV-1451 Tau {PET} in dementia},
+  author={Lowe, Val J and Curran, Geoffry and Fang, Ping and Liesinger, Amanda M and Josephs, Keith A and Parisi, Joseph E and Kantarci, Kejal and Boeve, Bradley F and Pandey, Mukesh K and Bruinsma, Tyler and others},
+  journal={Acta neuropathologica communications},
+  volume={4},
+  number={1},
+  pages={58},
+  year={2016},
+  publisher={BioMed Central}
+}
+@article{marquie2015validating,
+  title={Validating novel tau positron emission tomography tracer [F-18]-AV-1451 (T807) on postmortem brain tissue},
+  author={Marqui{\'e}, Marta and Normandin, Marc D and Vanderburg, Charles R and Costantino, Isabel M and Bien, Elizabeth A and Rycyna, Lisa G and Klunk, William E and Mathis, Chester A and Ikonomovic, Milos D and Debnath, Manik L and others},
+  journal={Annals of neurology},
+  volume={78},
+  number={5},
+  pages={787--800},
+  year={2015},
+  publisher={Wiley Online Library}
+}
+@article{sachdev2013alzheimer,
+  title={Is {Alzheimer's} a disease of the white matter?},
+  author={Sachdev, Perminder S and Zhuang, Lin and Braidy, Nady and Wen, Wei},
+  journal={Current opinion in psychiatry},
+  volume={26},
+  number={3},
+  pages={244--251},
+  year={2013},
+  publisher={LWW}
+}
+@article{bozzali2002white,
+  title={White matter damage in {Alzheimer's} disease assessed in vivo using diffusion tensor magnetic resonance imaging},
+  author={Bozzali, M and Falini, A and Franceschi, M and Cercignani, M and Zuffi, M and Scotti, G and Comi, G and Filippi, M},
+  journal={Journal of Neurology, Neurosurgery \& Psychiatry},
+  volume={72},
+  number={6},
+  pages={742--746},
+  year={2002},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{zhang2009white,
+  title={White matter damage in frontotemporal dementia and {Alzheimer's} disease measured by diffusion MRI},
+  author={Zhang, Yu and Schuff, Norbert and Du, An-Tao and Rosen, Howard J and Kramer, Joel H and Gorno-Tempini, Maria Luisa and Miller, Bruce L and Weiner, Michael W},
+  journal={Brain},
+  volume={132},
+  number={9},
+  pages={2579--2592},
+  year={2009},
+  publisher={Oxford University Press}
+}
+@article{zhou2012predicting,
+  title={Predicting regional neurodegeneration from the healthy brain functional connectome},
+  author={Zhou, Juan and Gennatas, Efstathios D and Kramer, Joel H and Miller, Bruce L and Seeley, William W},
+  journal={Neuron},
+  volume={73},
+  number={6},
+  pages={1216--1227},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{zhang2012noddi,
+  title={NODDI: practical in vivo neurite orientation dispersion and density imaging of the human brain},
+  author={Zhang, Hui and Schneider, Torben and Wheeler-Kingshott, Claudia A and Alexander, Daniel C},
+  journal={Neuroimage},
+  volume={61},
+  number={4},
+  pages={1000--1016},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{ekman2018t,
+  title={The A/T/N biomarker scheme and patterns of brain atrophy assessed in mild cognitive impairment},
+  author={Ekman, Urban and Ferreira, Daniel and Westman, Eric},
+  journal={Scientific reports},
+  volume={8},
+  number={1},
+  pages={8431},
+  year={2018},
+  publisher={Nature Publishing Group}
+}
+@article{depaz2012long,
+  title={Long-standing prion dementia manifesting as posterior cortical atrophy},
+  author={Depaz, Rapha{\"e}l and Haik, St{\'e}phane and Peoc’h, Katell and Seilhean, Danielle and Grabli, David and Vicart, Savine and Sarazin, Marie and DeToffol, Bertrand and Remy, Catherine and Fallet-Bianco, Catherine and others},
+  journal={Alzheimer Disease \& Associated Disorders},
+  volume={26},
+  number={3},
+  pages={289--292},
+  year={2012},
+  publisher={LWW}
+}
+@article{migliaccio2009clinical,
+  title={Clinical syndromes associated with posterior atrophy early age at onset {AD} spectrum},
+  author={Migliaccio, Raffaella and Agosta, Federica and Rascovsky, Katya and Karydas, Anna and Bonasera, Stephen and Rabinovici, Gil D and Miller, BL and Gorno-Tempini, ML},
+  journal={Neurology},
+  volume={73},
+  number={19},
+  pages={1571--1578},
+  year={2009},
+  publisher={AAN Enterprises}
+}
+@article{duning2009pattern,
+  title={Pattern and progression of white-matter changes in a case of posterior cortical atrophy using diffusion tensor imaging},
+  author={Duning, T and Warnecke, T and Mohammadi, S and Lohmann, H and Schiffbauer, H and Kugel, H and Knecht, S and Ringelstein, EB and Deppe, M},
+  journal={Journal of Neurology, Neurosurgery \& Psychiatry},
+  volume={80},
+  number={4},
+  pages={432--436},
+  year={2009},
+  publisher={BMJ Publishing Group Ltd}
+}
+@article{yoshida2004white,
+  title={White matter loss in the splenium of the corpus callosum in a case of posterior cortical atrophy: a diffusion tensor imaging study},
+  author={Yoshida, Tomokatsu and Shiga, Kensuke and Yoshikawa, Kenji and Yamada, Kei and Nakagawa, Masanori},
+  journal={European neurology},
+  volume={52},
+  number={2},
+  pages={77--81},
+  year={2004},
+  publisher={Karger Publishers}
+}
+@article{gardini2011visuo,
+  title={Visuo-spatial imagery impairment in posterior cortical atrophy: a cognitive and SPECT study},
+  author={Gardini, Simona and Concari, Letizia and Pagliara, Salvatrice and Ghetti, Caterina and Venneri, Annalena and Caffarra, Paolo},
+  journal={Behavioural neurology},
+  volume={24},
+  number={2},
+  pages={123--132},
+  year={2011},
+  publisher={Hindawi}
+}
+@article{aharon1999posterior,
+  title={Posterior cortical atrophy variants of {Alzheimer's} disease},
+  author={Aharon-Peretz, Judith and Israel, Ora and Goldsher, Dorit and Peretz, Aharon},
+  journal={Dementia and geriatric cognitive disorders},
+  volume={10},
+  number={6},
+  pages={483--487},
+  year={1999},
+  publisher={Karger Publishers}
+}
+@article{goethals2001posterior,
+  title={Posterior cortical atrophy. Two case reports and a review of the literature},
+  author={Goethals, Maarten and Santens, Patrick},
+  journal={Clinical neurology and neurosurgery},
+  volume={103},
+  number={2},
+  pages={115--119},
+  year={2001},
+  publisher={Elsevier}
+}
+@article{pietrini1996preferential,
+  title={Preferential metabolic involvement of visual cortical areas in a subtype of {Alzheimer's} disease: clinical implications},
+  author={Pietrini, Pietro and Furey, Maura L and Graff-Radford, Neill and Freo, Ulderico and others},
+  journal={The American journal of psychiatry},
+  volume={153},
+  number={10},
+  pages={1261},
+  year={1996},
+  publisher={American Psychiatric Association}
+}
+@article{ng2007evaluating,
+  title={Evaluating Atypical Dementia Syndromes Using Positron Emission Tomography With Carbon 11--Labeled Pittsburgh Compound B},
+  author={Ng, Steven Y and Villemagne, Victor L and Masters, Colin L and Rowe, Christopher C},
+  journal={Archives of neurology},
+  volume={64},
+  number={8},
+  pages={1140--1144},
+  year={2007},
+  publisher={American Medical Association}
+}
+@article{kambe2010posterior,
+  title={Posterior cortical atrophy with 11--C Pittsburgh compound B accumulation in the primary visual cortex},
+  author={Kambe, Taiki and Motoi, Yumiko and Ishii, Kenji and Hattori, Nobutaka},
+  journal={Journal of neurology},
+  volume={257},
+  number={3},
+  pages={469--471},
+  year={2010},
+  publisher={Springer}
+}
+@article{tenovuo2008posterior,
+  title={Posterior cortical atrophy: A rare form of dementia with in vivo evidence of amyloid-$\beta$ accumulation},
+  author={Tenovuo, Olli and Kemppainen, Nina and Aalto, Sargo and N{\aa}gren, Kjell and Rinne, Juha O},
+  journal={Journal of Alzheimer's Disease},
+  volume={15},
+  number={3},
+  pages={351--355},
+  year={2008},
+  publisher={IOS Press}
+}
+@article{formaglio2011vivo,
+  title={In vivo demonstration of amyloid burden in posterior cortical atrophy: a case series with {PET} and {CSF} findings},
+  author={Formaglio, Ma{\"\i}t{\'e} and Costes, Nicolas and Seguin, J{\'e}r{\'e}mie and Tholance, Yannick and Le Bars, Didier and Roullet-Solignac, Isabelle and Mercier, Bernadette and Krolak-Salmon, Pierre and Vighetto, Alain},
+  journal={Journal of neurology},
+  volume={258},
+  number={10},
+  pages={1841--1851},
+  year={2011},
+  publisher={Springer}
+}
+@article{de2011similar,
+  title={Similar amyloid-$\beta$ burden in posterior cortical atrophy and {Alzheimer's} disease},
+  author={De Souza, Leonardo Cruz and Corlier, Fabian and Habert, Marie-Odile and Uspenskaya, Olga and Maroy, Renaud and Lamari, Foudil and Chupin, Marie and Leh{\'e}ricy, St{\'e}phane and Colliot, Olivier and Hahn-Barma, Val{\'e}rie and others},
+  journal={Brain},
+  volume={134},
+  number={7},
+  pages={2036--2043},
+  year={2011},
+  publisher={Oxford University Press}
+}
+@article{mehta2017trials,
+  title={Why do trials for {Alzheimer's} disease drugs keep failing? A discontinued drug perspective for 2010-2015},
+  author={Mehta, Dev and Jackson, Robert and Paul, Gaurav and Shi, Jiong and Sabbagh, Marwan},
+  journal={Expert opinion on investigational drugs},
+  volume={26},
+  number={6},
+  pages={735--739},
+  year={2017},
+  publisher={Taylor \& Francis}
+}
+@article{jack200811c,
+  title={11C PiB and structural {MRI} provide complementary information in imaging of {Alzheimer's} disease and amnestic mild cognitive impairment},
+  author={Jack Jr, Clifford R and Lowe, Val J and Senjem, Matthew L and Weigand, Stephen D and Kemp, Bradley J and Shiung, Maria M and Knopman, David S and Boeve, Bradley F and Klunk, William E and Mathis, Chester A and others},
+  journal={Brain},
+  volume={131},
+  number={3},
+  pages={665--680},
+  year={2008},
+  publisher={Oxford University Press}
+}
+@article{hyman2011amyloid,
+  title={Amyloid-dependent and amyloid-independent stages of Alzheimer disease},
+  author={Hyman, Bradley T},
+  journal={Archives of neurology},
+  volume={68},
+  number={8},
+  pages={1062--1064},
+  year={2011},
+  publisher={American Medical Association}
+}
+@article{ridha2006tracking,
+  title={Tracking atrophy progression in familial {Alzheimer's} disease: a serial {MRI} study},
+  author={Ridha, Basil H and Barnes, Josephine and Bartlett, Jonathan W and Godbolt, Alison and Pepple, Tracey and Rossor, Martin N and Fox, Nick C},
+  journal={The Lancet Neurology},
+  volume={5},
+  number={10},
+  pages={828--834},
+  year={2006},
+  publisher={Elsevier}
+}
+@article{jack2008atrophy,
+  title={Atrophy rates accelerate in amnestic mild cognitive impairment},
+  author={Jack, CR and Weigand, Stephen D and Shiung, Maria M and Przybelski, Scott A and O’Brien, Peter C and Gunter, Jeffrey L and Knopman, David S and Boeve, Bradley F and Smith, Glenn E and Petersen, Ronald C},
+  journal={Neurology},
+  volume={70},
+  number={19 Part 2},
+  pages={1740--1752},
+  year={2008},
+  publisher={AAN Enterprises}
+}
+@article{stoub2005mri,
+  title={MRI predictors of risk of incident Alzheimer disease: a longitudinal study},
+  author={Stoub, TR and Bulgakova, M and Leurgans, S and Bennett, DA and Fleischman, D and Turner, DA and others},
+  journal={Neurology},
+  volume={64},
+  number={9},
+  pages={1520--1524},
+  year={2005},
+  publisher={AAN Enterprises}
+}
+@article{driscoll2009longitudinal,
+  title={Longitudinal pattern of regional brain volume change differentiates normal aging from {MCI}},
+  author={Driscoll, I and Davatzikos, C and An, Y and Wu, X and Shen, D and Kraut, M and Resnick, SM},
+  journal={Neurology},
+  volume={72},
+  number={22},
+  pages={1906--1913},
+  year={2009},
+  publisher={AAN Enterprises}
+}
+@article{benzinger2013regional,
+  title={Regional variability of imaging biomarkers in autosomal dominant {Alzheimer's} disease},
+  author={Benzinger, Tammie L and Blazey, Tyler and Jack, Clifford R and Koeppe, Robert A and Su, Yi and Xiong, Chengjie and Raichle, Marcus E and Snyder, Abraham Z and Ances, Beau M and Bateman, Randall J and others},
+  journal={Proceedings of the National Academy of Sciences},
+  volume={110},
+  number={47},
+  pages={E4502--E4509},
+  year={2013},
+  publisher={National Acad Sciences}
+}
+@article{jack2012shapes,
+  title={Shapes of the trajectories of 5 major biomarkers of Alzheimer disease},
+  author={Jack, Clifford R and Vemuri, Prashanthi and Wiste, Heather J and Weigand, Stephen D and Lesnick, Timothy G and Lowe, Val and Kantarci, Kejal and Bernstein, Matt A and Senjem, Matthew L and Gunter, Jeffrey L and others},
+  journal={Archives of neurology},
+  volume={69},
+  number={7},
+  pages={856--867},
+  year={2012},
+  publisher={American Medical Association}
+}
+@article{dickerson2011alzheimer,
+  title={Alzheimer-signature {MRI} biomarker predicts {AD} dementia in cognitively normal adults},
+  author={Dickerson, BC and Stoub, TR and Shah, RC and Sperling, RA and Killiany, RJ and Albert, MS and Hyman, BT and Blacker, Deborah and others},
+  journal={Neurology},
+  volume={76},
+  number={16},
+  pages={1395--1402},
+  year={2011},
+  publisher={AAN Enterprises}
+}
+@article{bouwman2007csf,
+  title={CSF biomarkers and medial temporal lobe atrophy predict dementia in mild cognitive impairment},
+  author={Bouwman, FH and Schoonenboom, SNM and van Der Flier, WM and Van Elk, EJ and Kok, A and Barkhof, F and Blankenstein, MA and Scheltens, Ph},
+  journal={Neurobiology of aging},
+  volume={28},
+  number={7},
+  pages={1070--1074},
+  year={2007},
+  publisher={Elsevier}
+}
+@article{csernansky2005preclinical,
+  title={Preclinical detection of {Alzheimer's} disease: hippocampal shape and volume predict dementia onset in the elderly},
+  author={Csernansky, JG and Wang, L and Swank, J and Miller, JP and Gado, M and McKeel, D and Miller, MI and Morris, JC},
+  journal={Neuroimage},
+  volume={25},
+  number={3},
+  pages={783--792},
+  year={2005},
+  publisher={Elsevier}
+}
+@article{hansson2006association,
+  title={Association between {CSF} biomarkers and incipient {Alzheimer's} disease in patients with mild cognitive impairment: a follow-up study},
+  author={Hansson, Oskar and Zetterberg, Henrik and Buchhave, Peder and Londos, Elisabet and Blennow, Kaj and Minthon, Lennart},
+  journal={The Lancet Neurology},
+  volume={5},
+  number={3},
+  pages={228--234},
+  year={2006},
+  publisher={Elsevier}
+}
+@article{kawas2003visual,
+  title={Visual memory predicts {Alzheimer's} disease more than a decade before diagnosis},
+  author={Kawas, CH and Corrada, MM and Brookmeyer, R and Morrison, A and Resnick, SM and Zonderman, AB and Arenberg, D},
+  journal={Neurology},
+  volume={60},
+  number={7},
+  pages={1089--1093},
+  year={2003},
+  publisher={AAN Enterprises}
+}
+@article{morris2001mild,
+  title={Mild cognitive impairment represents early-stage Alzheimer disease},
+  author={Morris, John C and Storandt, Martha and Miller, J Phillip and McKeel, Daniel W and Price, Joseph L and Rubin, Eugene H and Berg, Leonard},
+  journal={Archives of neurology},
+  volume={58},
+  number={3},
+  pages={397--405},
+  year={2001},
+  publisher={American Medical Association}
+}
+@article{modrego2004depression,
+  title={Depression in patients with mild cognitive impairment increases the risk of developing dementia of Alzheimer type: a prospective cohort study},
+  author={Modrego, Pedro J and Ferr{\'a}ndez, Jaime},
+  journal={Archives of neurology},
+  volume={61},
+  number={8},
+  pages={1290--1293},
+  year={2004},
+  publisher={American Medical Association}
+}
+@article{carr2000value,
+  title={The value of informant versus individual’s complaints of memory impairment in early dementia},
+  author={Carr, David B and Gray, Steven and Baty, Jack and Morris, John C},
+  journal={Neurology},
+  volume={55},
+  number={11},
+  pages={1724--1727},
+  year={2000},
+  publisher={AAN Enterprises}
+}
+@article{khachaturian2004apolipoprotein,
+  title={Apolipoprotein E ϵ4 count affects age at onset of Alzheimer disease, but not lifetime susceptibility: the Cache County Study},
+  author={Khachaturian, Ara S and Corcoran, Christopher D and Mayer, Lawrence S and Zandi, Peter P and Breitner, John CS},
+  journal={Archives of general psychiatry},
+  volume={61},
+  number={5},
+  pages={518--524},
+  year={2004},
+  publisher={American Medical Association}
+}
+@article{vemuri2009mri,
+  title={MRI and {CSF} biomarkers in normal,  {MCI}, and {AD} subjects: diagnostic discrimination and cognitive correlations},
+  author={Vemuri, P and Wiste, HJ and Weigand, SD and Shaw, LM and Trojanowski, JQ and Weiner, MW and Knopman, DS and Petersen, RC and Jack, CR and others},
+  journal={Neurology},
+  volume={73},
+  number={4},
+  pages={287--293},
+  year={2009},
+  publisher={AAN Enterprises}
+}
+@article{koval2018spatiotemporal,
+  title={Spatiotemporal Propagation of the Cortical Atrophy: Population and Individual Patterns},
+  author={Koval, Igor and Schiratti, Jean-Baptiste and Routier, Alexandre and Bacci, Michael and Colliot, Olivier and Allassonniere, Stephanie and Durrleman, Stanley},
+  journal={Frontiers in Neurology},
+  volume={9},
+  year={2018},
+  publisher={Frontiers Media SA}
+}
+@article{hochreiter1997long,
+  title={Long short-term memory},
+  author={Hochreiter, Sepp and Schmidhuber, J{\"u}rgen},
+  journal={Neural computation},
+  volume={9},
+  number={8},
+  pages={1735--1780},
+  year={1997},
+  publisher={MIT Press}
+}
+@article{karlekar2018detecting,
+  title={Detecting Linguistic Characteristics of {Alzheimer's} Dementia by Interpreting Neural Models},
+  author={Karlekar, Sweta and Niu, Tong and Bansal, Mohit},
+  journal={arXiv preprint arXiv:1804.06440},
+  year={2018}
+}
+@inproceedings{razavian2016multi,
+  title={Multi-task prediction of disease onsets from longitudinal laboratory tests},
+  author={Razavian, Narges and Marcus, Jake and Sontag, David},
+  booktitle={Machine Learning for Healthcare Conference},
+  pages={73--100},
+  year={2016}
+}
+@article{lipton2015learning,
+  title={Learning to diagnose with LSTM recurrent neural networks},
+  author={Lipton, Zachary C and Kale, David C and Elkan, Charles and Wetzel, Randall},
+  journal={arXiv preprint arXiv:1511.03677},
+  year={2015}
+}
+@article{aczon2017dynamic,
+  title={Dynamic mortality risk predictions in pediatric critical care using recurrent neural networks},
+  author={Aczon, Melissa and Ledbetter, David and Ho, L and Gunny, Alec and Flynn, Alysia and Williams, Jon and Wetzel, Randall},
+  journal={arXiv preprint arXiv:1701.06675},
+  year={2017}
+}
+@article{harutyunyan2017multitask,
+  title={Multitask learning and benchmarking with clinical time series data},
+  author={Harutyunyan, Hrayr and Khachatrian, Hrant and Kale, David C and Galstyan, Aram},
+  journal={arXiv preprint arXiv:1703.07771},
+  year={2017}
+}
+@article{georgiadis2018computational,
+  title={Computational modelling of pathogenic protein spread in neurodegenerative diseases},
+  author={Georgiadis, Konstantinos and Wray, Selina and Ourselin, S{\'e}bastien and Warren, Jason D and Modat, Marc},
+  journal={PloS one},
+  volume={13},
+  number={2},
+  pages={e0192518},
+  year={2018},
+  publisher={Public Library of Science}
+}
+@article{warren2013frontotemporal,
+  title={Frontotemporal dementia},
+  author={Warren, Jason D and Rohrer, Jonathan D and Rossor, Martin N},
+  journal={Bmj},
+  volume={347},
+  pages={f4827},
+  year={2013},
+  publisher={British Medical Journal Publishing Group}
+}
+@article{goldenberg2012multiple,
+  title={Multiple sclerosis review},
+  author={Goldenberg, Marvin M},
+  journal={Pharmacy and Therapeutics},
+  volume={37},
+  number={3},
+  pages={175},
+  year={2012},
+  publisher={MediMedia, USA}
+}
+@article{poewe2017parkinson,
+  title={Parkinson disease},
+  author={Poewe, Werner and Seppi, Klaus and Tanner, Caroline M and Halliday, Glenda M and Brundin, Patrik and Volkmann, Jens and Schrag, Anette-Eleonore and Lang, Anthony E},
+  journal={Nature reviews Disease primers},
+  volume={3},
+  pages={17013},
+  year={2017},
+  publisher={Nature Publishing Group}
+}
+@article{caballol2007cognitive,
+  title={Cognitive dysfunction and dementia in Parkinson disease},
+  author={Caballol, Nuria and Mart{\'\i}, Maria J and Tolosa, Eduardo},
+  journal={Movement disorders: official journal of the Movement Disorder Society},
+  volume={22},
+  number={S17},
+  pages={S358--S366},
+  year={2007},
+  publisher={Wiley Online Library}
+}
+@article{roos2010huntington,
+  title={Huntington's disease: a clinical review},
+  author={Roos, Raymund AC},
+  journal={Orphanet journal of rare diseases},
+  volume={5},
+  number={1},
+  pages={40},
+  year={2010},
+  publisher={BioMed Central}
+}
+@article{feigin2001metabolic,
+  title={Metabolic Network Abnormalities in Early Huntington's Disease: An 18F {FDG} {PET} Study},
+  author={Feigin, Andrew and Leenders, Klaus L and Moeller, James R and Missimer, John and Kuenig, Gabriella and Spetsieris, Phoebe and Antonini, Angelo and Eidelberg, David},
+  journal={Journal of Nuclear Medicine},
+  volume={42},
+  number={11},
+  pages={1591--1595},
+  year={2001},
+  publisher={[New York] Society of Nuclear Medicine.}
+}
+@article{georgiou2008magnetic,
+  title={Magnetic resonance imaging as an approach towards identifying neuropathological biomarkers for Huntington's disease},
+  author={Georgiou-Karistianis, Nellie and Hannan, Anthony J and Egan, Gary F},
+  journal={Brain research reviews},
+  volume={58},
+  number={1},
+  pages={209--225},
+  year={2008},
+  publisher={Elsevier}
+}
+@article{cash2014imaging,
+  title={Imaging endpoints for clinical trials in {Alzheimer's} disease},
+  author={Cash, David M and Rohrer, Jonathan D and Ryan, Natalie S and Ourselin, Sebastien and Fox, Nick C},
+  journal={Alzheimer's research \& therapy},
+  volume={6},
+  number={9},
+  pages={87},
+  year={2014},
+  publisher={BioMed Central}
+}
+@article{eshaghi2018progression,
+  title={Progression of regional grey matter atrophy in multiple sclerosis},
+  author={Eshaghi, Arman and Marinescu, Razvan V and Young, Alexandra L and Firth, Nicholas C and Prados, Ferran and Jorge Cardoso, M and Tur, Carmen and De Angelis, Floriana and Cawley, Niamh and Brownlee, Wallace J and others},
+  journal={Brain},
+  volume={141},
+  number={6},
+  pages={1665--1677},
+  year={2018},
+  publisher={Oxford University Press}
+}
+@article{kovacs2013non,
+  title={Non-Alzheimer neurodegenerative pathologies and their combinations are more frequent than commonly believed in the elderly brain: a community-based autopsy series},
+  author={Kovacs, Gabor G and Milenkovic, Ivan and W{\"o}hrer, Adelheid and H{\"o}ftberger, Romana and Gelpi, Ellen and Haberler, Christine and H{\"o}nigschnabl, Selma and Reiner-Concin, Angelika and Heinzl, Harald and Jungwirth, Susanne and others},
+  journal={Acta neuropathologica},
+  volume={126},
+  number={3},
+  pages={365--384},
+  year={2013},
+  publisher={Springer}
+}
+@article{james2016tdp,
+  title={TDP-43 stage, mixed pathologies, and clinical Alzheimer’s-type dementia},
+  author={James, Bryan D and Wilson, Robert S and Boyle, Patricia A and Trojanowski, John Q and Bennett, David A and Schneider, Julie A},
+  journal={Brain},
+  volume={139},
+  number={11},
+  pages={2983--2993},
+  year={2016},
+  publisher={Oxford University Press}
+}
+@article{scelsi2018genetic,
+  title={Genetic study of multimodal imaging {Alzheimer's} disease progression score implicates novel loci},
+  author={Scelsi, Marzia A and Khan, Raiyan R and Lorenzi, Marco and Christopher, Leigh and Greicius, Michael D and Schott, Jonathan M and Ourselin, Sebastien and Altmann, Andre},
+  journal={Brain},
+  year={2018}
+}
+@article{stein2010voxelwise,
+  title={Voxelwise genome-wide association study (vGWAS)},
+  author={Stein, Jason L and Hua, Xue and Lee, Suh and Ho, April J and Leow, Alex D and Toga, Arthur W and Saykin, Andrew J and Shen, Li and Foroud, Tatiana and Pankratz, Nathan and others},
+  journal={Neuroimage},
+  volume={53},
+  number={3},
+  pages={1160--1174},
+  year={2010},
+  publisher={Elsevier}
+}
+@article{marek2011parkinson,
+  title={The parkinson progression marker initiative (PPMI)},
+  author={Marek, Kenneth and Jennings, Danna and Lasch, Shirley and Siderowf, Andrew and Tanner, Caroline and Simuni, Tanya and Coffey, Chris and Kieburtz, Karl and Flagg, Emily and Chowdhury, Sohini and others},
+  journal={Progress in neurobiology},
+  volume={95},
+  number={4},
+  pages={629--635},
+  year={2011},
+  publisher={Elsevier}
+}
+@article{morris2012developing,
+  title={Developing an international network for Alzheimer research: the Dominantly Inherited Alzheimer Network},
+  author={Morris, John C and Aisen, Paul S and Bateman, Randall J and Benzinger, Tammie LS and Cairns, Nigel J and Fagan, Anne M and Ghetti, Bernardino and Goate, Alison M and Holtzman, David M and Klunk, William E and others},
+  journal={Clinical investigation},
+  volume={2},
+  number={10},
+  pages={975},
+  year={2012},
+  publisher={NIH Public Access}
+}
+@article{tabrizi2009biological,
+  title={Biological and clinical manifestations of Huntington's disease in the longitudinal TRACK-HD study: cross-sectional analysis of baseline data},
+  author={Tabrizi, Sarah J and Langbehn, Douglas R and Leavitt, Blair R and Roos, Raymund AC and Durr, Alexandra and Craufurd, David and Kennard, Christopher and Hicks, Stephen L and Fox, Nick C and Scahill, Rachael I and others},
+  journal={The Lancet Neurology},
+  volume={8},
+  number={9},
+  pages={791--801},
+  year={2009},
+  publisher={Elsevier}
+}
+@article{ikram2017rotterdam,
+  title={The Rotterdam Study: 2018 update on objectives, design and main results},
+  author={Ikram, M Arfan and Brusselle, Guy GO and Murad, Sarwa Darwish and van Duijn, Cornelia M and Franco, Oscar H and Goedegebure, Andr{\'e} and Klaver, Caroline CW and Nijsten, Tamar EC and Peeters, Robin P and Stricker, Bruno H and others},
+  journal={European Journal of Epidemiology},
+  volume={32},
+  number={9},
+  pages={807--850},
+  year={2017},
+  publisher={Springer}
+}
+@article{ellis2009australian,
+  title={The Australian Imaging, Biomarkers and Lifestyle (AIBL) study of aging: methodology and baseline characteristics of 1112 individuals recruited for a longitudinal study of {Alzheimer's} disease},
+  author={Ellis, Kathryn A and Bush, Ashley I and Darby, David and De Fazio, Daniela and Foster, Jonathan and Hudson, Peter and Lautenschlager, Nicola T and Lenzo, Nat and Martins, Ralph N and Maruff, Paul and others},
+  journal={International Psychogeriatrics},
+  volume={21},
+  number={4},
+  pages={672--687},
+  year={2009},
+  publisher={Cambridge University Press}
+}
+@article{hsu2014gait,
+  title={Gait and balance analysis for patients with {Alzheimer's} disease using an inertial-sensor-based wearable instrument},
+  author={Hsu, Yu-Liang and Chung, Pau-Choo and Wang, Wei-Hsin and Pai, Ming-Chyi and Wang, Chun-Yao and Lin, Chien-Wen and Wu, Hao-Li and Wang, Jeen-Shing},
+  journal={IEEE journal of biomedical and health informatics},
+  volume={18},
+  number={6},
+  pages={1822--1830},
+  year={2014},
+  publisher={IEEE}
+}
+@article{hutton1984eye,
+  title={Eye tracking dysfunction in Alzheimer-type dementia},
+  author={Hutton, J Thomas and Nagel, JA and Loewenson, Ruth B},
+  journal={Neurology},
+  volume={34},
+  number={1},
+  pages={99--99},
+  year={1984},
+  publisher={AAN Enterprises}
+}
+@article{hoffmann2010temporal,
+  title={Temporal parameters of spontaneous speech in {Alzheimer's} disease},
+  author={Hoffmann, Ildik{\'o} and Nemeth, Dezso and Dye, Cristina D and P{\'a}k{\'a}ski, Magdolna and Irinyi, Tam{\'a}s and K{\'a}lm{\'a}n, J{\'a}nos},
+  journal={International journal of speech-language pathology},
+  volume={12},
+  number={1},
+  pages={29--34},
+  year={2010},
+  publisher={Taylor \& Francis}
+}
+@article{khanal2016biophysical,
+  title={A biophysical model of brain deformation to simulate and analyze longitudinal MRIs of patients with {Alzheimer's} disease},
+  author={Khanal, Bishesh and Lorenzi, Marco and Ayache, Nicholas and Pennec, Xavier},
+  journal={NeuroImage},
+  volume={134},
+  pages={35--52},
+  year={2016},
+  publisher={Elsevier}
+}
+@article{stern2012cognitive,
+  title={Cognitive reserve in ageing and {Alzheimer's} disease},
+  author={Stern, Yaakov},
+  journal={The Lancet Neurology},
+  volume={11},
+  number={11},
+  pages={1006--1012},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{larner2006clinical,
+  title={Clinical phenotypic heterogeneity of {Alzheimer's} disease associated with mutations of the presenilin--1 gene},
+  author={Larner, AJ and Doran, M},
+  journal={Journal of neurology},
+  volume={253},
+  number={2},
+  pages={139--158},
+  year={2006},
+  publisher={Springer}
+}
+@article{whitwell2010progression,
+  title={Progression of atrophy in {Alzheimer’s} disease and related disorders},
+  author={Whitwell, Jennifer L},
+  journal={Neurotoxicity research},
+  volume={18},
+  number={3-4},
+  pages={339--346},
+  year={2010},
+  publisher={Springer}
+}
+@article{marcus2014brain,
+  title={Brain {PET} in the diagnosis of {Alzheimer's} disease},
+  author={Marcus, Charles and Mena, Esther and Subramaniam, Rathan M},
+  journal={Clinical nuclear medicine},
+  volume={39},
+  number={10},
+  pages={e413},
+  year={2014},
+  publisher={NIH Public Access}
+}
+@article{clark2011use,
+  title={Use of florbetapir-{PET} for imaging $\beta$-amyloid pathology},
+  author={Clark, Christopher M and Schneider, Julie A and Bedell, Barry J and Beach, Thomas G and Bilker, Warren B and Mintun, Mark A and Pontecorvo, Michael J and Hefti, Franz and Carpenter, Alan P and Flitter, Matthew L and others},
+  journal={JAMA},
+  volume={305},
+  number={3},
+  pages={275--283},
+  year={2011},
+  publisher={American Medical Association}
+}
+@article{clark2012cerebral,
+  title={Cerebral {PET} with florbetapir compared with neuropathology at autopsy for detection of neuritic amyloid-$\beta$ plaques: a prospective cohort study},
+  author={Clark, Christopher M and Pontecorvo, Michael J and Beach, Thomas G and Bedell, Barry J and Coleman, R Edward and Doraiswamy, P Murali and Fleisher, Adam S and Reiman, Eric M and Sabbagh, Marwan N and Sadowsky, Carl H and others},
+  journal={The Lancet Neurology},
+  volume={11},
+  number={8},
+  pages={669--678},
+  year={2012},
+  publisher={Elsevier}
+}
+@article{ossenkoppele2016tau,
+  title={Tau {PET} patterns mirror clinical and neuroanatomical variability in {Alzheimer's} disease},
+  author={Ossenkoppele, Rik and Schonhaut, Daniel R and Sch{\"o}ll, Michael and Lockhart, Samuel N and Ayakta, Nagehan and Baker, Suzanne L and O’Neil, James P and Janabi, Mustafa and Lazaris, Andreas and Cantwell, Averill and others},
+  journal={Brain},
+  volume={139},
+  number={5},
+  pages={1551--1567},
+  year={2016},
+  publisher={Oxford University Press}
+}
+@article{wijeratne2018image,
+  title={An image-based model of brain volume biomarker changes in Huntington's disease},
+  author={Wijeratne, Peter A and Young, Alexandra L and Oxtoby, Neil P and Marinescu, Razvan V and Firth, Nicholas C and Johnson, Eileanoir B and Mohan, Amrita and Sampaio, Cristina and Scahill, Rachael I and Tabrizi, Sarah J and others},
+  journal={Annals of clinical and translational neurology},
+  volume={5},
+  number={5},
+  pages={570--582},
+  year={2018},
+  publisher={Wiley Online Library}
+}
+@article{trojanowski2010update,
+  title={Update on the biomarker core of the Alzheimer's Disease Neuroimaging Initiative subjects},
+  author={Trojanowski, John Q and Vandeerstichele, Hugo and Korecka, Magdalena and Clark, Christopher M and Aisen, Paul S and Petersen, Ronald C and Blennow, Kaj and Soares, Holly and Simon, Adam and Lewczuk, Piotr and others},
+  journal={Alzheimer's \& Dementia},
+  volume={6},
+  number={3},
+  pages={230--238},
+  year={2010},
+  publisher={Elsevier}
+}
+@article{iturria2016early,
+  title={Early role of vascular dysregulation on late-onset Alzheimer’s disease based on multifactorial data-driven analysis},
+  author={Iturria-Medina, Yasser and Sotero, Roberto C and Toussaint, Paule J and Mateos-P{\'e}rez, Jos{\'e} Mar{\'\i}a and Evans, Alan C and Weiner, Michael W and Aisen, Paul and Petersen, Ronald and Jack, Clifford R and Jagust, William and others},
+  journal={Nature communications},
+  volume={7},
+  pages={11934},
+  year={2016},
+  publisher={Nature Publishing Group}
+}
+@article{cheng2017multi,
+  title={Multi-domain transfer learning for early diagnosis of alzheimer’s disease},
+  author={Cheng, Bo and Liu, Mingxia and Shen, Dinggang and Li, Zuoyong and Zhang, Daoqiang and Alzheimer’s Disease Neuroimaging Initiative},
+  journal={Neuroinformatics},
+  volume={15},
+  number={2},
+  pages={115--132},
+  year={2017},
+  publisher={Springer}
+}
+@article{cheng2015domain,
+  title={Domain transfer learning for MCI conversion prediction},
+  author={Cheng, Bo and Liu, Mingxia and Zhang, Daoqiang and Munsell, Brent C and Shen, Dinggang},
+  journal={IEEE Transactions on Biomedical Engineering},
+  volume={62},
+  number={7},
+  pages={1805--1817},
+  year={2015},
+  publisher={IEEE}
+}
+@article{johnson2012brain,
+  title={Brain imaging in Alzheimer disease},
+  author={Johnson, Keith A and Fox, Nick C and Sperling, Reisa A and Klunk, William E},
+  journal={Cold Spring Harbor perspectives in medicine},
+  pages={a006213},
+  year={2012},
+  publisher={Cold Spring Harbor Laboratory Press}
+}
+@article{platt1998sequential,
+  title={Sequential minimal optimization: A fast algorithm for training support vector machines},
+  author={Platt, John},
+  year={1998}
+}
+@inproceedings{hinton2003stochastic,
+  title={Stochastic neighbor embedding},
+  author={Hinton, Geoffrey E and Roweis, Sam T},
+  booktitle={Advances in neural information processing systems},
+  pages={857--864},
+  year={2003}
+}
+@misc{marinescu2019BrainPainter,
+  author = {Marinescu, Razvan V.},
+  title = {BrainPainter - Brain Colouring Software (open-source)},
+  year = {2019},
+  howpublished = {\url{https://github.com/mrazvan22/brain-coloring}},
+}
+\end{filecontents*}
+
+
+
+
+
+\begin{document}
+\belowdisplayskip=12pt plus 3pt minus 9pt
+\belowdisplayshortskip=7pt plus 3pt minus 4pt
+
+\sloppy
+
+% for fancyhdr
+\FrontPageStyle{}
+
+\begin{titlepage}
+\begin{center}
+
+% % Upper part of the page. The '~' is needed because \\
+% % works if a paragraph has started.
+% \includegraphics[width=0.3\textwidth]{./images/ucl-logo2}~\\[1cm]
+% 
+% \textsc{\LARGE University College London}\\[1.5cm]
+% 
+% \textsc{\Large MRes Project}\\[0.5cm]
+
+{\Large 
+
+% Title
+\HRule \\[0.4cm]
+{ \LARGE Modelling the Neuroanatomical Progression of Alzheimer's Disease and Posterior Cortical Atrophy\\[0.4cm] }
+
+\HRule \\[1.5cm]
+
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \Large
+\emph{Author:}\\
+R\u{a}zvan V. \textsc{Marinescu}
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\begin{flushright} \Large
+\emph{Supervisors:} \\
+Prof. Daniel C. \textsc{Alexander}\\
+Dr. Sebastian \textsc{Crutch}\\
+Dr. Neil P. \textsc{Oxtoby} 
+\end{flushright}
+\end{minipage}
+
+
+\vfill
+
+\includegraphics[height=7cm]{images/cortical_1}
+
+\vfill
+ 
+A dissertation submitted in partial fulfillment \\
+of the requirements for the degree of\\[0.3cm]
+\textbf{Doctor of Philosophy}\\[0.3cm]
+of\\[0.3cm]
+\textbf{University College London}\\[1cm]
+
+Centre for Medical Image Computing, University College London
+ 
+ \vfill
+% 
+% Word count: 18,847 (as measured by texcount)
+% 
+% \vfill
+
+% Bottom of the page
+{\Large Defense date: January 23, 2019} % date of defense/viva
+
+}
+\end{center}
+\end{titlepage}
+% \maketitle{}
+
+
+\clearpage
+
+
+I, R\u{a}zvan Valentin Marinescu, confirm that the work presented in this thesis is my own. Where information has been derived from other sources, I confirm that this has been indicated in the thesis.
+
+\clearpage
+
+
+\chapter*{Abstract}
+
+In order to find effective treatments for Alzheimer's disease (AD), a devastating neurodegenerative disease affecting millions of people worldwide, we need to identify subjects at risk of AD as early as possible. To this end, disease progression models have been recently developed, which not only to perform early diagnosis, but also estimate a unique disease signature that is used to predict the subjects' disease stages and future evolution. However, these models have not yet been applied to rare neurodegenerative diseases, are not suitable to understand the complex dynamics of biomarkers, work only on large multimodal datasets, and their predictive performance has not been objectively validated.
+
+In this work I developed novel models of disease progression and applied them to estimate the progression of Alzheimer's disease and Posterior Cortical atrophy, a rare neurodegenerative syndrome causing visual deficits. My first contribution is a study on the progression of Posterior Cortical Atrophy, using models already developed: the Event-based Model (EBM) and the Differential Equation Model (DEM). My second contribution is the development of DIVE, a novel spatio-temporal model of disease progression that estimates fine-grained spatial patterns of pathology, potentially enabling us to understand complex disease mechanisms relating to pathology propagation along brain networks. My third contribution is the development of Disease Knowledge Transfer (DKT), a novel disease progression model that estimates the multimodal progression of rare neurodegenerative diseases from limited, unimodal datasets, by transferring information from larger, multimodal datasets of typical neurodegenerative diseases. My fourth contribution is the development of novel extensions for the EBM and the DEM, and the development of novel measures for performance evaluation of such models. My last contribution is the organization of the TADPOLE challenge, a competition which aims to identify algorithms and features that best predict the evolution of AD. 
+
+\chapter*{Impact Statement}
+\thispagestyle{empty}
+
+The work presented in this thesis furthers our understanding of the temporal evolution of Posterior Cortical Atrophy and Alzheimer's disease. The disease progression models and evaluation techniques that we developed can help towards understanding underlying disease mechanisms, aid patient stratification and drug evaluation in clinical trials for Alzheimer's disease and Posterior Cortical Atrophy, and can be used in clinical practice for predicting the future evolution of subjects that are at risk of developing Alzheimer's disease. 
+
+I published the work in this PhD thesis in two first-author papers (DIVE and TADPOLE chapters), and will soon submit another two papers (DKT and PCA chapters). I have also communicated my results in international conferences. I have also engaged with the broader scientific community by organising the TADPOLE Challenge, as well as a couple of hackathons at the PyConUK conference and the CMIC Summer School.
+
+%Alzheimer's disease (AD), along with related dementias, is a devastating neurodegenerative disease that affects up to 44 million people worldwide.  All clinical trials have so far failed to find disease-modifying treatments -- it is believed that treatments are administered too late, and to wrong subjects that have different underlying pathology. We thus need to administer treatments as early as possible, and to the right subjects. 
+
+
+
+\chapter*{Acknowledgements}
+\thispagestyle{empty}
+
+%When I first started my PhD in October 2014, I attended a welcome lecture by Ivana Drobnjak who said that a PhD is a marathon and not a race. For me, it has actually been more of a triathlon. I've sometimes almost "drowned" in projects that didn't seem to lead to anywhere, while other times I've been cycling through tasks at great speed. 
+
+There are many great people who have helped my PhD project become reality. First of all, I'd like to thank my supervisor Daniel Alexander, for his great advice, ideas and research directions. He has always encouraged me to pursue interesting ideas and supported me in developing them. Secondly, I'd also like to thank Alexandra Young and Neil Oxtoby for teaching me disease progression modelling, especially in the early years of my PhD. I'd also like to thank Sebastian Crutch, Tim Shakespeare, Keir Yong, and other DRC collaborators, for their help and advice on Posterior Cortical Atrophy and other clinical aspects of my work. I'd like to thank Marco Lorenzi, for trying to explain mathematics to a wanna-be mathematician like myself. Marco and Neil are also great guitar players, which I had the opportunity to hear a few times. I'd also like to thank Sara Garbarino, for her great spirit, for taking the time to repeatedly listen to my presentations when rehearsing them, and for reminding me that I was probably the biggest nerd in CMIC. I'd further like to thank the POND group, for the help they offered me throughout my PhD, for the great coffees we had after our meetings, and for reminding me that I can't deal with non-working technology in hotels during our trips in the Netherlands. I'd like to thank Gary Zhang for coaching me on how to present my work without putting half of the audience to sleep, as well as others in MIG and CMIC, for teaching me about diffusion MRI, machine learning and other imaging techniques. I remember coming to those meetings in early days of my PhD and not understanding what was being discussed.
+
+In terms of the social aspect, I had a wonderful time at UCL. I'll miss the trips organised by Pawel Markiewicz around Wales and Cornwall, where we had a lot of fun surfing, playing frisbee and BBQ-ing on the beach. I'll also miss the great camping trips with the CMIC folks in Peak District and Lake district, when I attempted driving -- successfully! -- for the first time in the UK! I'll also miss the great time I had with Thore Bucking, Emma Hill and Kin Quan during the MRes year. I'll miss the dinners and lunches such as the EuroPOND celebratory lunch, when we got so excited that we each ordered 4 glasses of champagne, which got me tipsy. When we came back to UCL after lunch I realised I was actually breaking the code instead of doing anything useful.
+
+Finally, I'd like to thank my parents, Aurora and Dan Marinescu, for their love and support, without which I wouldn't have been able to start the PhD in the first place. My brother Robert Marinescu, for his funny jokes and good spirit. My grandmother Anghelut\u{a} Constantina, for her funny and charismatic character. And my friends and housemates, in particular Vibhav Mishra, Carlos Gavidia and Mikael Brudfors, for the wonderful time spent in the Ifor residence, as well as Georgiana Ghetie, Alexandru Barbu and Oana Lang, for their light-hearted spirit, conversations and for the fun we had in the last few months of my PhD. 
+
+\clearpage
+
+\cleardoublepage{}
+\MainPageStyle{}
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\setcounter{tocdepth}{1}
+\listoffigures
+
+\listoftables
+
+\newcommand{\pxgs}{\begin{equation}
+  p(X|S) = \prod_{j=1}^J \left[ \sum_{k=0}^N p(k) \left( \prod_{i=1}^k p\left(x_{s(i),j} | E_{s(i)} \right) \prod_{i=k+1}^N p\left(x_{s(i),j} | \neg E_{s(i)}\right) \right) \right]
+  \end{equation}}
+
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\setlength{\tabcolsep}{0.2em}
+  
+\include{introduction}
+
+\include{background_research}
+
+\include{pcaProg}
+
+\include{perf_eval}
+
+\include{voxelwise}
+
+\include{dkt}
+
+\include{tadpole}
+
+\include{conclusion}
+
+
+\appendix
+
+% these do NOT count as part of the suggested page count
+% This is probably a good place to explain the models in some detail for example
+\include{appendix}
+
+\cleardoublepage
+
+\nocite{*} % Show all Bib-entries
+\bibliographystyle{unsrt}
+\bibliography{report}
+
+%\printbibliography
+
+
+
+
+\end{document}

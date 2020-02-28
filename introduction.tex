@@ -1,0 +1,127 @@
+%auto-ignore
+\chapter{Introduction}
+\label{chapter:intro}
+% AD: symptoms, diagnosis, causes, treatment
+
+\section{Alzheimer's Disease}
+
+% AD cost to society - 
+Alzheimer's disease (AD) is a chronic progressive neurodegenerative disorder that accounts for 60\% to 70\% of all cases of dementia worldwide \cite{Burns2009,world2013dementia}. In 2010 it was estimated that up to 35 million people worldwide suffered from AD \cite{world2013dementia}. Its symptoms include cognitive dysfunction such as memory loss, language difficulties and psychiatric symptoms such as depression, hallucinations, delusions and agitation. Diagnosis is usually based on the person's medical history, information from relatives and behavioural observations.
+
+% neuroimaging + disease mechanisms
+In terms of neuroimaging, Magnetic Resonance Imaging (MRI) shows early atrophy in the medial temporal lobes and fusifom gyrus, which then spreads to the posterior temporal lobe, parietal lobe, and finally to the frontal lobe \cite{whitwell2010progression}, with relative sparing of the sensorimotor cortex, visual cortex and the cerebellum. Imaging with Positron Emission Tomography (PET) shows reduced metabolism and increased uptake of amyloid proteins \cite{marcus2014brain}. The underlying disease mechanisms are currently not well understood -- it is currently believed that initial abnormalities in the folding of amyloid-$\beta$ and/or tau proteins leads to a cascade of events which results in neurodegeneration and cognitive decline \cite{mudher2002alzheimer}. These are known as the amyloid and tau hypotheses \cite{mudher2002alzheimer}.
+
+
+% no treatments - clinical trials failed - treatments not administered early enough - need to identify subjects as early as possible
+There are no treatments that can stop or at least slow down cognitive decline, because all clinical trials so far have failed to prove any disease modifying effect \cite{mudher2002alzheimer}. One of the reasons why clinical trials have failed might be due to a lack of understanding of the underlying mechanisms, which results in wrong drug targets \cite{mehta2017trials}. For example, within the amyloid and tau hypotheses, it is not precisely understood what is the exact process underlying the formation of the misfolded amyloid and tau and what might be the cause of their misfolding \cite{mudher2002alzheimer}. Another reason why clinical trials in AD are believed to have failed is the late administration of the treatment to patients who were already in the symptomatic stage \cite{mehta2017trials}. It is currently believed that for clinical trials to be successful in AD, we need to fully understand the underlying disease mechanisms, in order to identify the right drug targets, and to administer the treatments early in the pre-symptomatic stages, and to the right subjects who will otherwise develop dementia in the future \cite{mehta2017trials}. 
+
+
+% a different variant of AD is PCA -> symptoms -> imaging -> no progression study -> heterogeneity in PCA -> no study on PCA heterogeneity 
+\section{Posterior Cortical Atrophy}
+
+Alzheimer's disease is a very heterogeneous disease, which has been observed both clinically, with amnestic, visual, executive and aphasic types \cite{galton2000atypical} as well as pathologically, with hippocampal sparing and limbic predominant cases reported in the literature \cite{murray2011neuropathologically}. This heterogeneity can help us understand disease causes and underlying mechanisms, and identify risk- and protective-factors. For example, it has been observed that different speeds of progression can be due to differences in amyloid-$\beta$ fibrils among subjects \cite{qiang2017structural}. Another example is that different ages of onset in familial AD are associated with different underlying mutations in the PSEN1 gene \cite{larner2006clinical}.  
+
+A notable example of phenotypic heterogeneity in Alzheimer's disease is given by Posterior Cortical Atrophy (PCA). PCA, also called Benson's syndrome \cite{benson1988posterior}, is a neurodegenerative disease similar to AD that results in disruptions of the visual and motor systems. Early symptoms include blurred vision, inability to read, difficulty with depth perception and problems navigating through space \cite{crutch2012posterior, borruat2013posterior}, while late-stage symptoms can include inability to recognise familiar faces and objects as well as visual hallucinations. Neuroanatomically, PCA is characterised by atrophy in the superior parietal, occipital and posterior temporal regions \cite{lehmann2011cortical, whitwell2007imaging}. However, due to the rarity of the disease, only a limited number of small studies have been done in PCA \cite{crutch2012posterior}. 
+
+\section{Disease Progression Models}
+
+% for both tAD and PCA, need to quantitatively map their progression, to understand underlying mechanisms, and aid clinical trials through stratification and drug evaluation. Progression mapping can be done by tracking the evolution of quantitative biomarkers: MRI, PET, DTI, CSF, cognitive tests. however, no single biomarker is enough to perform accurate staging and predictions, because bla bla. Hence, we need holistic quantitative models that combine multiple biomarkers to enable accurate predictions
+For both PCA and typical AD (tAD), in order to understand the underlying disease mechanisms and to select the right subjects for clinical trials, we need to quantitatively map their longitudinal evolution. To this end, many biomarkers can be used, which are based on Magnetic Resonance Imaging (e.g. brain volumes, cortical thickness), Positron Emission Tomography (e.g. measures of hypometabolism, concentrations of amyloid and tau proteins), samples from cerebrospinal fluid (CSF) (e.g. concentrations of various molecular markers) or neuropsychiatric tests.  However, no single biomarker is sufficient for accurate staging and subject prediction, as they are not specific to one disease and can result in misdiagnosis, can be influenced by variability not related to the disease (e.g. the cognitive reserve theory \cite{stern2012cognitive}), show changes only in limited time windows, and have inherent noise. Therefore, holistic, quantitative models called \emph{disease progression models} are needed, which integrate a variety of biomarker data to estimate the subjects' disease stage and future evolution.  
+
+
+A hypothetical model of disease progression has been proposed by \cite{jack2010hypothetical}, describing the trajectory of key biomarkers along the progression of Alzheimer's disease. The model suggests that amyloid-beta and tau biomarkers become abnormal long before symptoms appear, followed by neurodegeneration and cognitive decline. Motivated by this idea, several data-driven disease progression models have been proposed, that reconstruct biomarker trajectories and can be used to stage subjects. One such model is the Event-Based Model \cite{fonteijn2012event, young2014data}, which estimates the progression of the disease as a sequence of discrete events, representing underlying biomarkers switching from a normal to abnormal state. Another model, the Differential Equation Model (DEM) \cite{villemagne2013amyloid}, reconstructs a continuous trajectory of biomarker measurements from changes in short-term follow-up data, which represent samples of the slope at different points along the trajectory. Other models such as the Disease Progression Score (DPS) \cite{jedynak2012},  Self-Modelling Regression \cite{donohue2014estimating} or Riemannian manifold techniques \cite{schiratti2015mixed} have been developed, that build continuous trajectories by "stitching" together short-term follow-up data.
+
+While these models have shown great promise at identifying the earliest events in the Alzheimer's disease cascade \cite{young2014data, iturria2016early}, mapping the heterogeneity within Alzheimer's disease \cite{young2018uncovering} and showed increased performance in predictions compared to standard approaches \cite{oxtoby2018}, they have some limitations that need to be addressed. First of all, they have not been applied to some rare neurodegenerative diseases such as Posterior Cortical Atrophy. Secondly, they are not suitable for modelling the complex dynamics of biomarkers. This is because they work on extracted features, which generally lack important information present in the brain's morphology; also, they cannot exploit biomarker relationships shared across related diseases. Third, it is not yet clear how to measure the performance of such models, and no previous literature study has been done to establish the comparative performance of such models at different prediction tasks.
+
+\section{Problem Statement}
+
+In the field of Alzheimer's disease progression, there are several issues that need to be addressed:
+\begin{itemize}
+\item The longitudinal neuroanatomical progression of Posterior Cortical Atrophy has not been quantified in a comprehensive study.
+\item Current disease progression models are not appropriate for modelling the complex dynamics of biomarker measurements.
+\item The comparative performance of different models of disease prediction is yet to be established.
+\end{itemize}
+
+The work I present in this thesis tries to address these three aspects.
+
+\section{Justification}
+
+\subsection{Longitudinal Modelling of Posterior Cortical Atrophy}
+
+The longitudinal neuroanatomical progression of Posterior Cortical Atrophy has not been quantified in a comprehensive study so far. Several case studies have been published, which described the brain pathological progression of PCA \cite{ross1996progressive, goethals2001posterior, giovagnoli2009neuropsychological, chang2015substance, kennedy2012visualizing, crutch2017consensus}. The only longitudinal study of PCA \cite{lehmann2012global} showed widespread gray matter loss in both PCA and tAD. However, the numbers were small (17 PCA and 16 tAD) and the time interval was short (1 year). Larger longitudinal studies are therefore required to robustly estimate the progression of brain pathology in PCA, which is important for understanding underlying disease mechanisms and for stratification of subjects clinical trials.
+
+\subsection{Current Disease Progression Models Cannot Model Complex Dynamics}
+
+Current disease progression models are not appropriate for modelling the complex dynamics of biomarker measurements. For example, many models such as the event-based model or the differential equation model cannot be applied to voxelwise biomarker data such as amyloid load or hypometabolism from PET, or cortical thickness/compression maps from MRI. While this can be mitigated by averaging these measures over pre-defined regions of interest, it has been shown that patterns of pathology in different types of dementia are dispersed and disconnected, as they follow underlying brain networks \cite{seeley2009neurodegenerative}. In order to study the link between neuroanatomical pathology and brain networks, we need to develop spatio-temporal models of disease progression that account for changes over the brain structure, as well as over the disease timeline. Such spatio-temporal models can help us understand more complex disease mechanisms and enable more accurate predictions of disease risk, which can aid stratification in clinical trials. 
+
+Another limitation of current disease progression models is that it is challenging to apply them to study rare types of dementia such as PCA. These models generally require large multimodal datasets which are often not available for rare dementias. Therefore, there is a need to develop models that can transfer information from larger multimodal datasets. In particular for PCA, these transfer-learning approaches can enable us to estimate robust, multimodal biomarker trajectories, and to make more accurate predictions for each subject.
+
+\subsection{Comparative Performance of Different Disease Progression Models}
+
+The comparative performance of different models of disease prediction is yet to be established. More precisely, there has not been any study comparing the performance of algorithms and features at longitudinal prediction of subjects at risk of AD. While these questions are generally answered in the medical image community through grand challenges, most challenges so far have focused on classification of clinical diagnosis. For example, the recent CADDementia challenge \cite{bron2015standardized} aimed to predict clinical diagnosis from MRI scans, while a similar challenge, the "\emph{International challenge for automated prediction of MCI from MRI data}" \cite{sarica2018machine}, asked participants to predict diagnosis and conversion status from extracted MRI features. While these challenges are helpful in establishing which algorithms are best at predicting biomarkers at the current timepoint, they cannot identify algorithms that are best at predicting the continuous progression of subjects at risk of AD.
+
+\section{Thesis Contributions}
+
+In this thesis I contributed to the three key aspects mentioned above. My key contributions for each chapter are described in the following sections.
+
+\subsection{Longitudinal Neuroanatomical Progression of Posterior Cortical Atrophy}
+
+\begin{itemize}
+\item I performed the first comprehensive study of longitudinal atrophy progression in Posterior Cortical Atrophy, and compared it with the atrophy progression in typical Alzheimer's disease, using data from the Dementia Research Centre (DRC), UK. Previous studies were limited to case series, or used small numbers of patients over short time-frames (1-year interval).
+\item I estimated the ordering in which brain regions show volume reductions using the event-based model, and also estimated the rate and extent of volume loss using the differential equation model. I contrasted these between PCA and tAD, and showed differences both qualitatively and quantitatively, which were further supported by statistical tests.
+\item I showed that three cognitively-defined PCA subgroups show different phenotype-specific patterns of early atrophy. This was the first study to show quantitative evidence of heterogeneity within PCA.
+\end{itemize}
+
+
+\subsection{DIVE: A Spatiotemporal Progression Model of Brain Pathology in Neurodegenerative Disorders}
+
+\begin{itemize}
+\item I developed DIVE, a novel spatiotemporal model that estimates fine-grained patterns of pathology at every point on the cortical surface, while also accounting for subject-specific time-shifts
+\item I validated DIVE on simulations, in presence of ground truth. More precisely, I showed that DIVE can accurately estimate the true cluster assignments of each simulated vertex, biomarker trajectories and subject-specific time-shifts.
+\item On patient data, I showed that DIVE estimates similar spatial patterns of pathology in two independent typical AD datasets: the Alzheimer's Disease Neuroimaging Initiative (ADNI) and the Dementia Research Centre (DRC), UK.
+\item On patient data, I showed that DIVE estimates different spatial patterns of pathology for distinct diseases (typical Alzheimer's Disease vs Posterior Cortical Atrophy) and distinct imaging modalities (MRI vs PET).
+\item I further validated DIVE on patient data, showing that it is robust under cross-validation and that the subjects' latent time-shifts, derived only from imaging data, are clinically meaningful as they correlate with four different cognitive tests.
+\item I showed that DIVE has better or similar performance compared to standard approaches. 
+\end{itemize}
+ 
+\subsection{Disease Knowledge Transfer across Neurodegenerative Diseases}
+\begin{itemize}
+\item I developed DKT, a novel disease progression model that estimates multimodal biomarker progressions in rare neurodegenerative diseases even when only limited, unimodal data is available, by transferring information from larger multimodal datasets from common neurodegenerative diseases.
+\item I validated DKT in a simulation in the presence of ground truth, where I showed that it can accurately estimate biomarker trajectories in one disease, where there is a complete lack of such data, by exploiting correlations with other known biomarkers.
+\item I demonstrated DKT on Alzheimer's variants, where I showed it is able to infer plausible non-MRI biomarker trajectories in a rare dementia, i.e. Posterior Cortical Atrophy, by transferring such knowledge from a larger dataset of typical Alzheimer's disease.
+\item I showed that DKT has favourable performance compared to standard models.
+\end{itemize}
+ 
+\subsection{Novel Extensions to the Event-based Model and Differential Equation Model}
+\begin{itemize}
+ \item I made novel extensions to the methodology of two disease progression models, the event-based model (EBM) and the differential equation model (DEM), which enable better estimation of their parameters. 
+ \item I developed four novel performance metrics that were used to assess the performance of all the models evaluated. 
+ \item I showed that the extended models had better or similar performance compared to the standard models.
+ \item My results also indicate that the novel performance metrics are more sensitive than standard approaches based on the prediction accuracy of clinical diagnosis. 
+\end{itemize} 
+ 
+\subsection{TADPOLE Challenge: Prediction of Longitudinal Evolution in Alzheimer's Disease}
+\begin{itemize}
+\item I helped organise the TADPOLE Challenge, which aims to find algorithms and features that best predict the evolution of subjects at risk of Alzheimer's disease.
+\item I helped build the website and I created the main training dataset.
+\item I built a leaderboard system that enabled live evaluation of participants' submissions based on existing data.
+\item I promoted the competition at medical imaging conferences, and I organised two TADPOLE mini-challenges, during the PyConUK 2017 conference and during the CMIC Medical Imaging Summer School, 2018.
+\end{itemize}
+ 
+\section{Thesis Structure}
+
+The thesis has the following structure:
+\begin{itemize}
+ \item Chapter \ref{chapter:bck} contains background information on Alzheimer's disease and Posterior Cortical Atrophy.
+ \item Chapter \ref{chapter:bckDpm} contains background information on disease progression models.
+ \item Chapter \ref{chapter:pca} contains the clinical analysis regarding the progression of Posterior Cortical Atrophy as compared to typical Alzheimer's disease. 
+  \item Chapter \ref{chapter:perf} presents novel extensions in the event-based model and differential equation model, which are evaluated against
+  \item Chapter \ref{chapter:dive} presents the DIVE model formulation and results on four different datasets, along with model validation.
+ \item Chapter \ref{chapter:dkt} presents the DKT model formulation, along with results on simulated data and patient data, and model validation.
+ standard implementations based on performance metrics that I proposed.
+ \item Chapter \ref{chapter:tadpole} presents the design of the TADPOLE Challenge.
+ \item Chapter \ref{chapter:conclusions} presents a summary of the work in this thesis, and proposes directions for further research.
+ \end{itemize}
+
+
+

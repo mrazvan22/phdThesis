@@ -1,0 +1,95 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage{amsmath,amssymb,calc,ifthen}
+\usepackage{float}
+%\usepackage{cancel}
+\usepackage[table,usenames,dvipsnames]{xcolor} % for coloured cells in tables
+\usepackage{tikz}
+% Allows us to click on links and references!
+\usepackage{hyperref}
+\usepackage{url}
+\hypersetup{
+colorlinks,
+citecolor=black,
+filecolor=black,
+linkcolor=black,
+urlcolor=black
+}
+% Nice package for plotting graphs
+% See excellent guide:
+% http://www.tug.org/TUGboat/tb31-1/tb97wright-pgfplots.pdf
+\usetikzlibrary{plotmarks,shapes}
+\usepackage{amsmath,graphicx}
+\usepackage{epstopdf}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+% highlight - useful for TODOs and similar
+\usepackage{color}
+\newcommand{\hilight}[1]{\colorbox{yellow}{#1}}
+\newcommand\ci{\perp\!\!\!\perp} % perpendicular sign
+\newcommand*\rfrac[2]{{}^{#1}\!/_{#2}} % diagonal fraction
+\newcommand\SLASH{\char`\\}
+\usepackage{listings}
+% margin size
+\usepackage[margin=0.1in]{geometry}
+\usepackage{pdfpages}
+\usepackage{enumitem} % for nested enumerate numbers 1 1.1 1.1.1
+
+\usepackage{titlesec} % reduce spacing after subsections
+
+% \titlespacing\subsection{0pt}{4pt plus 4pt minus 2pt}{4pt plus 2pt minus 2pt}
+
+
+\begin{document}
+\belowdisplayskip=12pt plus 3pt minus 9pt
+\belowdisplayshortskip=7pt plus 3pt minus 4pt
+
+\begin{figure}[H]
+ \centering
+ \begin{subfigure}{0.47\textwidth}
+    \includegraphics[scale=0.5]{fig1_linReg.png}
+ \end{subfigure}
+ \begin{subfigure}{0.47\textwidth}
+     \includegraphics[scale=0.5]{fig2_GP.png}
+ \end{subfigure}
+ 
+  \begin{subfigure}{0.47\textwidth}
+    \includegraphics[scale=0.5]{fig3_recon.png}
+ \end{subfigure}
+ \begin{subfigure}{0.47\textwidth}
+     \includegraphics[scale=0.5]{fig4_align.png}
+ \end{subfigure}
+ 
+
+%  \hspace{-3em}
+ 
+
+\end{figure}
+
+
+%'incrSubj'    'incrDistOverlap'    'incrMisData'    'incrBiomk'    'incrStagingUnif'    'incrCtlPrec'
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
