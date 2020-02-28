@@ -1,3 +1,0 @@
-convertToPNG:
-  convert -density 600 figs.pdf -quality 100 figs.png
-
