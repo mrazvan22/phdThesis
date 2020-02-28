@@ -1,1 +1,14 @@
 *.zip
+*.aux
+*.bbl
+*.bib
+*.blg
+*.lof
+*.log
+*.lot
+*.out
+report.pdf
+*.py.err
+*.py.out
+*.toc
+latex.py
