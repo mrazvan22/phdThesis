@@ -526,26 +526,88 @@ For the performance comparison of DIVE with other models, we compute two perform
 }
 \vspace{1em}
 
- \begin{python}
-for f in range(10): 
-  if f == 5:
-    print '\n'
-  if f == 0 or f ==5:
-    #print r''
-    print r'\begin{subfigure}[b]{0.223\textwidth}'
-    print r'\centering'
-    print 'f=%d' % (f+1)
-    print r'\includegraphics[width=\linewidth, trim=22 0 35 20,clip]{\adniThickCVFolder/'+ 'f%d/trajSamplesOneFig_cogCorr_\\adniThickCVExpName_f%d}' % (f, f)
-    
-  else:
-    print r'\begin{subfigure}[b]{0.185\textwidth}'
-    print r'\centering'
-    print 'f=%d' % (f+1)
-    print r'\includegraphics[width=\linewidth, trim=75 0 35 20,clip]{\adniThickCVFolder/'+ 'f%d/trajSamplesOneFig_cogCorr_\\adniThickCVExpName_f%d}' % (f, f)
-  
-  print r'\end{subfigure}%    <-- % added here'
-  print r'\hfill'
-\end{python}
+\begin{subfigure}[b]{0.223\textwidth}
+\centering
+f=1
+\includegraphics[width=\linewidth, trim=24 0 35 20,clip]{\adniThickCVFolder/f0/trajSamplesOneFig_cogCorr_\adniThickCVExpName_f0}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.185\textwidth}
+\centering
+f=2
+\includegraphics[width=\linewidth, trim=75 0 35 20,clip]{\adniThickCVFolder/f1/trajSamplesOneFig_cogCorr_\adniThickCVExpName_f1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.185\textwidth}
+\centering
+f=3
+\includegraphics[width=\linewidth, trim=75 0 35 20,clip]{\adniThickCVFolder/f2/trajSamplesOneFig_cogCorr_\adniThickCVExpName_f2}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.185\textwidth}
+\centering
+f=4
+\includegraphics[width=\linewidth, trim=75 0 35 20,clip]{\adniThickCVFolder/f3/trajSamplesOneFig_cogCorr_\adniThickCVExpName_f3}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.185\textwidth}
+\centering
+f=5
+\includegraphics[width=\linewidth, trim=75 0 35 20,clip]{\adniThickCVFolder/f4/trajSamplesOneFig_cogCorr_\adniThickCVExpName_f4}
+\end{subfigure}
+\hfill
+
+\begin{subfigure}[b]{0.223\textwidth}
+\centering
+f=6
+\includegraphics[width=\linewidth, trim=24 0 35 20,clip]{\adniThickCVFolder/f5/trajSamplesOneFig_cogCorr_\adniThickCVExpName_f5}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.185\textwidth}
+\centering
+f=7
+\includegraphics[width=\linewidth, trim=75 0 35 20,clip]{\adniThickCVFolder/f6/trajSamplesOneFig_cogCorr_\adniThickCVExpName_f6}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.185\textwidth}
+\centering
+f=8
+\includegraphics[width=\linewidth, trim=75 0 35 20,clip]{\adniThickCVFolder/f7/trajSamplesOneFig_cogCorr_\adniThickCVExpName_f7}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.185\textwidth}
+\centering
+f=9
+\includegraphics[width=\linewidth, trim=75 0 35 20,clip]{\adniThickCVFolder/f8/trajSamplesOneFig_cogCorr_\adniThickCVExpName_f8}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.185\textwidth}
+\centering
+f=10
+\includegraphics[width=\linewidth, trim=75 0 35 20,clip]{\adniThickCVFolder/f9/trajSamplesOneFig_cogCorr_\adniThickCVExpName_f9}
+\end{subfigure}
+\hfill
+
+%  \begin{python}
+% for f in range(10): 
+%   if f == 5:
+%     print('\n')
+%   if f == 0 or f ==5:
+%     #print r''
+%     print(r'\begin{subfigure}[b]{0.223\textwidth}')
+%     print(r'\centering')
+%     print('f=%d' % (f+1))
+%     print(r'\includegraphics[width=\linewidth, trim=22 0 35 20,clip]{\adniThickCVFolder/'+ 'f%d/trajSamplesOneFig_cogCorr_\\adniThickCVExpName_f%d}' % (f, f))
+%     
+%   else:
+%     print (r'\begin{subfigure}[b]{0.185\textwidth}')
+%     print (r'\centering')
+%     print ('f=%d' % (f+1))
+%     print (r'\includegraphics[width=\linewidth, trim=75 0 35 20,clip]{\adniThickCVFolder/'+ 'f%d/trajSamplesOneFig_cogCorr_\\adniThickCVExpName_f%d}' % (f, f))
+%   
+%   print (r'\end{subfigure})%    <-- % added here'
+%   print (r'\hfill')
+% \end{python}
 \caption[DIVE estimated clusters and trajectories over the 10 cross-validation folds]{(top) Clusters estimated from 10-fold cross-validation training sets on the ADNI MRI dataset. (bottom) Estimated trajectories for each fold. }
 \label{fig:diveClustTrajCV}
 \end{figure}

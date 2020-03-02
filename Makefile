@@ -11,5 +11,5 @@ copy:
 prepareArxiv:
 	rm *.bib *.bbl *.aux *.blg *.log *.out *.lot *.lof *.err *.toc;
 	rm report.pdf;
-	rm thesis_arxiv.zip; zip -r thesis_arxiv.zip .
+	rm thesis_arxiv.zip; zip -r thesis_arxiv.zip . -x '*.git*' report.pdf
 

@@ -21,7 +21,7 @@
 \usepackage[raggedright]{titlesec} % for section titles not to exceed page margins
 
 \usepackage[nomessages]{fp}% http://ctan.org/pkg/fp
-\usepackage{python} % allows to run pythonrvisors code inside latex
+% \usepackage{python} % allows to run pythonrvisors code inside latex
 
 % \usepackage{subfig}%
 
@@ -47,6 +47,7 @@
             pdftitle={Modelling the Neuroanatomical Progression of Alzheimer's Disease and Posterior Cortical Atrophy},
             pdfsubject={Modelling the Neuroanatomical Progression of Alzheimer's Disease and Posterior Cortical Atrophy},
             pdfkeywords={Alzheimer's disease, Bayesian Modelling, Disease Progression Model}]{hyperref}
+            
 \hypersetup{
     colorlinks,
     citecolor=blue4,
@@ -279,6 +280,10 @@ inner sep=0]
 % fancy headers and footers from Petr 
 
 \usepackage{fancyhdr}
+
+\fancyhead[C]{\rule{.5\textwidth}{4\baselineskip}}% Add something BIG in the header
+\setlength{\headheight}{15pt}
+
 
 \newcommand{\FrontPageStyle}{\pagestyle{empty}}
 \newcommand{\MainPageStyle}{\pagestyle{main}}
@@ -4370,7 +4375,7 @@ I, R\u{a}zvan Valentin Marinescu, confirm that the work presented in this thesis
 
 \chapter*{Abstract}
 
-In order to find effective treatments for Alzheimer's disease (AD), a devastating neurodegenerative disease affecting millions of people worldwide, we need to identify subjects at risk of AD as early as possible. To this end, disease progression models have been recently developed, which not only to perform early diagnosis, but also estimate a unique disease signature that is used to predict the subjects' disease stages and future evolution. However, these models have not yet been applied to rare neurodegenerative diseases, are not suitable to understand the complex dynamics of biomarkers, work only on large multimodal datasets, and their predictive performance has not been objectively validated.
+In order to find effective treatments for Alzheimer's disease (AD), a devastating neurodegenerative disease affecting millions of people worldwide, we need to identify subjects at risk of AD as early as possible. To this end, recently developed disease progression models can be used to perform early diagnosis, as well as predict the subjects' disease stages and future evolution. However, these models have not yet been applied to rare neurodegenerative diseases, are not suitable to understand the complex dynamics of biomarkers, work only on large multimodal datasets, and their predictive performance has not been objectively validated.
 
 In this work I developed novel models of disease progression and applied them to estimate the progression of Alzheimer's disease and Posterior Cortical atrophy, a rare neurodegenerative syndrome causing visual deficits. My first contribution is a study on the progression of Posterior Cortical Atrophy, using models already developed: the Event-based Model (EBM) and the Differential Equation Model (DEM). My second contribution is the development of DIVE, a novel spatio-temporal model of disease progression that estimates fine-grained spatial patterns of pathology, potentially enabling us to understand complex disease mechanisms relating to pathology propagation along brain networks. My third contribution is the development of Disease Knowledge Transfer (DKT), a novel disease progression model that estimates the multimodal progression of rare neurodegenerative diseases from limited, unimodal datasets, by transferring information from larger, multimodal datasets of typical neurodegenerative diseases. My fourth contribution is the development of novel extensions for the EBM and the DEM, and the development of novel measures for performance evaluation of such models. My last contribution is the organization of the TADPOLE challenge, a competition which aims to identify algorithms and features that best predict the evolution of AD. 
 
